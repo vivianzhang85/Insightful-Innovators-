@@ -38,6 +38,6 @@ footer:
     home: /west-coast/travel/
     next: /west-coast/analytics/sandiego/
 ---
-{%- include tailwind/quests/west-coas-travel.html -%}
+{%- include dayinnewyork/west-coast-travel.html -%}
 
 
