@@ -15,25 +15,25 @@ lxdData:
       Level: 1
       Description: "Pick from 3 breakfast options"
       Lessons: "/west-coast/analytics/sandiego/"
-      Image: "/images/west-coast/sandiego.png"
+      Image: "/images/nycimages/newyorkbreakfast.jpeg"
     - Title: "Shopping"
       Genre: "Geographical Flask"
       Level: 2
       Description: "Pick your own clothes, make outfit, post about it!"
       Lessons: "/west-coast/analytics/losangeles/"
-      Image: "/images/west-coast/la.png"
+      Image: "/images/nycimages/nycshopping.jpeg"
     - Title: "Landmarks"
       Genre: "Geographical Flask"
       Level: 3
       Description: "Explore Manhattan's famous landmarks!"
       Lessons: "/west-coast/analytics/sanfrancisco/"
-      Image: "/images/west-coast/sanfranciso.png"
+      Image: "/images/nycimages/nyclandmarks.jpeg"
     - Title: "Broadway"
       Genre: "Random Generator"
       Level: 4
       Description: "Watch and hear an iconic broadway show!"
       Lessons: "/west-coast/analytics/seattle/"
-      Image: "/images/west-coast/seattle.png"
+      Image: "/images/nycimages/broadway.jpeg"
 footer: 
     home: /nyc/home/
 ---
