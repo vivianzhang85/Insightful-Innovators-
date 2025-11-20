@@ -3,12 +3,12 @@ layout: post
 title: UI Roadtrip
 tailwind: True
 description: >
-  Code on the Road: A UI Adventure Across the The West Coast
-author: CSA 2025-26
+  Code on the Road: An Interactive Adventure Across Manhattan
+author: Insightful Innovators
 permalink: /nyc/home/
 lxdData:
   Title: "Code on the Road: A UI Adventure Across the The West Coast"
-  Description: "From San Diego to Seattle, we’re coding our way up the coast! You'll receive a destination, see how we built via code, try coding it yourself, then share it on the microblog."
+  Description: "Breakfast, shopping, landmarks and a broadway show in New York City!"
   Topics:
     - Title: "Breakfast"
       Genre: "Choose your own adventure"
