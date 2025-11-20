@@ -2,15 +2,15 @@
 layout: post
 title: "Step 1 Breakfast"
 description: "Breakfast time hits, and in NYC that means one thing: pick your spot and dive in."
-permalink: /west-coast/analytics/sanfrancisco/
+permalink: /new-york/breakfast/
 parent: "Analytics/Admin"
-team: "Cool Collaborators"
-submodule: 2
-author: "Cool Collaborators"
-date: 2025-10-21
+team: "Insightful Innovators"
+submodule: 1
+author: "Insightful Innocators"
+date: 2025-11-20
 microblog: true
 footer: 
-    previous:  /west-coast/analytics/sandiego/
-    home: /west-coast/travel/
-    next: /west-coast/analytics/seattle/
+    previous: /new-york/landmarks/
+    home: /nyc/home/
+    next: /new-york/shopping/
 ---
