@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Step 2 Shopping"
+title: "Step 4 Broadway"
 description: "Time to shop! Let's make a new outfit."
 permalink: /new-york/broadway/
 parent: "Analytics/Admin"

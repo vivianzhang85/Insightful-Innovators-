@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Step 2 Shopping"
+title: "Step 3 Landmarks"
 description: "Time to shop! Let's make a new outfit."
 permalink: /new-york/landmarks/
 parent: "Analytics/Admin"
