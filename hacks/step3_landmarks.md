@@ -2508,3 +2508,942 @@ footer:
     <div class="ground"></div>
 </body>
 </html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ landmark.name }} - NYC Landmarks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+
+        /* NAVBAR */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #005EB8;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #005EB8;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+            background: white;
+        }
+
+        /* LEFT COLUMN - ANIMATION (65%) */
+        .animation-column {
+            flex: 0 0 65%;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 40%, #FFE4B5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animation-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* ANIMATION STYLES - Ukrainian Museum */
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 35%;
+            background: linear-gradient(180deg, #5a5a5a 0%, #333333 50%, #1a1a1a 100%);
+            z-index: 2;
+        }
+
+        .sidewalk {
+            position: absolute;
+            bottom: 35%;
+            width: 100%;
+            height: 8%;
+            background: linear-gradient(180deg, #e0e0e0 0%, #b0b0b0 100%);
+            z-index: 3;
+        }
+
+        .grass {
+            position: absolute;
+            bottom: 43%;
+            width: 100%;
+            height: 5%;
+            background: linear-gradient(180deg, #7BC043 0%, #2E8B57 100%);
+            z-index: 3;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 100px;
+            animation: cloudFloat 45s linear infinite;
+            filter: blur(1px);
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 100px;
+        }
+
+        .cloud1 {
+            width: 120px;
+            height: 50px;
+            top: 8%;
+            left: -150px;
+        }
+
+        .cloud1::before {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: 15px;
+        }
+
+        .cloud1::after {
+            width: 70px;
+            height: 50px;
+            top: -20px;
+            right: 15px;
+        }
+
+        .cloud2 {
+            width: 140px;
+            height: 55px;
+            top: 18%;
+            left: -180px;
+            animation-duration: 50s;
+            animation-delay: 10s;
+        }
+
+        .cloud2::before {
+            width: 70px;
+            height: 70px;
+            top: -35px;
+            left: 20px;
+        }
+
+        .cloud2::after {
+            width: 80px;
+            height: 55px;
+            top: -25px;
+            right: 20px;
+        }
+
+        .skyline-bg {
+            position: absolute;
+            bottom: 48%;
+            left: 0;
+            right: 0;
+            height: 250px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            opacity: 0.2;
+            z-index: 1;
+            gap: 15px;
+            padding: 0 50px;
+        }
+
+        .bg-building {
+            background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+            animation: buildingRise 1.5s ease-out both;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bg-building1 { width: 80px; height: 180px; animation-delay: 0.1s; }
+        .bg-building2 { width: 70px; height: 220px; animation-delay: 0.2s; }
+        .bg-building3 { width: 90px; height: 160px; animation-delay: 0.3s; }
+        .bg-building4 { width: 75px; height: 240px; animation-delay: 0.4s; }
+        .bg-building5 { width: 85px; height: 190px; animation-delay: 0.5s; }
+        .bg-building6 { width: 80px; height: 210px; animation-delay: 0.6s; }
+
+        .museum-complex {
+            position: absolute;
+            bottom: 48%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: museumAppear 2.2s ease-out 0.7s both;
+        }
+
+        .museum-main {
+            width: 550px;
+            height: 400px;
+            background: linear-gradient(180deg, #D4464F 0%, #A8373F 50%, #8B2E33 100%);
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            border: 3px solid #6B1F24;
+        }
+
+        .entrance-section {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 220px;
+            background: linear-gradient(180deg, #A8373F 0%, #6B1F24 100%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            border-top: 4px solid #FFD700;
+        }
+
+        .entrance-door {
+            width: 140px;
+            height: 200px;
+            background: linear-gradient(90deg, #2c2c2c 0%, #1a1a1a 100%);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            box-shadow: inset 0 5px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .door-handle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        .window-section {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 50px;
+            height: 150px;
+        }
+
+        .window {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            border: 4px solid #FFD700;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.4);
+            position: relative;
+            animation: windowGlow 3s ease-in-out infinite;
+        }
+
+        .window::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 215, 0, 0.2) 10px,
+                rgba(255, 215, 0, 0.2) 11px
+            );
+        }
+
+        .ornament {
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: ornamentBob 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        .ornament1 { width: 15px; height: 15px; top: 25px; left: 60px; animation-delay: 0s; }
+        .ornament2 { width: 15px; height: 15px; top: 25px; right: 60px; animation-delay: 0.5s; }
+        .ornament3 { width: 12px; height: 12px; top: 150px; left: 70px; animation-delay: 1s; }
+        .ornament4 { width: 12px; height: 12px; top: 150px; right: 70px; animation-delay: 1.5s; }
+
+        .roof {
+            position: absolute;
+            top: -25px;
+            left: -15px;
+            right: -15px;
+            height: 25px;
+            background: linear-gradient(180deg, #005EB8 0%, #004A99 100%);
+            clip-path: polygon(0 100%, 5% 0, 95% 0, 100% 100%);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .roof::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            background: #FFD700;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .flag {
+            position: absolute;
+            top: -60px;
+            left: 40px;
+            width: 80px;
+            height: 50px;
+            background: linear-gradient(180deg, #005EB8 0%, #FFD700 50%);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            animation: flagWave 2.5s ease-in-out infinite;
+            z-index: 6;
+        }
+
+        .flag-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .taxi {
+            position: absolute;
+            bottom: 35%;
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(180deg, #FFD700 0%, #FFC700 100%);
+            border-radius: 5px 5px 3px 3px;
+            animation: taxiDrive 20s linear infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            z-index: 7;
+        }
+
+        .taxi-top {
+            position: absolute;
+            top: -12px;
+            left: 25px;
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(180deg, #FFD700 0%, #FFC700 100%);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .taxi-sign {
+            position: absolute;
+            top: -18px;
+            left: 32px;
+            width: 26px;
+            height: 8px;
+            background: #FF6B6B;
+            border-radius: 2px;
+            font-size: 5px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 8px;
+        }
+
+        .wheel {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #2c2c2c;
+            border-radius: 50%;
+            border: 2px solid #1a1a1a;
+            bottom: -8px;
+        }
+
+        .wheel-front { left: 10px; }
+        .wheel-back { right: 10px; }
+
+        .taxi1 { animation-duration: 18s; }
+        .taxi2 { animation-duration: 22s; animation-delay: 6s; bottom: 36%; }
+
+        .person {
+            position: absolute;
+            bottom: 43%;
+            width: 15px;
+            height: 35px;
+            background: linear-gradient(180deg, #2c2c2c 0%, #1a1a1a 60%, #2c2c2c 100%);
+            border-radius: 8px 8px 3px 3px;
+            animation: personWalk 18s linear infinite;
+            z-index: 6;
+        }
+
+        .person-head {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #d4a574;
+            border-radius: 50%;
+        }
+
+        .person1 { animation-duration: 25s; left: -20px; }
+        .person2 { animation-duration: 30s; animation-delay: 8s; left: -20px; }
+        .person3 { animation-duration: 28s; animation-delay: 15s; left: -20px; }
+
+        /* Overlay buttons on animation */
+        .animation-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .btn-overlay {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-overlay:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .bottom-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        /* RIGHT COLUMN - INFO SIDEBAR (35%) */
+        .info-column {
+            flex: 0 0 35%;
+            background: white;
+            overflow-y: auto;
+            padding: 2rem;
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .header-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .landmark-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .landmark-location {
+            color: #666;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-facts {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        .fact-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e8e8e8;
+            font-size: 0.9rem;
+        }
+
+        .fact-row:last-child {
+            border-bottom: none;
+        }
+
+        .fact-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .fact-value {
+            color: #333;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            padding: 0.8rem 1rem;
+            background: #005EB8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            background: #004495;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary-full {
+            padding: 0.8rem 1rem;
+            background: #f0f0f0;
+            border: 2px solid #005EB8;
+            color: #005EB8;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary-full:hover {
+            background: #e8f0ff;
+        }
+
+        .btn-full {
+            grid-column: 1 / -1;
+        }
+
+        .description-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .description-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .reviews-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .review-item {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #005EB8;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .review-rating {
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .write-review-btn {
+            padding: 0.8rem 1rem;
+            background: #005EB8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #005EB8;
+            box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.1);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .star:hover, .star.active {
+            color: #FFD700;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-actions button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            background: #005EB8;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #004495;
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        /* ANIMATIONS */
+        @keyframes cloudFloat {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        @keyframes buildingRise {
+            0% { transform: scaleY(0); opacity: 0; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        @keyframes museumAppear {
+            0% { opacity: 0; transform: translateX(-50%) translateY(80px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes windowGlow {
+            0%, 100% { box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 0 35px rgba(255, 215, 0, 0.7); }
+        }
+
+        @keyframes ornamentBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes flagWave {
+            0%, 100% { transform: scaleX(1) rotate(0deg); }
+            50% { transform: scaleX(0.95) rotate(2deg); }
+        }
+
+        @keyframes taxiDrive {
+            0% { left: -100px; }
+            100% { left: calc(100% + 100px); }
+        }
+
+        @keyframes personWalk {
+            0% { left: -20px; }
+            100% { left: calc(100% + 20px); }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .animation-column {
+                flex: 0 0 40vh;
+            }
+
+            .info-column {
+                flex: 1;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-left">
+            <div class="logo">🗽 NYC</div>
+            <a href="/">Home</a>
+            <a href="/#map">Map</a>
+        </div>
+        <div class="nav-right">
+            {% if session.user_id %}
+                <a href="/dashboard">Dashboard</a>
+                <a href="/auth/logout" class="btn-secondary">Logout</a>
+            {% else %}
+                <a href="/auth/login" class="btn-secondary">Login</a>
+                <a href="/auth/register" class="btn-secondary">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- LEFT COLUMN - ANIMATION (65%) -->
+        <div class="animation-column">
+            <div class="animation-wrapper">
+                <!-- ANIMATION CONTENT -->
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+
+                <div class="skyline-bg">
+                    <div class="bg-building bg-building1"></div>
+                    <div class="bg-building bg-building2"></div>
+                    <div class="bg-building bg-building3"></div>
+                    <div class="bg-building bg-building4"></div>
+                    <div class="bg-building bg-building5"></div>
+                    <div class="bg-building bg-building6"></div>
+                </div>
+
+                <div class="museum-complex">
+                    <div class="museum-main">
+                        <div class="roof"></div>
+                        <div class="flag">
+                            <div class="flag-text">🇺🇦</div>
+                        </div>
+                        <div class="ornament ornament1"></div>
+                        <div class="ornament ornament2"></div>
+                        <div class="ornament ornament3"></div>
+                        <div class="ornament ornament4"></div>
+                        <div class="window-section">
+                            <div class="window"></div>
+                            <div class="window"></div>
+                            <div class="window"></div>
+                        </div>
+                        <div class="entrance-section">
+                            <div class="entrance-door">
+                                <div class="door-handle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="taxi taxi1">
+                    <div class="taxi-top"></div>
+                    <div class="taxi-sign">TAXI</div>
+                    <div class="wheel wheel-front"></div>
+                    <div class="wheel wheel-back"></div>
+                </div>
+                <div class="taxi taxi2">
+                    <div class="taxi-top"></div>
+                    <div class="taxi-sign">TAXI</div>
+                    <div class="wheel wheel-front"></div>
+                    <div class="wheel wheel-back"></div>
+                </div>
+
+                <div class="person person1">
+                    <div class="person-head"></div>
+                </div>
+                <div class="person person2">
+                    <div class="person-head"></div>
+                </div>
+                <div class="person person3">
+                    <div class="person-head"></div>
+                </div>
+
+                <div class="grass"></div>
+                <div class="sidewalk"></div>
+                <div class="ground"></div>
+
+                <!-- OVERLAY CONTROLS -->
+                <div class="animation-controls">
+                    <button class="btn-overlay" onclick="alert('Learn more coming soon!')">ℹ️ Info</button>
+                    <button class="btn-overlay" onclick="document.getElementById('add-to-itinerary-modal').classList.add('active')">📌 Add to Trip</button>
+                </div>
+
+                <div class="bottom-controls">
+                    <button class="btn-overlay" onclick="window.open('{{ landmark.website }}', '_blank')">🌐 Visit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN - INFO SIDEBAR (35%) -->
+        <div class="info-column">
+            <!-- HEADER SECTION -->
+            <div class="header-section">
+                <h1 class="landmark-title">{{ landmark.name }}</h1>
+                <div class="landmark-location">
+                    📍 {{ landmark.
