@@ -256,18 +256,6 @@ footer:
             box-shadow: 0 5px 15px rgba(255,215,0,0.5);
         }
 
-        .btn-secondary {
-            background: #1e3a5f;
-            color: #FFD700;
-            border: 2px solid #FFD700;
-        }
-
-        .btn-secondary:hover {
-            background: #2d4a7c;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
-        }
-
         /* Interactive Games Section */
         .interactive-section {
             margin-top: 2rem;
@@ -332,7 +320,7 @@ footer:
             overflow: hidden;
         }
 
-        /* The Met Animation */
+        /* IMPROVED The Met Animation */
         .met-animation {
             background: linear-gradient(180deg, #1a3a5f 0%, #2d4a7c 50%, #4a6fa5 100%);
             position: relative;
@@ -342,11 +330,11 @@ footer:
 
         .met-building {
             position: absolute;
-            bottom: 20%;
+            bottom: 15%;
             left: 50%;
             transform: translateX(-50%);
-            width: 400px;
-            height: 250px;
+            width: 320px;
+            height: 200px;
             background: linear-gradient(45deg, #8B7355, #A52A2A);
             border-radius: 15px 15px 0 0;
             box-shadow: 0 0 40px rgba(0,0,0,0.6);
@@ -360,6 +348,13 @@ footer:
             height: 50px;
             background: #8B4513;
             clip-path: polygon(0 100%, 5% 0, 95% 0, 100% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
         .met-columns {
@@ -372,8 +367,8 @@ footer:
         }
 
         .met-column {
-            width: 25px;
-            height: 180px;
+            width: 20px;
+            height: 150px;
             background: linear-gradient(45deg, #DEB887, #F5F5DC);
             border-radius: 8px 8px 0 0;
             position: relative;
@@ -400,8 +395,8 @@ footer:
         }
 
         .art-piece {
-            width: 80px;
-            height: 100px;
+            width: 60px;
+            height: 80px;
             background: linear-gradient(45deg, #FFD700, #FF6347);
             border-radius: 8px;
             animation: floatArt 6s ease-in-out infinite;
@@ -533,7 +528,7 @@ footer:
             background: linear-gradient(135deg, #FFD700, #FFA500);
         }
 
-        /* FIXED Empire State Animation */
+        /* FIXED Empire State Animation - Full Building Visible */
         .empire-animation {
             background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 30%, #2d4a7c 60%, #4a6fa5 100%);
             position: relative;
@@ -543,11 +538,11 @@ footer:
 
         .empire-building {
             position: absolute;
-            bottom: 10%;
+            bottom: 5%;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
-            height: 380px;
+            width: 150px;
+            height: 320px;
             background: linear-gradient(45deg, #708090, #2F4F4F);
             box-shadow: 0 0 50px rgba(255,255,255,0.2);
         }
@@ -556,41 +551,41 @@ footer:
             position: absolute;
             left: 10%;
             right: 10%;
-            height: 20px;
+            height: 15px;
             background: rgba(255,255,255,0.15);
             border-bottom: 2px solid rgba(255,255,255,0.3);
         }
 
         .empire-antenna {
             position: absolute;
-            bottom: 380px;
+            bottom: 320px;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
-            height: 80px;
+            width: 3px;
+            height: 60px;
             background: #C0C0C0;
         }
 
         .antenna-light {
             position: absolute;
-            bottom: 460px;
+            bottom: 380px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             background: #FF0000;
             border-radius: 50%;
             animation: blinkAntenna 2s ease-in-out infinite;
-            box-shadow: 0 0 20px #FF0000;
+            box-shadow: 0 0 15px #FF0000;
         }
 
         .observation-deck {
             position: absolute;
-            bottom: 280px;
+            bottom: 220px;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
-            height: 25px;
+            width: 180px;
+            height: 20px;
             background: rgba(255,255,255,0.2);
             border-radius: 5px;
         }
@@ -612,7 +607,7 @@ footer:
             animation: twinkle 3s ease-in-out infinite;
         }
 
-        /* FIXED Ukrainian Museum Animation */
+        /* IMPROVED Ukrainian Museum Animation */
         .ukrainian-animation {
             background: linear-gradient(180deg, #0057B7 0%, #0057B7 50%, #FFD700 50%, #FFD700 100%);
             position: relative;
@@ -622,27 +617,81 @@ footer:
 
         .ukrainian-building {
             position: absolute;
-            bottom: 20%;
+            bottom: 15%;
             left: 50%;
             transform: translateX(-50%);
-            width: 280px;
+            width: 250px;
             height: 180px;
             background: linear-gradient(45deg, #8B0000, #A52A2A);
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
             border: 4px solid #FFD700;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            overflow: hidden;
         }
 
-        .museum-sign {
-            color: #FFD700;
-            font-size: 1.8rem;
+        .ukrainian-roof {
+            position: absolute;
+            top: -30px;
+            left: -15px;
+            right: -15px;
+            height: 40px;
+            background: #FFD700;
+            clip-path: polygon(0 100%, 5% 0, 95% 0, 100% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0057B7;
             font-weight: bold;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        .ukrainian-windows {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .ukrainian-window {
+            width: 40px;
+            height: 50px;
+            background: #FFD700;
+            border: 2px solid #0057B7;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .window-pane {
+            width: 30px;
+            height: 15px;
+            background: #0057B7;
+            margin: 2px 0;
+        }
+
+        .ukrainian-door {
+            width: 60px;
+            height: 80px;
+            background: #FFD700;
+            border: 3px solid #0057B7;
+            border-radius: 5px 5px 0 0;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .door-handle {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            width: 8px;
+            height: 8px;
+            background: #0057B7;
+            border-radius: 50%;
         }
 
         .flag-pattern {
@@ -734,7 +783,7 @@ footer:
             animation: blinkLight 2s infinite alternate;
         }
 
-        /* FIXED Embroidery Game */
+        /* FIXED Embroidery Game - Draws Lines and Curves */
         .embroidery-game {
             width: 100%;
             height: 150px;
@@ -750,12 +799,10 @@ footer:
             background-size: 20px 20px;
         }
 
-        .stitch {
+        .embroidery-line {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
+            background: transparent;
+            transform-origin: 0 0;
         }
 
         /* Animations */
@@ -786,8 +833,8 @@ footer:
         }
 
         @keyframes blinkAntenna {
-            0%, 100% { opacity: 1; box-shadow: 0 0 20px #FF0000; }
-            50% { opacity: 0.3; box-shadow: 0 0 10px #FF0000; }
+            0%, 100% { opacity: 1; box-shadow: 0 0 15px #FF0000; }
+            50% { opacity: 0.3; box-shadow: 0 0 8px #FF0000; }
         }
 
         @keyframes twinkle {
@@ -869,7 +916,7 @@ footer:
         <div class="animation-container">
             <div class="met-animation">
                 <div class="met-building">
-                    <div class="met-roof"></div>
+                    <div class="met-roof">THE MET</div>
                     <div class="met-columns">
                         <div class="met-column"></div>
                         <div class="met-column"></div>
@@ -950,9 +997,6 @@ footer:
             <div class="interactive-buttons">
                 <button class="btn btn-primary" onclick="window.open('https://www.metmuseum.org', '_blank')">
                     <span>🌐</span> Visit Website
-                </button>
-                <button class="btn btn-secondary" onclick="alert('Directions to The Met')">
-                    <span>🗺️</span> Get Directions
                 </button>
             </div>
         </div>
@@ -1045,9 +1089,6 @@ footer:
                 <button class="btn btn-primary" onclick="window.open('https://www.museumoficecream.com', '_blank')">
                     <span>🌐</span> Visit Website
                 </button>
-                <button class="btn btn-secondary" onclick="alert('Directions to Museum of Ice Cream')">
-                    <span>🗺️</span> Get Directions
-                </button>
             </div>
         </div>
     </section>
@@ -1125,9 +1166,6 @@ footer:
                 <button class="btn btn-primary" onclick="window.open('https://www.esbnyc.com', '_blank')">
                     <span>🌐</span> Visit Website
                 </button>
-                <button class="btn btn-secondary" onclick="alert('Directions to Empire State Building')">
-                    <span>🗺️</span> Get Directions
-                </button>
             </div>
         </div>
     </section>
@@ -1138,7 +1176,20 @@ footer:
             <div class="ukrainian-animation">
                 <div class="flag-pattern"></div>
                 <div class="ukrainian-building">
-                    <div class="museum-sign">Ukrainian Museum</div>
+                    <div class="ukrainian-roof">Ukrainian Museum</div>
+                    <div class="ukrainian-windows">
+                        <div class="ukrainian-window">
+                            <div class="window-pane"></div>
+                            <div class="window-pane"></div>
+                        </div>
+                        <div class="ukrainian-window">
+                            <div class="window-pane"></div>
+                            <div class="window-pane"></div>
+                        </div>
+                    </div>
+                    <div class="ukrainian-door">
+                        <div class="door-handle"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1193,7 +1244,7 @@ footer:
             <!-- Interactive Game for Ukrainian Museum -->
             <div class="interactive-section">
                 <h3 class="interactive-title">Create Ukrainian Embroidery</h3>
-                <p class="game-instructions">Click on the grid to create traditional Ukrainian embroidery patterns</p>
+                <p class="game-instructions">Click and drag to create traditional Ukrainian embroidery patterns</p>
                 <div class="game-container">
                     <div class="embroidery-game" id="embroidery-game"></div>
                 </div>
@@ -1202,9 +1253,6 @@ footer:
             <div class="interactive-buttons">
                 <button class="btn btn-primary" onclick="window.open('https://www.ukrainianmuseum.org', '_blank')">
                     <span>🌐</span> Visit Website
-                </button>
-                <button class="btn btn-secondary" onclick="alert('Directions to Ukrainian Museum')">
-                    <span>🗺️</span> Get Directions
                 </button>
             </div>
         </div>
@@ -1221,7 +1269,7 @@ footer:
         // Create stars for Empire State section
         function createStars() {
             const starsContainer = document.getElementById('stars-container');
-            const starCount = 100;
+            const starCount = 80;
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
@@ -1237,7 +1285,7 @@ footer:
         // Create building sections for Empire State
         function createBuildingSections() {
             const building = document.querySelector('.empire-building');
-            const sectionCount = 15;
+            const sectionCount = 12;
             
             for (let i = 0; i < sectionCount; i++) {
                 const section = document.createElement('div');
@@ -1296,20 +1344,50 @@ footer:
             }, 3000);
         });
 
-        // FIXED Embroidery Game Functionality
-        document.getElementById('embroidery-game').addEventListener('click', function(event) {
-            const game = event.currentTarget;
-            const stitch = document.createElement('div');
-            stitch.className = 'stitch';
-            stitch.style.left = event.offsetX + 'px';
-            stitch.style.top = event.offsetY + 'px';
+        // FIXED Embroidery Game - Draws Lines and Curves
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        const embroideryGame = document.getElementById('embroidery-game');
+        
+        embroideryGame.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+        
+        embroideryGame.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            
+            const line = document.createElement('div');
+            line.className = 'embroidery-line';
+            
+            // Calculate line properties
+            const x1 = lastX;
+            const y1 = lastY;
+            const x2 = e.offsetX;
+            const y2 = e.offsetY;
+            
+            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            
+            // Style the line
+            line.style.width = `${length}px`;
+            line.style.height = '3px';
+            line.style.left = `${x1}px`;
+            line.style.top = `${y1}px`;
+            line.style.transform = `rotate(${angle}deg)`;
             
             // Use Ukrainian flag colors
             const colors = ['#0057B7', '#FFD700'];
-            stitch.style.background = colors[Math.floor(Math.random() * colors.length)];
+            line.style.background = colors[Math.floor(Math.random() * colors.length)];
             
-            game.appendChild(stitch);
+            embroideryGame.appendChild(line);
+            
+            [lastX, lastY] = [e.offsetX, e.offsetY];
         });
+        
+        embroideryGame.addEventListener('mouseup', () => isDrawing = false);
+        embroideryGame.addEventListener('mouseleave', () => isDrawing = false);
 
         // Change art color in Met interactive game
         function changeArtColor(element) {
