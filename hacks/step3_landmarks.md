@@ -320,7 +320,7 @@ footer:
             overflow: hidden;
         }
 
-        /* IMPROVED The Met Animation */
+        /* The Met Animation */
         .met-animation {
             background: linear-gradient(180deg, #1a3a5f 0%, #2d4a7c 50%, #4a6fa5 100%);
             position: relative;
@@ -414,12 +414,20 @@ footer:
             background: linear-gradient(45deg, #32CD32, #90EE90);
         }
 
-        /* Ice Cream Museum Animation */
+        /* IMPROVED Ice Cream Museum Animation - Realistic Building */
         .icecream-animation {
-            background: linear-gradient(45deg, #FFB6C1, #FF69B4, #FF1493);
+            background: linear-gradient(180deg, #87CEEB 0%, #FFB6C1 30%, #FF69B4 70%, #FF1493 100%);
             position: relative;
             height: 100%;
             overflow: hidden;
+        }
+
+        .icecream-ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20%;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
         }
 
         .icecream-building {
@@ -427,25 +435,80 @@ footer:
             bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
-            width: 350px;
-            height: 200px;
+            width: 300px;
+            height: 180px;
             background: linear-gradient(45deg, #FF69B4, #FF1493);
-            border-radius: 20px 20px 0 0;
+            border-radius: 15px 15px 0 0;
             box-shadow: 0 0 30px rgba(255,105,180,0.6);
             border: 5px solid #FFD700;
         }
 
-        .icecream-roof {
+        .icecream-facade {
             position: absolute;
-            top: -50px;
-            left: -25px;
-            right: -25px;
-            height: 60px;
-            background: #FF69B4;
-            border-radius: 50% 50% 0 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 10px,
+                rgba(255,215,0,0.2) 10px,
+                rgba(255,215,0,0.2) 20px
+            );
+        }
+
+        .icecream-windows {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
+        }
+
+        .icecream-window {
+            width: 40px;
+            height: 50px;
+            background: #FFD700;
+            border: 2px solid #FF1493;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+        }
+
+        .icecream-pane {
+            width: 30px;
+            height: 15px;
+            background: #FF1493;
+            margin: 2px 0;
+        }
+
+        .icecream-door {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 80px;
+            background: #FFD700;
+            border: 3px solid #FF1493;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .icecream-sign {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            text-align: center;
+            white-space: nowrap;
         }
 
         .giant-icecream {
@@ -528,7 +591,17 @@ footer:
             background: linear-gradient(135deg, #FFD700, #FFA500);
         }
 
-        /* FIXED Empire State Animation - Full Building Visible */
+        /* NEW: Sprinkle Animation */
+        .sprinkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: fallSprinkle 5s linear infinite;
+            z-index: 5;
+        }
+
+        /* Empire State Animation */
         .empire-animation {
             background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 30%, #2d4a7c 60%, #4a6fa5 100%);
             position: relative;
@@ -607,12 +680,26 @@ footer:
             animation: twinkle 3s ease-in-out infinite;
         }
 
-        /* IMPROVED Ukrainian Museum Animation */
+        /* FIXED Ukrainian Museum Animation */
         .ukrainian-animation {
             background: linear-gradient(180deg, #0057B7 0%, #0057B7 50%, #FFD700 50%, #FFD700 100%);
             position: relative;
             height: 100%;
             overflow: hidden;
+        }
+
+        .ukrainian-title {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            text-align: center;
+            white-space: nowrap;
+            z-index: 10;
         }
 
         .ukrainian-building {
@@ -640,12 +727,6 @@ footer:
             height: 40px;
             background: #FFD700;
             clip-path: polygon(0 100%, 5% 0, 95% 0, 100% 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #0057B7;
-            font-weight: bold;
-            font-size: 1.2rem;
         }
 
         .ukrainian-windows {
@@ -741,7 +822,7 @@ footer:
             cursor: pointer;
         }
 
-        .sprinkle {
+        .sprinkle-game {
             position: absolute;
             width: 10px;
             height: 10px;
@@ -783,7 +864,7 @@ footer:
             animation: blinkLight 2s infinite alternate;
         }
 
-        /* FIXED Embroidery Game - Draws Lines and Curves */
+        /* Embroidery Game - Draws Lines and Curves */
         .embroidery-game {
             width: 100%;
             height: 150px;
@@ -1005,15 +1086,22 @@ footer:
     <!-- Ice Cream Museum Section -->
     <section id="icecream-section" class="section">
         <div class="animation-container">
-            <div class="icecream-animation">
+            <div class="icecream-animation" id="icecream-animation">
+                <div class="icecream-ground"></div>
                 <div class="icecream-building">
-                    <div class="icecream-roof">
-                        <div class="giant-icecream">
-                            <div class="giant-scoop"></div>
-                            <div class="giant-cherry"></div>
-                            <div class="giant-cone"></div>
+                    <div class="icecream-sign">MUSEUM OF ICE CREAM</div>
+                    <div class="icecream-facade"></div>
+                    <div class="icecream-windows">
+                        <div class="icecream-window">
+                            <div class="icecream-pane"></div>
+                            <div class="icecream-pane"></div>
+                        </div>
+                        <div class="icecream-window">
+                            <div class="icecream-pane"></div>
+                            <div class="icecream-pane"></div>
                         </div>
                     </div>
+                    <div class="icecream-door"></div>
                 </div>
                 <div class="floating-cones">
                     <div class="floating-cone">
@@ -1025,6 +1113,11 @@ footer:
                     <div class="floating-cone">
                         <div class="floating-scoop"></div>
                     </div>
+                </div>
+                <div class="giant-icecream">
+                    <div class="giant-scoop"></div>
+                    <div class="giant-cherry"></div>
+                    <div class="giant-cone"></div>
                 </div>
             </div>
         </div>
@@ -1175,8 +1268,9 @@ footer:
         <div class="animation-container">
             <div class="ukrainian-animation">
                 <div class="flag-pattern"></div>
+                <div class="ukrainian-title">Ukrainian Museum</div>
                 <div class="ukrainian-building">
-                    <div class="ukrainian-roof">Ukrainian Museum</div>
+                    <div class="ukrainian-roof"></div>
                     <div class="ukrainian-windows">
                         <div class="ukrainian-window">
                             <div class="window-pane"></div>
@@ -1295,6 +1389,24 @@ footer:
             }
         }
 
+        // Create sprinkles for Ice Cream Museum animation
+        function createSprinkles() {
+            const icecreamAnimation = document.getElementById('icecream-animation');
+            const sprinkleCount = 40;
+            const colors = ['#FF69B4', '#FFD700', '#00CED1', '#98FB98', '#DDA0DD', '#FF6347', '#87CEEB', '#FFA500'];
+            
+            for (let i = 0; i < sprinkleCount; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.className = 'sprinkle';
+                sprinkle.style.left = Math.random() * 100 + '%';
+                sprinkle.style.top = (Math.random() * -30) + '%';
+                sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                sprinkle.style.animationDelay = Math.random() * 5 + 's';
+                sprinkle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                icecreamAnimation.appendChild(sprinkle);
+            }
+        }
+
         // Create building lights for observation game
         function createBuildingLights() {
             const gameContainer = document.getElementById('observation-game');
@@ -1329,7 +1441,7 @@ footer:
             const colors = ['#FF69B4', '#FFD700', '#00CED1', '#98FB98', '#DDA0DD', '#FF6347', '#87CEEB', '#FFA500'];
             
             const sprinkle = document.createElement('div');
-            sprinkle.className = 'sprinkle';
+            sprinkle.className = 'sprinkle-game';
             sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
             sprinkle.style.left = event.offsetX + 'px';
             sprinkle.style.top = event.offsetY + 'px';
@@ -1443,6 +1555,7 @@ footer:
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             createBuildingSections();
+            createSprinkles();
             createBuildingLights();
             
             window.addEventListener('scroll', updateProgressIndicator);
