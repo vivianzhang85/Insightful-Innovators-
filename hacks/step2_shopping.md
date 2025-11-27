@@ -29,7 +29,7 @@ footer:
 
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #1a2332 0%, #2c3e50 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -65,18 +65,18 @@ footer:
         }
 
         .wardrobe-section {
-            background: white;
+            background: #1a1a1a;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         .wardrobe-section.womens {
-            border-top: 5px solid #f5576c;
+            border-top: 5px solid #ffd700;
         }
 
         .wardrobe-section.mens {
-            border-top: 5px solid #4169e1;
+            border-top: 5px solid #ffd700;
         }
 
         .section-title {
@@ -86,11 +86,11 @@ footer:
         }
 
         .section-title.womens {
-            color: #f5576c;
+            color: #ffd700;
         }
 
         .section-title.mens {
-            color: #4169e1;
+            color: #ffd700;
         }
 
         .outfit-grid {
@@ -101,7 +101,7 @@ footer:
         }
 
         .clothing-item {
-            background: #f9f9f9;
+            background: #2a2a2a;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
@@ -115,7 +115,7 @@ footer:
 
         .item-category {
             font-size: 0.85em;
-            color: #666;
+            color: #ffd700;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
@@ -124,7 +124,7 @@ footer:
         .item-display {
             width: 100%;
             height: 200px;
-            background: white;
+            background: #0a0a0a;
             border-radius: 8px;
             margin-bottom: 12px;
             display: flex;
@@ -141,7 +141,7 @@ footer:
 
         .item-name {
             font-size: 1em;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 12px;
             font-weight: 600;
         }
@@ -163,19 +163,21 @@ footer:
         }
 
         .nav-btn.womens {
-            background: #f5576c;
+            background: #ffd700;
+            color: #1a2332;
         }
 
         .nav-btn.womens:hover {
-            background: #f093fb;
+            background: #ffed4e;
         }
 
         .nav-btn.mens {
-            background: #4169e1;
+            background: #ffd700;
+            color: #1a2332;
         }
 
         .nav-btn.mens:hover {
-            background: #1e90ff;
+            background: #ffed4e;
         }
 
         .action-buttons {
@@ -198,11 +200,13 @@ footer:
         }
 
         .btn.womens {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a2332;
         }
 
         .btn.mens {
-            background: linear-gradient(135deg, #4169e1 0%, #1e90ff 100%);
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a2332;
         }
 
         .btn:hover {
@@ -219,11 +223,11 @@ footer:
         }
 
         .status-message.womens {
-            color: #f5576c;
+            color: #ffd700;
         }
 
         .status-message.mens {
-            color: #4169e1;
+            color: #ffd700;
         }
 
         @media (max-width: 1024px) {
