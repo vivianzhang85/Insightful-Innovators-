@@ -16,10 +16,12 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Configure Bundler to install gems locally
+# Ensure Bundler is installed for the active Ruby and set local path
+gem install bundler || true
 bundle config set --local path './.bundle'
 
-# Install Ruby gems
-bundle install
+# Install Ruby gems using the Bundler that belongs to the active Ruby
+bundle install --jobs=4 || true
 
 # Check if Git username/email are already set
 GIT_NAME=$(git config --global user.name)

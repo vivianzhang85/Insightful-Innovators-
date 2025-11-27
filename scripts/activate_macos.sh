@@ -16,23 +16,32 @@ add_to_bashrc() {
 add_to_bashrc 'alias code="code --no-sandbox"'
 
 # 1. Brew Packages (Python & Ruby)
+# Prefer using rbenv-managed Ruby if available; otherwise install Homebrew Ruby
 brew update
-brew install python ruby
+brew install python
 
-# 2. Ruby Gems
-# Add Homebrew Ruby to PATH (before system Ruby)
-RUBY_PATH=$(brew --prefix ruby)/bin
-add_to_bashrc "export PATH=\"$RUBY_PATH:\$PATH\""
+# If rbenv is present, prefer it; otherwise add Homebrew Ruby to PATH
+if command -v rbenv >/dev/null 2>&1; then
+    echo "rbenv detected — will use rbenv-managed Ruby if configured"
+    add_to_bashrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    add_to_bashrc 'eval "$(rbenv init - zsh)"'
+else
+    brew install ruby || true
+    RUBY_PATH=$(brew --prefix ruby)/bin
+    add_to_bashrc "export PATH=\"$RUBY_PATH:\$PATH\""
+fi
 
-# Set GEM_HOME to user-accessible location
-GEM_HOME="$HOME/.local/gems"
-mkdir -p "$GEM_HOME"
-add_to_bashrc "export GEM_HOME=\"$GEM_HOME\""
-add_to_bashrc "export PATH=\"$GEM_HOME/bin:\$PATH\""
+# Set GEM_HOME to user-accessible location only when not using rbenv
+if ! command -v rbenv >/dev/null 2>&1; then
+    GEM_HOME="$HOME/.local/gems"
+    mkdir -p "$GEM_HOME"
+    add_to_bashrc "export GEM_HOME=\"$GEM_HOME\""
+    add_to_bashrc "export PATH=\"$GEM_HOME/bin:\$PATH\""
+fi
 
-# Install gems (no sudo needed now)
-gem install bundler jekyll benchmark openssl zlib racc bigdecimal drb unicode-display_width \
-            logger etc fileutils ipaddr mutex_m ostruct rss strscan stringio time
+# Install gems (will install into active Ruby's gemset — rbenv or system)
+echo "Installing Bundler and Jekyll for the active Ruby environment"
+gem install bundler jekyll || true
 
 # 3. Python3 is Python
 mkdir -p "$HOME/.local/bin"
