@@ -19,7 +19,7 @@ footer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Closet</title>
+    <title>Columbus Circle Digital Closet</title>
     <style>
         * {
             margin: 0;
@@ -29,7 +29,7 @@ footer:
 
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -67,7 +67,7 @@ footer:
 
         .outfit-title {
             font-size: 2em;
-            color: #667eea;
+            color: #f5576c;
             margin-bottom: 30px;
             text-align: center;
         }
@@ -80,7 +80,7 @@ footer:
         }
 
         .clothing-item {
-            background: #f8f9fa;
+            background: #fff5f7;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
@@ -113,6 +113,12 @@ footer:
             position: relative;
         }
 
+        .item-display img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
         .item-name {
             font-size: 1.1em;
             color: #333;
@@ -127,7 +133,7 @@ footer:
         }
 
         .nav-btn {
-            background: #667eea;
+            background: #f5576c;
             color: white;
             border: none;
             padding: 8px 20px;
@@ -138,7 +144,7 @@ footer:
         }
 
         .nav-btn:hover {
-            background: #764ba2;
+            background: #f093fb;
         }
 
         .action-buttons {
@@ -149,7 +155,7 @@ footer:
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -169,7 +175,7 @@ footer:
         .status-message {
             text-align: center;
             font-size: 1.5em;
-            color: #667eea;
+            color: #f5576c;
             margin-top: 20px;
             font-style: italic;
             min-height: 40px;
@@ -189,18 +195,18 @@ footer:
 <body>
     <div class="container">
         <header>
-            <h1>Digital Closet</h1>
-            <p class="subtitle">As if! Let's find your perfect outfit.</p>
+            <h1>Welcome to Columbus Circle!</h1>
+            <p class="subtitle">Luxury shopping in the heart of Manhattan</p>
         </header>
 
         <div class="outfit-display">
-            <h2 class="outfit-title">Your Current Look</h2>
+            <h2 class="outfit-title">Your Designer Look</h2>
             
             <div class="outfit-grid">
                 <div class="clothing-item">
                     <div class="item-category">Top</div>
                     <div class="item-display" id="top-display"></div>
-                    <div class="item-name" id="top-name">Pink Blouse</div>
+                    <div class="item-name" id="top-name">Silk Blouse</div>
                     <div class="nav-buttons">
                         <button class="nav-btn" onclick="prevItem('top')">← Prev</button>
                         <button class="nav-btn" onclick="nextItem('top')">Next →</button>
@@ -210,7 +216,7 @@ footer:
                 <div class="clothing-item">
                     <div class="item-category">Bottom</div>
                     <div class="item-display" id="bottom-display"></div>
-                    <div class="item-name" id="bottom-name">Navy Skirt</div>
+                    <div class="item-name" id="bottom-name">Pencil Skirt</div>
                     <div class="nav-buttons">
                         <button class="nav-btn" onclick="prevItem('bottom')">← Prev</button>
                         <button class="nav-btn" onclick="nextItem('bottom')">Next →</button>
@@ -220,7 +226,7 @@ footer:
                 <div class="clothing-item">
                     <div class="item-category">Shoes</div>
                     <div class="item-display" id="shoes-display"></div>
-                    <div class="item-name" id="shoes-name">Black Heels</div>
+                    <div class="item-name" id="shoes-name">Designer Heels</div>
                     <div class="nav-buttons">
                         <button class="nav-btn" onclick="prevItem('shoes')">← Prev</button>
                         <button class="nav-btn" onclick="nextItem('shoes')">Next →</button>
@@ -233,32 +239,37 @@ footer:
                 <button class="btn" onclick="saveOutfit()">💾 Save Outfit</button>
             </div>
 
-            <div class="status-message" id="status">Whatever!</div>
+            <div class="status-message" id="status">Shop luxury!</div>
         </div>
     </div>
 
     <script>
+        // ========================================
+        // COLUMBUS CIRCLE - LUXURY COLLECTION
+        // ADD YOUR IMAGE URLS HERE!
+        // ========================================
+        
         const wardrobe = {
             top: [
-                { name: 'Pink Blouse', color: '#FF69B4' },
-                { name: 'White Turtleneck', color: '#FFFFFF' },
-                { name: 'Lavender Sweater', color: '#DDA0DD' },
-                { name: 'Purple Cardigan', color: '#BA55D3' },
-                { name: 'Hot Pink Tank', color: '#FF1493' }
+                { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/8B4513?text=Silk+Blouse' },
+                { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
+                { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
+                { name: 'Satin Top', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Satin+Top' },
+                { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
             ],
             bottom: [
-                { name: 'Navy Skirt', color: '#000080' },
-                { name: 'Blue Jeans', color: '#4169E1' },
-                { name: 'Light Wash Denim', color: '#1E90FF' },
-                { name: 'Sky Blue Pants', color: '#87CEEB' },
-                { name: 'Black Mini Skirt', color: '#000000' }
+                { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Pencil+Skirt' },
+                { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Designer+Trousers' },
+                { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=A-Line+Skirt' },
+                { name: 'Tailored Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Tailored+Pants' },
+                { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=Midi+Skirt' }
             ],
             shoes: [
-                { name: 'Black Heels', color: '#000000' },
-                { name: 'Brown Boots', color: '#8B4513' },
-                { name: 'Silver Pumps', color: '#C0C0C0' },
-                { name: 'Gold Sandals', color: '#FFD700' },
-                { name: 'Red Sneakers', color: '#FF0000' }
+                { name: 'Designer Heels', image: 'https://via.placeholder.com/300x200/B22222/FFFFFF?text=Designer+Heels' },
+                { name: 'Patent Pumps', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Patent+Pumps' },
+                { name: 'Leather Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Leather+Boots' },
+                { name: 'Stilettos', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Stilettos' },
+                { name: 'Ankle Boots', image: 'https://via.placeholder.com/300x200/696969/FFFFFF?text=Ankle+Boots' }
             ]
         };
 
@@ -269,79 +280,28 @@ footer:
         };
 
         const phrases = [
-            "As if!",
-            "Whatever!",
-            "Totally!",
-            "Way cute!",
-            "Ugh, as if!",
-            "That's so fetch!",
-            "You look marvelous!",
-            "Fabulous choice!"
+            "Absolutely fabulous!",
+            "Très chic!",
+            "Designer perfection!",
+            "Luxury looks!",
+            "High fashion!",
+            "Stunning choice!",
+            "Pure elegance!",
+            "Simply divine!"
         ];
 
-        function drawClothing(elementId, color, type) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 200;
-            canvas.height = 250;
-            const ctx = canvas.getContext('2d');
-
-            ctx.fillStyle = color;
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 3;
-
-            if (type === 'top') {
-                // Draw a simple shirt/blouse
-                ctx.beginPath();
-                ctx.moveTo(50, 40);
-                ctx.lineTo(30, 80);
-                ctx.lineTo(30, 150);
-                ctx.lineTo(170, 150);
-                ctx.lineTo(170, 80);
-                ctx.lineTo(150, 40);
-                ctx.lineTo(100, 60);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-            } else if (type === 'bottom') {
-                // Draw pants/skirt
-                ctx.beginPath();
-                ctx.moveTo(50, 50);
-                ctx.lineTo(40, 220);
-                ctx.lineTo(80, 220);
-                ctx.lineTo(90, 50);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(110, 50);
-                ctx.lineTo(120, 220);
-                ctx.lineTo(160, 220);
-                ctx.lineTo(150, 50);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-            } else {
-                // Draw shoes
-                ctx.beginPath();
-                ctx.ellipse(100, 125, 70, 40, 0, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.stroke();
-            }
-
-            const element = document.getElementById(elementId);
-            element.innerHTML = '';
-            element.appendChild(canvas);
-        }
-
         function updateDisplay() {
-            drawClothing('top-display', wardrobe.top[currentSelection.top].color, 'top');
-            drawClothing('bottom-display', wardrobe.bottom[currentSelection.bottom].color, 'bottom');
-            drawClothing('shoes-display', wardrobe.shoes[currentSelection.shoes].color, 'shoes');
+            const topItem = wardrobe.top[currentSelection.top];
+            const bottomItem = wardrobe.bottom[currentSelection.bottom];
+            const shoesItem = wardrobe.shoes[currentSelection.shoes];
 
-            document.getElementById('top-name').textContent = wardrobe.top[currentSelection.top].name;
-            document.getElementById('bottom-name').textContent = wardrobe.bottom[currentSelection.bottom].name;
-            document.getElementById('shoes-name').textContent = wardrobe.shoes[currentSelection.shoes].name;
+            document.getElementById('top-display').innerHTML = `<img src="${topItem.image}" alt="${topItem.name}">`;
+            document.getElementById('bottom-display').innerHTML = `<img src="${bottomItem.image}" alt="${bottomItem.name}">`;
+            document.getElementById('shoes-display').innerHTML = `<img src="${shoesItem.image}" alt="${shoesItem.name}">`;
+
+            document.getElementById('top-name').textContent = topItem.name;
+            document.getElementById('bottom-name').textContent = bottomItem.name;
+            document.getElementById('shoes-name').textContent = shoesItem.name;
 
             document.getElementById('status').textContent = phrases[Math.floor(Math.random() * phrases.length)];
         }
@@ -361,7 +321,7 @@ footer:
             currentSelection.bottom = Math.floor(Math.random() * wardrobe.bottom.length);
             currentSelection.shoes = Math.floor(Math.random() * wardrobe.shoes.length);
             updateDisplay();
-            document.getElementById('status').textContent = "✨ Surprise! Looking fabulous! ✨";
+            document.getElementById('status').textContent = "✨ Surprise! Pure luxury! ✨";
         }
 
         function saveOutfit() {
@@ -371,10 +331,9 @@ footer:
                 shoes: wardrobe.shoes[currentSelection.shoes].name
             };
             console.log('Saved outfit:', outfit);
-            document.getElementById('status').textContent = "💾 Outfit saved! You're so organized!";
+            document.getElementById('status').textContent = "💾 Outfit saved! Impeccable taste!";
         }
 
-        // Initialize display
         updateDisplay();
     </script>
 </body>
