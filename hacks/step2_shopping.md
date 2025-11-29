@@ -478,7 +478,7 @@ footer:
 
         // Initialize both displays
         updateDisplay('women');
-        updateDisplay('men');
+        updateDisplay('men ');
     </script>
 </body>
 </html>
