@@ -243,25 +243,25 @@ footer:
             },
             "The Lion King": {
                 "description": "Disney's award-winning adaptation of the animated classic",
-                "video": "https://www.youtube.com/embed/4CbLXeGSDxg",
+                "video": "https://www.youtube.com/embed/pluUQ6qXGEQ",
                 "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
                 "year": "1997"
             },
             "Wicked": {
                 "description": "The untold story of the Witches of Oz",
-                "video": "https://www.youtube.com/embed/WP9NPwwU128",
+                "video": "https://www.youtube.com/embed/Svt0UytcAgc",
                 "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
                 "year": "2003"
             },
             "The Phantom of the Opera": {
                 "description": "A haunting tale of obsession beneath the Paris Opera House",
-                "video": "https://www.youtube.com/embed/h8IuFl3sMhk",
+                "video": "https://www.youtube.com/embed/8XQ_Ewetygs",
                 "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
                 "year": "1988"
             },
             "Dear Evan Hansen": {
                 "description": "A letter that was never meant to be seen sparks a movement",
-                "video": "https://www.youtube.com/embed/pTVlHSArk8w",
+                "video": "https://www.youtube.com/embed/g_c_Jd-hP-s",
                 "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
                 "year": "2016"
             }
