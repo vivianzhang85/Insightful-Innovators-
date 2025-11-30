@@ -361,21 +361,18 @@ footer:
                     { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/8B4513?text=Silk+Blouse' },
                     { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
                     { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
-                    { name: 'Satin Top', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Satin+Top' },
                     { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
                 ],
                 bottom: [
                     { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Pencil+Skirt' },
                     { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Designer+Trousers' },
                     { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=A-Line+Skirt' },
-                    { name: 'Tailored Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Tailored+Pants' },
                     { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=Midi+Skirt' }
                 ],
                 shoes: [
                     { name: 'Designer Heels', image: 'https://via.placeholder.com/300x200/B22222/FFFFFF?text=Designer+Heels' },
                     { name: 'Patent Pumps', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Patent+Pumps' },
                     { name: 'Leather Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Leather+Boots' },
-                    { name: 'Stilettos', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Stilettos' },
                     { name: 'Ankle Boots', image: 'https://via.placeholder.com/300x200/696969/FFFFFF?text=Ankle+Boots' }
                 ]
             },
@@ -384,21 +381,18 @@ footer:
                     { name: 'Dress Shirt', image: 'https://via.placeholder.com/300x400/E0FFFF/000080?text=Dress+Shirt' },
                     { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo+Shirt' },
                     { name: 'Suit Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Suit+Jacket' },
-                    { name: 'Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Sweater' },
                     { name: 'Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Blazer' }
                 ],
                 bottom: [
                     { name: 'Tailored Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Tailored+Trousers' },
                     { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Dress+Pants' },
                     { name: 'Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Chinos' },
-                    { name: 'Suit Pants', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Suit+Pants' },
                     { name: 'Slacks', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Slacks' }
                 ],
                 shoes: [
                     { name: 'Oxford Shoes', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Oxford+Shoes' },
                     { name: 'Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Loafers' },
                     { name: 'Derby Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Derby+Shoes' },
-                    { name: 'Dress Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Dress+Boots' },
                     { name: 'Brogues', image: 'https://via.placeholder.com/300x200/8B7355/FFFFFF?text=Brogues' }
                 ]
             }
