@@ -1,13 +1,13 @@
 ---
 layout: post 
-title: UI Roadtrip
+title: Day in NYC
 tailwind: True
 description: >
-  Code on the Road: An Interactive Adventure Across Manhattan
+  An Interactive Adventure Across Manhattan powered by flask
 author: Insightful Innovators
 permalink: /nyc/home/
 lxdData:
-  Title: "Code on the Road: A UI Adventure Across the The West Coast"
+  Title: "Day in NYC"
   Description: "Breakfast, shopping, landmarks and a broadway show in New York City!"
   Topics:
     - Title: "Breakfast"
