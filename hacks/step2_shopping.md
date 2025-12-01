@@ -506,7 +506,7 @@ footer:
         const wardrobes = {
             women: {
                 top: [
-                    { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/8B4513?text=Silk+Blouse' },
+                    { name: 'Black Top', image: '/images/61JLmUnNRiL._AC_UL640_FMwebp_QL65_-removebg-preview.png' },
                     { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
                     { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
                     { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
