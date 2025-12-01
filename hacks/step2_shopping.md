@@ -14,7 +14,6 @@ footer:
     home: /nyc/home/
     next: /new-york/landmarks/
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -240,12 +239,129 @@ footer:
             }
         }
 
+        .post-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: #0a0a0a;
+            border-radius: 15px;
+            border-top: 3px solid #ffd700;
+        }
+
+        .post-section h2 {
+            text-align: center;
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .post-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .outfit-preview {
+            background: #1a1a1a;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .outfit-preview h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .preview-item {
+            padding: 15px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .preview-item strong {
+            color: #ffd700;
+        }
+
+        .preview-item p {
+            color: #ccc;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        .caption-section {
+            margin-bottom: 20px;
+        }
+
+        .caption-section label {
+            display: block;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .caption-section textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ffd700;
+            background: #1a1a1a;
+            color: white;
+            min-height: 80px;
+            font-family: Georgia, serif;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .caption-section textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .post-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a2332;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .post-status {
+            text-align: center;
+            margin-top: 15px;
+            min-height: 25px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
             }
 
             .wardrobe-section {
+                padding: 20px;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .post-section {
                 padding: 20px;
             }
         }
@@ -347,6 +463,38 @@ footer:
                 <div class="status-message mens" id="men-status">Shop luxury!</div>
             </div>
         </div>
+
+        <!-- post section -->
+        <div class="post-section">
+            <h2>✨ Post Your Look ✨</h2>
+            
+            <div class="post-container">
+                <!-- Display current selections -->
+                <div class="outfit-preview">
+                    <h3>Your Selected Outfits:</h3>
+                    
+                    <div class="preview-grid">
+                        <div class="preview-item">
+                            <strong>Her Look:</strong>
+                            <p id="preview-women"></p>
+                        </div>
+                        <div class="preview-item">
+                            <strong>His Look:</strong>
+                            <p id="preview-men"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="caption-section">
+                    <label for="caption">Add a Caption (optional):</label>
+                    <textarea id="caption" placeholder="What do you think about this look?"></textarea>
+                </div>
+
+                <button class="post-button" onclick="postOutfit()">📸 Post Your Outfit</button>
+
+                <div class="post-status" id="post-status"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -443,11 +591,13 @@ footer:
         function nextItem(gender, category) {
             currentSelection[gender][category] = (currentSelection[gender][category] + 1) % wardrobes[gender][category].length;
             updateDisplay(gender);
+            updateOutfitPreview();
         }
 
         function prevItem(gender, category) {
             currentSelection[gender][category] = (currentSelection[gender][category] - 1 + wardrobes[gender][category].length) % wardrobes[gender][category].length;
             updateDisplay(gender);
+            updateOutfitPreview();
         }
 
         function randomOutfit(gender) {
@@ -455,6 +605,7 @@ footer:
             currentSelection[gender].bottom = Math.floor(Math.random() * wardrobes[gender].bottom.length);
             currentSelection[gender].shoes = Math.floor(Math.random() * wardrobes[gender].shoes.length);
             updateDisplay(gender);
+            updateOutfitPreview();
             const prefix = gender === 'women' ? 'women' : 'men';
             document.getElementById(`${prefix}-status`).textContent = "✨ Surprise! Pure luxury! ✨";
         }
@@ -469,10 +620,68 @@ footer:
             const prefix = gender === 'women' ? 'women' : 'men';
             document.getElementById(`${prefix}-status`).textContent = "💾 Outfit saved! Impeccable taste!";
         }
+// post section
+
+        function updateOutfitPreview() {
+            const womenOutfit = `${wardrobes.women.top[currentSelection.women.top].name} + ${wardrobes.women.bottom[currentSelection.women.bottom].name} + ${wardrobes.women.shoes[currentSelection.women.shoes].name}`;
+            const menOutfit = `${wardrobes.men.top[currentSelection.men.top].name} + ${wardrobes.men.bottom[currentSelection.men.bottom].name} + ${wardrobes.men.shoes[currentSelection.men.shoes].name}`;
+            
+            document.getElementById('preview-women').textContent = womenOutfit;
+            document.getElementById('preview-men').textContent = menOutfit;
+        }
+
+        function postOutfit() {
+            const statusDiv = document.getElementById('post-status');
+            
+            // Validate user is logged in (check if Flask session exists via data attribute)
+            const userId = document.body.getAttribute('data-user-id');
+            if (!userId) {
+                statusDiv.textContent = '❌ Please log in to post your outfit!';
+                statusDiv.style.color = '#ff6b6b';
+                return;
+            }
+            
+            const outfitData = {
+                women_top: wardrobes.women.top[currentSelection.women.top].name,
+                women_bottom: wardrobes.women.bottom[currentSelection.women.bottom].name,
+                women_shoes: wardrobes.women.shoes[currentSelection.women.shoes].name,
+                men_top: wardrobes.men.top[currentSelection.men.top].name,
+                men_bottom: wardrobes.men.bottom[currentSelection.men.bottom].name,
+                men_shoes: wardrobes.men.shoes[currentSelection.men.shoes].name,
+                caption: document.getElementById('caption').value || ''
+            };
+            
+            statusDiv.textContent = '⏳ Posting...';
+            
+            fetch('/api/post-outfit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(outfitData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    statusDiv.textContent = '✅ Posted!';
+                    statusDiv.style.color = '#51cf66';
+                    document.getElementById('caption').value = ''; 
+                } else {
+                    statusDiv.textContent = `❌ Error: ${data.error}`;
+                    statusDiv.style.color = '#ff6b6b';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                statusDiv.textContent = '❌ Failed to post. Please try again.';
+                statusDiv.style.color = '#ff6b6b';
+            });
+        }
 
         // Initialize both displays
         updateDisplay('women');
         updateDisplay('men ');
+        updateOutfitPreview();
     </script>
 </body>
 </html>
