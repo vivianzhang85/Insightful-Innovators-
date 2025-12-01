@@ -506,13 +506,13 @@ footer:
         const wardrobes = {
             women: {
                 top: [
-                    { name: 'Black Top', image: 'https://m.media-amazon.com/images/I/61JLmUnNRiL._AC_UL640_FMwebp_QL65_.jpg' },
+                    { name: 'White Sweater', image: 'https://m.media-amazon.com/images/I/61JLmUnNRiL._AC_UL640_FMwebp_QL65_.jpg' },
                     { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
                     { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
                     { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
                 ],
                 bottom: [
-                    { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Pencil+Skirt' },
+                    { name: 'Pencil Skirt', image: 'https://image.hm.com/assets/hm/94/a8/94a886e2c8a0b80830a56678e32760996492fea8.jpg?imwidth=564' },
                     { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Designer+Trousers' },
                     { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=A-Line+Skirt' },
                     { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=Midi+Skirt' }
