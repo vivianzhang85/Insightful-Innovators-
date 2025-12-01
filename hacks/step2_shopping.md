@@ -506,7 +506,7 @@ footer:
         const wardrobes = {
             women: {
                 top: [
-                    { name: 'Black Top', image: '/images/61JLmUnNRiL._AC_UL640_FMwebp_QL65_-removebg-preview.png' },
+                    { name: 'Black Top', image: 'https://www.amazon.com/sspa/click?ie=UTF8&spc=MTo3ODQ2NTk0Mjk1NzQzNTMzOjE3NjQ1NTQyNjE6c3BfYXRmOjMwMDM5NjQ4NTI0NjQwMjo6MDo6&url=%2FMilumia-Ruched-Strapless-Flared-Bandeau%2Fdp%2FB0CPY9R5ZL%2Fref%3Dsr_1_3_sspa%3Fcrid%3D3KHE7XU4WVLD9%26dib%3DeyJ2IjoiMSJ9.PANwyK6olK-cJ874-81sqLIvkxOwVv6EMJKz7UBo8-1bERBBgs1AlthfXpn6LDwho0kHCPbt2s0v-uPvsG4vS2Y0XB2-at-fBC_Tl_RlqD10_WuNwhCxgACyzkVW4WTz8FX9c1vLFBCfz4RI12jSG4lU1F1mW-IvSe6PIm__4-kQDHqBht2OJtiH8-1eASAgppcLnd7IoTH1KSe4RA6RFMBnRixH7pIhAYTS8OYSWUaF3gTLqcSGWY2VSrlniQwA8tFOazY0vlKejPxaK9_B1QOSCUxVm5qRhlAma5_qIuk.1wp29i-dZA3zByyEqKGcV8iAwafBosMwYoMGZ6RKDmE%26dib_tag%3Dse%26keywords%3Dcute%2Bblack%2Btube%2Btop%26qid%3D1764554261%26sprefix%3Dcute%2Bblack%2Btube%2Btop%252Caps%252C164%26sr%3D8-3-spons%26sp_csd%3Dd2lkZ2V0TmFtZT1zcF9hdGY%26psc%3D1' },
                     { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
                     { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
                     { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
