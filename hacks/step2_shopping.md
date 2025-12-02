@@ -18,9 +18,8 @@ footer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ shopping_area.name }} - His & Hers Digital Closet</title>
+    <title>{{ shopping_area.name }} - Digital Closet</title>
     <style>
-        /* Your existing CSS styles here */
         * {
             margin: 0;
             padding: 0;
@@ -55,6 +54,54 @@ footer:
             font-size: 1.2em;
             font-style: italic;
             opacity: 0.95;
+        }
+
+        /* Gender Selection Screen */
+        .gender-selection {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            gap: 40px;
+        }
+
+        .gender-card {
+            background: #1a1a1a;
+            padding: 50px 40px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            min-width: 250px;
+        }
+
+        .gender-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
+        }
+
+        .gender-card h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .gender-card p {
+            color: #ccc;
+            font-size: 1.1em;
+        }
+
+        .gender-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        /* Hide shopping section initially */
+        .shopping-content {
+            display: none;
         }
 
         .area-info {
@@ -93,12 +140,22 @@ footer:
             border: 1px solid #ffd700;
         }
 
-        /* Rest of your existing CSS styles */
-        .wardrobes-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #ffd700;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
         }
 
         .wardrobe-section {
@@ -106,27 +163,15 @@ footer:
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .wardrobe-section.womens {
             border-top: 5px solid #ffd700;
-        }
-
-        .wardrobe-section.mens {
-            border-top: 5px solid #ffd700;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .section-title {
             font-size: 1.8em;
             margin-bottom: 25px;
             text-align: center;
-        }
-
-        .section-title.womens {
-            color: #ffd700;
-        }
-
-        .section-title.mens {
             color: #ffd700;
         }
 
@@ -190,30 +235,17 @@ footer:
         }
 
         .nav-btn {
+            background: #ffd700;
+            color: #1a2332;
             border: none;
             padding: 6px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.85em;
             transition: all 0.3s ease;
-            color: white;
         }
 
-        .nav-btn.womens {
-            background: #ffd700;
-            color: #1a2332;
-        }
-
-        .nav-btn.womens:hover {
-            background: #ffed4e;
-        }
-
-        .nav-btn.mens {
-            background: #ffd700;
-            color: #1a2332;
-        }
-
-        .nav-btn.mens:hover {
+        .nav-btn:hover {
             background: #ffed4e;
         }
 
@@ -225,7 +257,8 @@ footer:
         }
 
         .btn {
-            color: white;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a2332;
             border: none;
             padding: 12px 25px;
             border-radius: 20px;
@@ -234,16 +267,6 @@ footer:
             font-weight: 600;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .btn.womens {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a2332;
-        }
-
-        .btn.mens {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a2332;
         }
 
         .btn:hover {
@@ -257,24 +280,7 @@ footer:
             margin-top: 15px;
             font-style: italic;
             min-height: 30px;
-        }
-
-        .status-message.womens {
             color: #ffd700;
-        }
-
-        .status-message.mens {
-            color: #ffd700;
-        }
-
-        @media (max-width: 1024px) {
-            .wardrobes-container {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 2.2em;
-            }
         }
 
         .post-section {
@@ -283,6 +289,9 @@ footer:
             background: #0a0a0a;
             border-radius: 15px;
             border-top: 3px solid #ffd700;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .post-section h2 {
@@ -290,11 +299,6 @@ footer:
             color: #ffd700;
             font-size: 2em;
             margin-bottom: 30px;
-        }
-
-        .post-container {
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .outfit-preview {
@@ -307,12 +311,6 @@ footer:
         .outfit-preview h3 {
             color: #ffd700;
             margin-bottom: 15px;
-        }
-
-        .preview-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
         }
 
         .preview-item {
@@ -391,12 +389,18 @@ footer:
                 font-size: 1.8em;
             }
 
-            .wardrobe-section {
-                padding: 20px;
+            .gender-selection {
+                flex-direction: column;
+                gap: 20px;
             }
 
-            .preview-grid {
-                grid-template-columns: 1fr;
+            .gender-card {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .wardrobe-section {
+                padding: 20px;
             }
 
             .post-section {
@@ -412,123 +416,87 @@ footer:
             <p class="subtitle">{{ shopping_area.description }}</p>
         </header>
 
-        <div class="area-info">
-            <h2>📍 Shopping in {{ shopping_area.area }}</h2>
-            <p>After your breakfast, explore these luxury stores:</p>
-            <div class="stores-list">
-                {% for store in shopping_area.stores %}
-                <span class="store-badge">{{ store }}</span>
-                {% endfor %}
+        <!-- Gender Selection Screen -->
+        <div id="gender-selection" class="gender-selection">
+            <div class="gender-card" onclick="selectGender('women')">
+                <div class="gender-icon">👗</div>
+                <h2>Her Look</h2>
+                <p>Shop women's designer fashion</p>
+            </div>
+
+            <div class="gender-card" onclick="selectGender('men')">
+                <div class="gender-icon">👔</div>
+                <h2>His Look</h2>
+                <p>Shop men's designer fashion</p>
             </div>
         </div>
 
-        <div class="wardrobes-container">
-            <!-- WOMEN'S SECTION -->
-            <div class="wardrobe-section womens">
-                <h2 class="section-title womens">Her Designer Look</h2>
+        <!-- Shopping Content (Hidden Initially) -->
+        <div id="shopping-content" class="shopping-content">
+            <button class="back-button" onclick="resetSelection()">← Change Selection</button>
+
+            <div class="area-info">
+                <h2>📍 Shopping in {{ shopping_area.area }}</h2>
+                <p>After your breakfast, explore these luxury stores:</p>
+                <div class="stores-list">
+                    {% for store in shopping_area.stores %}
+                    <span class="store-badge">{{ store }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="wardrobe-section">
+                <h2 class="section-title" id="section-title">Designer Look</h2>
                 
                 <div class="outfit-grid">
                     <div class="clothing-item">
                         <div class="item-category">Top</div>
-                        <div class="item-display" id="women-top-display"></div>
-                        <div class="item-name" id="women-top-name">Silk Blouse</div>
+                        <div class="item-display" id="top-display"></div>
+                        <div class="item-name" id="top-name">Top</div>
                         <div class="nav-buttons">
-                            <button class="nav-btn womens" onclick="prevItem('women', 'top')">← Prev</button>
-                            <button class="nav-btn womens" onclick="nextItem('women', 'top')">Next →</button>
+                            <button class="nav-btn" onclick="prevItem('top')">← Prev</button>
+                            <button class="nav-btn" onclick="nextItem('top')">Next →</button>
                         </div>
                     </div>
 
                     <div class="clothing-item">
                         <div class="item-category">Bottom</div>
-                        <div class="item-display" id="women-bottom-display"></div>
-                        <div class="item-name" id="women-bottom-name">Pencil Skirt</div>
+                        <div class="item-display" id="bottom-display"></div>
+                        <div class="item-name" id="bottom-name">Bottom</div>
                         <div class="nav-buttons">
-                            <button class="nav-btn womens" onclick="prevItem('women', 'bottom')">← Prev</button>
-                            <button class="nav-btn womens" onclick="nextItem('women', 'bottom')">Next →</button>
+                            <button class="nav-btn" onclick="prevItem('bottom')">← Prev</button>
+                            <button class="nav-btn" onclick="nextItem('bottom')">Next →</button>
                         </div>
                     </div>
 
                     <div class="clothing-item">
                         <div class="item-category">Shoes</div>
-                        <div class="item-display" id="women-shoes-display"></div>
-                        <div class="item-name" id="women-shoes-name">Designer Heels</div>
+                        <div class="item-display" id="shoes-display"></div>
+                        <div class="item-name" id="shoes-name">Shoes</div>
                         <div class="nav-buttons">
-                            <button class="nav-btn womens" onclick="prevItem('women', 'shoes')">← Prev</button>
-                            <button class="nav-btn womens" onclick="nextItem('women', 'shoes')">Next →</button>
+                            <button class="nav-btn" onclick="prevItem('shoes')">← Prev</button>
+                            <button class="nav-btn" onclick="nextItem('shoes')">Next →</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="action-buttons">
-                    <button class="btn womens" onclick="randomOutfit('women')">✨ Surprise Me!</button>
-                    <button class="btn womens" onclick="saveOutfit('women')">💾 Save</button>
+                    <button class="btn" onclick="randomOutfit()">✨ Surprise Me!</button>
+                    <button class="btn" onclick="saveOutfit()">💾 Save</button>
                 </div>
 
-                <div class="status-message womens" id="women-status">Shop luxury at {{ shopping_area.name }}!</div>
+                <div class="status-message" id="status">Shop luxury!</div>
             </div>
 
-            <!-- MEN'S SECTION -->
-            <div class="wardrobe-section mens">
-                <h2 class="section-title mens">His Designer Look</h2>
+            <!-- Post Section -->
+            <div class="post-section">
+                <h2>✨ Post Your {{ shopping_area.name }} Look ✨</h2>
                 
-                <div class="outfit-grid">
-                    <div class="clothing-item">
-                        <div class="item-category">Top</div>
-                        <div class="item-display" id="men-top-display"></div>
-                        <div class="item-name" id="men-top-name">Dress Shirt</div>
-                        <div class="nav-buttons">
-                            <button class="nav-btn mens" onclick="prevItem('men', 'top')">← Prev</button>
-                            <button class="nav-btn mens" onclick="nextItem('men', 'top')">Next →</button>
-                        </div>
-                    </div>
-
-                    <div class="clothing-item">
-                        <div class="item-category">Bottom</div>
-                        <div class="item-display" id="men-bottom-display"></div>
-                        <div class="item-name" id="men-bottom-name">Tailored Trousers</div>
-                        <div class="nav-buttons">
-                            <button class="nav-btn mens" onclick="prevItem('men', 'bottom')">← Prev</button>
-                            <button class="nav-btn mens" onclick="nextItem('men', 'bottom')">Next →</button>
-                        </div>
-                    </div>
-
-                    <div class="clothing-item">
-                        <div class="item-category">Shoes</div>
-                        <div class="item-display" id="men-shoes-display"></div>
-                        <div class="item-name" id="men-shoes-name">Oxford Shoes</div>
-                        <div class="nav-buttons">
-                            <button class="nav-btn mens" onclick="prevItem('men', 'shoes')">← Prev</button>
-                            <button class="nav-btn mens" onclick="nextItem('men', 'shoes')">Next →</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn mens" onclick="randomOutfit('men')">✨ Surprise Me!</button>
-                    <button class="btn mens" onclick="saveOutfit('men')">💾 Save</button>
-                </div>
-
-                <div class="status-message mens" id="men-status">Shop luxury at {{ shopping_area.name }}!</div>
-            </div>
-        </div>
-
-        <!-- Post Section -->
-        <div class="post-section">
-            <h2>✨ Post Your {{ shopping_area.name }} Look ✨</h2>
-            
-            <div class="post-container">
                 <div class="outfit-preview">
-                    <h3>Your Selected Outfits:</h3>
-                    
-                    <div class="preview-grid">
-                        <div class="preview-item">
-                            <strong>Her Look:</strong>
-                            <p id="preview-women"></p>
-                        </div>
-                        <div class="preview-item">
-                            <strong>His Look:</strong>
-                            <p id="preview-men"></p>
-                        </div>
+                    <h3>Your Selected Outfit:</h3>
+                    <div class="preview-item">
+                        <strong id="preview-title">Your Look:</strong>
+                        <p id="preview-outfit"></p>
                     </div>
                 </div>
 
@@ -545,7 +513,6 @@ footer:
     </div>
 
     <script>
-        // Wardrobe data and JavaScript functions from your original shopping page
         const wardrobes = {
             women: {
                 top: [
@@ -595,11 +562,6 @@ footer:
             }
         };
 
-        let currentSelection = {
-            women: { top: 0, bottom: 0, shoes: 0 },
-            men: { top: 0, bottom: 0, shoes: 0 }
-        };
-
         const phrases = {
             women: [
                 "Absolutely fabulous!",
@@ -619,75 +581,97 @@ footer:
             ]
         };
 
-        function updateDisplay(gender) {
-            const prefix = gender === 'women' ? 'women' : 'men';
-            const topItem = wardrobes[gender].top[currentSelection[gender].top];
-            const bottomItem = wardrobes[gender].bottom[currentSelection[gender].bottom];
-            const shoesItem = wardrobes[gender].shoes[currentSelection[gender].shoes];
+        let selectedGender = null;
+        let currentSelection = { top: 0, bottom: 0, shoes: 0 };
 
-            document.getElementById(`${prefix}-top-display`).innerHTML = `<img src="${topItem.image}" alt="${topItem.name}">`;
-            document.getElementById(`${prefix}-bottom-display`).innerHTML = `<img src="${bottomItem.image}" alt="${bottomItem.name}">`;
-            document.getElementById(`${prefix}-shoes-display`).innerHTML = `<img src="${shoesItem.image}" alt="${shoesItem.name}">`;
-
-            document.getElementById(`${prefix}-top-name`).textContent = topItem.name;
-            document.getElementById(`${prefix}-bottom-name`).textContent = bottomItem.name;
-            document.getElementById(`${prefix}-shoes-name`).textContent = shoesItem.name;
-
-            const randomPhrase = phrases[gender][Math.floor(Math.random() * phrases[gender].length)];
-            document.getElementById(`${prefix}-status`).textContent = randomPhrase;
-        }
-
-        function nextItem(gender, category) {
-            currentSelection[gender][category] = (currentSelection[gender][category] + 1) % wardrobes[gender][category].length;
-            updateDisplay(gender);
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('gender-selection').style.display = 'none';
+            document.getElementById('shopping-content').style.display = 'block';
+            
+            // Update title
+            const title = gender === 'women' ? 'Her Designer Look' : 'His Designer Look';
+            document.getElementById('section-title').textContent = title;
+            document.getElementById('preview-title').textContent = gender === 'women' ? 'Her Look:' : 'His Look:';
+            
+            updateDisplay();
             updateOutfitPreview();
         }
 
-        function prevItem(gender, category) {
-            currentSelection[gender][category] = (currentSelection[gender][category] - 1 + wardrobes[gender][category].length) % wardrobes[gender][category].length;
-            updateDisplay(gender);
+        function resetSelection() {
+            selectedGender = null;
+            currentSelection = { top: 0, bottom: 0, shoes: 0 };
+            document.getElementById('gender-selection').style.display = 'flex';
+            document.getElementById('shopping-content').style.display = 'none';
+            document.getElementById('caption').value = '';
+            document.getElementById('post-status').textContent = '';
+        }
+
+        function updateDisplay() {
+            if (!selectedGender) return;
+
+            const topItem = wardrobes[selectedGender].top[currentSelection.top];
+            const bottomItem = wardrobes[selectedGender].bottom[currentSelection.bottom];
+            const shoesItem = wardrobes[selectedGender].shoes[currentSelection.shoes];
+
+            document.getElementById('top-display').innerHTML = `<img src="${topItem.image}" alt="${topItem.name}">`;
+            document.getElementById('bottom-display').innerHTML = `<img src="${bottomItem.image}" alt="${bottomItem.name}">`;
+            document.getElementById('shoes-display').innerHTML = `<img src="${shoesItem.image}" alt="${shoesItem.name}">`;
+
+            document.getElementById('top-name').textContent = topItem.name;
+            document.getElementById('bottom-name').textContent = bottomItem.name;
+            document.getElementById('shoes-name').textContent = shoesItem.name;
+
+            const randomPhrase = phrases[selectedGender][Math.floor(Math.random() * phrases[selectedGender].length)];
+            document.getElementById('status').textContent = randomPhrase;
+        }
+
+        function nextItem(category) {
+            currentSelection[category] = (currentSelection[category] + 1) % wardrobes[selectedGender][category].length;
+            updateDisplay();
             updateOutfitPreview();
         }
 
-        function randomOutfit(gender) {
-            currentSelection[gender].top = Math.floor(Math.random() * wardrobes[gender].top.length);
-            currentSelection[gender].bottom = Math.floor(Math.random() * wardrobes[gender].bottom.length);
-            currentSelection[gender].shoes = Math.floor(Math.random() * wardrobes[gender].shoes.length);
-            updateDisplay(gender);
+        function prevItem(category) {
+            currentSelection[category] = (currentSelection[category] - 1 + wardrobes[selectedGender][category].length) % wardrobes[selectedGender][category].length;
+            updateDisplay();
             updateOutfitPreview();
-            const prefix = gender === 'women' ? 'women' : 'men';
-            document.getElementById(`${prefix}-status`).textContent = "✨ Surprise! Pure luxury! ✨";
         }
 
-        function saveOutfit(gender) {
+        function randomOutfit() {
+            currentSelection.top = Math.floor(Math.random() * wardrobes[selectedGender].top.length);
+            currentSelection.bottom = Math.floor(Math.random() * wardrobes[selectedGender].bottom.length);
+            currentSelection.shoes = Math.floor(Math.random() * wardrobes[selectedGender].shoes.length);
+            updateDisplay();
+            updateOutfitPreview();
+            document.getElementById('status').textContent = "✨ Surprise! Pure luxury! ✨";
+        }
+
+        function saveOutfit() {
             const outfit = {
-                top: wardrobes[gender].top[currentSelection[gender].top].name,
-                bottom: wardrobes[gender].bottom[currentSelection[gender].bottom].name,
-                shoes: wardrobes[gender].shoes[currentSelection[gender].shoes].name
+                top: wardrobes[selectedGender].top[currentSelection.top].name,
+                bottom: wardrobes[selectedGender].bottom[currentSelection.bottom].name,
+                shoes: wardrobes[selectedGender].shoes[currentSelection.shoes].name
             };
-            console.log(`Saved ${gender} outfit:`, outfit);
-            const prefix = gender === 'women' ? 'women' : 'men';
-            document.getElementById(`${prefix}-status`).textContent = "💾 Outfit saved! Impeccable taste!";
+            console.log(`Saved ${selectedGender} outfit:`, outfit);
+            document.getElementById('status').textContent = "💾 Outfit saved! Impeccable taste!";
         }
 
         function updateOutfitPreview() {
-            const womenOutfit = `${wardrobes.women.top[currentSelection.women.top].name} + ${wardrobes.women.bottom[currentSelection.women.bottom].name} + ${wardrobes.women.shoes[currentSelection.women.shoes].name}`;
-            const menOutfit = `${wardrobes.men.top[currentSelection.men.top].name} + ${wardrobes.men.bottom[currentSelection.men.bottom].name} + ${wardrobes.men.shoes[currentSelection.men.shoes].name}`;
+            if (!selectedGender) return;
             
-            document.getElementById('preview-women').textContent = womenOutfit;
-            document.getElementById('preview-men').textContent = menOutfit;
+            const outfit = `${wardrobes[selectedGender].top[currentSelection.top].name} + ${wardrobes[selectedGender].bottom[currentSelection.bottom].name} + ${wardrobes[selectedGender].shoes[currentSelection.shoes].name}`;
+            document.getElementById('preview-outfit').textContent = outfit;
         }
 
         function postOutfit() {
             const statusDiv = document.getElementById('post-status');
             
             const outfitData = {
-                women_top: wardrobes.women.top[currentSelection.women.top].name,
-                women_bottom: wardrobes.women.bottom[currentSelection.women.bottom].name,
-                women_shoes: wardrobes.women.shoes[currentSelection.women.shoes].name,
-                men_top: wardrobes.men.top[currentSelection.men.top].name,
-                men_bottom: wardrobes.men.bottom[currentSelection.men.bottom].name,
-                men_shoes: wardrobes.men.shoes[currentSelection.men.shoes].name,
+                gender: selectedGender,
+                top: wardrobes[selectedGender].top[currentSelection.top].name,
+                bottom: wardrobes[selectedGender].bottom[currentSelection.bottom].name,
+                shoes: wardrobes[selectedGender].shoes[currentSelection.shoes].name,
                 caption: document.getElementById('caption').value || '',
                 shopping_area: "{{ shopping_area.name }}"
             };
@@ -718,11 +702,6 @@ footer:
                 statusDiv.style.color = '#ff6b6b';
             });
         }
-
-        // Initialize both displays
-        updateDisplay('women');
-        updateDisplay('men');
-        updateOutfitPreview();
     </script>
 </body>
 </html>
