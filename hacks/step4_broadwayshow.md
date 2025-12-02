@@ -19,7 +19,7 @@ footer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broadway Experience</title>
+    <title>NYC Broadway Explorer</title>
     <style>
         * {
             margin: 0;
@@ -60,245 +60,396 @@ footer:
             font-style: italic;
         }
         
-        .selector-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-        
-        .random-btn {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a1a2e;
-            border: none;
-            padding: 20px 50px;
-            font-size: 1.5em;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .random-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 20px rgba(255, 215, 0, 0.4);
-        }
-        
-        .random-btn:active {
-            transform: translateY(-1px);
-        }
-        
-        .show-display {
+        .step {
             display: none;
-            animation: fadeIn 0.8s ease-in;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .step.active {
+            display: block;
         }
         
-        .show-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-        
-        .show-title {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #ffd700;
-        }
-        
-        .show-year {
-            font-size: 1em;
-            color: #aaa;
-            margin-bottom: 20px;
-        }
-        
-        .show-description {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #ddd;
-        }
-        
-        .media-section {
+        .playhouse-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .media-section {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .media-box {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-        }
-        
-        .media-title {
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            color: #ffd700;
-            text-align: center;
-        }
-        
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-        
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-        
-        .curtain {
-            font-size: 4em;
-            text-align: center;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             margin: 20px 0;
         }
         
-        .loading {
-            text-align: center;
-            font-size: 1.5em;
+        .playhouse-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .playhouse-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .playhouse-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
             color: #ffd700;
-            display: none;
+        }
+        
+        .playhouse-card .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        
+        .playhouse-card p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+        
+        .show-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .show-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .show-item h4 {
+            margin: 0 0 5px 0;
+            color: #ffd700;
+        }
+        
+        .show-item .price {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .show-item p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .show-item .showtimes {
+            color: #ddd;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #10b981, #059669);
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .back-btn {
+            background: transparent;
+            border: 1px solid #64748b;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn:hover {
+            border-color: white;
+            color: white;
+        }
+        
+        .booking-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .booking-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .custom-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        .custom-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+        
+        .remove-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .total {
+            font-size: 28px;
+            text-align: right;
+            margin: 20px 0;
+            color: #ffd700;
+        }
+        
+        .theater-header {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .playhouse-grid, .show-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="curtain">🎭</div>
+            <div style="font-size: 4em;">🎭</div>
             <h1>Broadway Tonight!</h1>
-            <p class="subtitle">Your magical theatrical experience awaits</p>
+            <p class="subtitle">Choose your theatrical experience</p>
         </header>
-        
-        <div class="selector-section">
-            <button class="random-btn" onclick="selectRandomShow()">
-                ✨ Choose My Show! ✨
-            </button>
-            <div class="loading" id="loading">
-                🎪 Opening the curtains...
-            </div>
-        </div>
-        
-        <div class="show-display" id="showDisplay">
-            <div class="show-card">
-                <h2 class="show-title" id="showTitle"></h2>
-                <p class="show-year" id="showYear"></p>
-                <p class="show-description" id="showDescription"></p>
-                
-                <div class="media-section">
-                    <div class="media-box">
-                        <h3 class="media-title">🎬 Official Trailer</h3>
-                        <div class="video-container" id="videoContainer"></div>
-                    </div>
-                    
-                    <div class="media-box">
-                        <h3 class="media-title">🎵 Soundtrack Preview</h3>
-                        <p style="text-align: center; margin-bottom: 10px; color: #ddd;">
-                            Listen to a snippet from the show
-                        </p>
-                        <audio id="audioPlayer" controls>
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
+
+        <div class="step active" id="step1">
+            <h2 style="text-align: center; margin-bottom: 30px;">Choose Your Playhouse</h2>
+            <div class="playhouse-grid">
+                <div class="playhouse-card" onclick="selectPlayhouse('majestic')">
+                    <h3>Majestic Theatre</h3>
+                    <div class="badge">Historic & Grand</div>
+                    <p>📍 245 W 44th Street</p>
+                    <p>One of Broadway's most iconic venues, featuring spectacular productions since 1927. Home to some of the longest-running shows in Broadway history.</p>
+                </div>
+                <div class="playhouse-card" onclick="selectPlayhouse('gershwin')">
+                    <h3>Gershwin Theatre</h3>
+                    <div class="badge">Largest & Most Modern</div>
+                    <p>📍 222 W 51st Street</p>
+                    <p>Broadway's largest theater with 1,933 seats. Known for spectacular staging and cutting-edge productions that push theatrical boundaries.</p>
+                </div>
+                <div class="playhouse-card" onclick="selectPlayhouse('imperial')">
+                    <h3>Imperial Theatre</h3>
+                    <div class="badge">Intimate & Classic</div>
+                    <p>📍 249 W 45th Street</p>
+                    <p>A beautifully preserved theater offering an intimate Broadway experience. Perfect acoustics and sightlines from every seat in the house.</p>
+                </div>
+                <div class="playhouse-card" onclick="selectPlayhouse('richardrodgers')">
+                    <h3>Richard Rodgers Theatre</h3>
+                    <div class="badge">Contemporary & Renowned</div>
+                    <p>📍 226 W 46th Street</p>
+                    <p>Home to Tony Award-winning productions and revolutionary shows. A modern theater space with state-of-the-art technology and exceptional staging.</p>
                 </div>
             </div>
         </div>
+
+        <div class="step" id="step2">
+            <button class="btn back-btn" onclick="goToStep(1)">← Back</button>
+            <div class="theater-header" id="theaterHeader"></div>
+            <div class="show-grid" id="showGrid"></div>
+            <button class="btn btn-primary" onclick="goToStep(3)">Continue to Booking →</button>
+        </div>
+
+        <div class="step" id="step3">
+            <button class="btn back-btn" onclick="goToStep(2)">← Back</button>
+            <div class="booking-section">
+                <h2>Your Selections</h2>
+                <div id="bookingList"></div>
+                <h3 style="margin-top: 30px;">Add Special Request</h3>
+                <input type="text" class="custom-input" id="customInput" placeholder="E.g., Wheelchair accessible seating, center orchestra">
+                <button class="btn" onclick="addCustom()">Add Request</button>
+            </div>
+            <button class="btn btn-primary" onclick="goToStep(4)">Review Booking →</button>
+        </div>
+
+        <div class="step" id="step4">
+            <div class="booking-section">
+                <h2>Booking Confirmation</h2>
+                <div class="theater-header" id="reviewHeader"></div>
+                <div id="reviewList"></div>
+                <div class="total" id="totalPrice">Total: $0</div>
+                <button class="btn back-btn" onclick="goToStep(3)">← Edit Booking</button>
+                <button class="btn btn-primary" onclick="confirm()">Confirm Booking</button>
+            </div>
+        </div>
     </div>
-    
+
     <script>
-        const SHOWS = {
-            "Hamilton": {
-                "description": "The story of America's Founding Father Alexander Hamilton",
-                "video": "https://www.youtube.com/embed/DSCKfXpAGHc",
-                "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                "year": "2015"
+        var data = {
+            majestic: {
+                name: 'Majestic Theatre',
+                location: '245 W 44th Street',
+                items: [
+                    {name: 'The Phantom of the Opera', price: 149, desc: 'The longest-running show in Broadway history', showtimes: 'Wed & Sat 2pm, Tue-Sat 8pm'},
+                    {name: 'Les Misérables', price: 139, desc: 'Epic tale of love and revolution', showtimes: 'Wed & Sat 2pm, Tue-Sun 7:30pm'},
+                    {name: 'Chicago', price: 119, desc: 'Razzle dazzle musical spectacular', showtimes: 'Thu & Sat 2pm, Mon-Sat 8pm'},
+                    {name: 'Cats', price: 99, desc: 'Now and forever, a timeless classic', showtimes: 'Wed & Sat 2pm, Tue-Sat 7pm'}
+                ]
             },
-            "The Lion King": {
-                "description": "Disney's award-winning adaptation of the animated classic",
-                "video": "https://www.youtube.com/embed/pluUQ6qXGEQ",
-                "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-                "year": "1997"
+            gershwin: {
+                name: 'Gershwin Theatre',
+                location: '222 W 51st Street',
+                items: [
+                    {name: 'Wicked', price: 189, desc: 'The untold story of the Witches of Oz', showtimes: 'Wed & Sat 2pm, Tue-Sat 8pm, Sun 3pm'},
+                    {name: 'The Lion King', price: 179, desc: 'Disney\'s award-winning masterpiece', showtimes: 'Wed & Sat 2pm, Daily 8pm'},
+                    {name: 'Frozen', price: 159, desc: 'Let it go on Broadway', showtimes: 'Sat & Sun 2pm, Wed-Sat 8pm'},
+                    {name: 'Aladdin', price: 149, desc: 'A whole new world awaits', showtimes: 'Thu & Sun 2pm, Tue-Sun 7pm'}
+                ]
             },
-            "Wicked": {
-                "description": "The untold story of the Witches of Oz",
-                "video": "https://www.youtube.com/embed/Svt0UytcAgc",
-                "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-                "year": "2003"
+            imperial: {
+                name: 'Imperial Theatre',
+                location: '249 W 45th Street',
+                items: [
+                    {name: 'Moulin Rouge!', price: 169, desc: 'Spectacular spectacular!', showtimes: 'Wed & Sat 2pm, Tue-Sat 8pm'},
+                    {name: 'Six', price: 129, desc: 'The Tudor queens rock out', showtimes: 'Sat & Sun 2pm, Tue-Sun 7:30pm'},
+                    {name: 'Mean Girls', price: 139, desc: 'So fetch on Broadway', showtimes: 'Thu & Sat 2pm, Wed-Sat 8pm'},
+                    {name: 'Dear Evan Hansen', price: 119, desc: 'You will be found', showtimes: 'Wed & Sat 2pm, Tue-Sat 7pm'}
+                ]
             },
-            "The Phantom of the Opera": {
-                "description": "A haunting tale of obsession beneath the Paris Opera House",
-                "video": "https://www.youtube.com/embed/8XQ_Ewetygs",
-                "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-                "year": "1988"
-            },
-            "Dear Evan Hansen": {
-                "description": "A letter that was never meant to be seen sparks a movement",
-                "video": "https://www.youtube.com/embed/g_c_Jd-hP-s",
-                "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-                "year": "2016"
+            richardrodgers: {
+                name: 'Richard Rodgers Theatre',
+                location: '226 W 46th Street',
+                items: [
+                    {name: 'Hamilton', price: 299, desc: 'The revolutionary musical phenomenon', showtimes: 'Wed & Sat 2pm, Tue-Sat 8pm, Sun 3pm'},
+                    {name: 'Book of Mormon', price: 179, desc: 'Outrageous and hilarious', showtimes: 'Thu & Sat 2pm, Tue-Sun 7pm'},
+                    {name: 'Come From Away', price: 149, desc: 'A true story of kindness', showtimes: 'Wed & Sat 2pm, Daily 7:30pm'},
+                    {name: 'Hadestown', price: 159, desc: 'Journey to the underworld', showtimes: 'Sat & Sun 2pm, Tue-Sun 8pm'}
+                ]
             }
         };
-        
-        function selectRandomShow() {
-            const btn = document.querySelector('.random-btn');
-            const loading = document.getElementById('loading');
-            const display = document.getElementById('showDisplay');
-            
-            btn.disabled = true;
-            loading.style.display = 'block';
-            display.style.display = 'none';
-            
-            setTimeout(() => {
-                const showNames = Object.keys(SHOWS);
-                const randomShow = showNames[Math.floor(Math.random() * showNames.length)];
-                const showData = SHOWS[randomShow];
-                
-                displayShow(randomShow, showData);
-                loading.style.display = 'none';
-                btn.disabled = false;
-            }, 1000);
+
+        var current = null;
+        var cart = [];
+
+        function goToStep(n) {
+            var steps = document.querySelectorAll('.step');
+            for (var i = 0; i < steps.length; i++) {
+                steps[i].classList.remove('active');
+            }
+            document.getElementById('step' + n).classList.add('active');
+            if (n === 4) showReview();
         }
-        
-        function displayShow(name, show) {
-            document.getElementById('showTitle').textContent = name;
-            document.getElementById('showYear').textContent = `Broadway Debut: ${show.year}`;
-            document.getElementById('showDescription').textContent = show.description;
-            
-            const videoContainer = document.getElementById('videoContainer');
-            videoContainer.innerHTML = `<iframe src="${show.video}" allowfullscreen></iframe>`;
-            
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = show.audio;
-            
-            document.getElementById('showDisplay').style.display = 'block';
+
+        function selectPlayhouse(id) {
+            current = data[id];
+            showShows();
+            goToStep(2);
+        }
+
+        function showShows() {
+            document.getElementById('theaterHeader').innerHTML = '<h2>' + current.name + '</h2><p>' + current.location + '</p>';
+            var html = '';
+            for (var i = 0; i < current.items.length; i++) {
+                var item = current.items[i];
+                html += '<div class="show-item">';
+                html += '<h4>' + item.name + '</h4>';
+                html += '<div class="price">$' + item.price + '</div>';
+                html += '<p>' + item.desc + '</p>';
+                html += '<div class="showtimes">🎟️ ' + item.showtimes + '</div>';
+                html += '<button class="btn" style="margin-top: 10px;" onclick="addItem(' + i + ')">Book Tickets</button>';
+                html += '</div>';
+            }
+            document.getElementById('showGrid').innerHTML = html;
+        }
+
+        function addItem(idx) {
+            cart.push({name: current.items[idx].name, price: current.items[idx].price, custom: false});
+            updateBooking();
+        }
+
+        function addCustom() {
+            var val = document.getElementById('customInput').value;
+            if (val) {
+                cart.push({name: val, price: 0, custom: true});
+                document.getElementById('customInput').value = '';
+                updateBooking();
+            }
+        }
+
+        function removeItem(idx) {
+            cart.splice(idx, 1);
+            updateBooking();
+        }
+
+        function updateBooking() {
+            var html = '';
+            if (cart.length === 0) {
+                html = '<p style="text-align: center; color: #64748b;">No tickets selected yet</p>';
+            } else {
+                for (var i = 0; i < cart.length; i++) {
+                    html += '<div class="booking-item">';
+                    html += '<div>' + cart[i].name;
+                    if (cart[i].custom) html += ' <span style="background: #a855f7; padding: 2px 8px; border-radius: 4px; font-size: 12px;">Request</span>';
+                    html += '</div>';
+                    html += '<div>';
+                    if (!cart[i].custom) html += '<span style="color: #ffd700; margin-right: 15px;">$' + cart[i].price + '</span>';
+                    html += '<button class="remove-btn" onclick="removeItem(' + i + ')">Remove</button>';
+                    html += '</div></div>';
+                }
+            }
+            document.getElementById('bookingList').innerHTML = html;
+        }
+
+        function showReview() {
+            document.getElementById('reviewHeader').innerHTML = '<h2>' + current.name + '</h2><p>' + current.location + '</p>';
+            var html = '';
+            var total = 0;
+            for (var i = 0; i < cart.length; i++) {
+                total += cart[i].price;
+                html += '<div class="booking-item">';
+                html += '<div>' + cart[i].name;
+                if (cart[i].custom) html += ' <span style="background: #a855f7; padding: 2px 8px; border-radius: 4px; font-size: 12px;">Request</span>';
+                html += '</div>';
+                if (!cart[i].custom) html += '<div style="color: #ffd700;">$' + cart[i].price + '</div>';
+                html += '</div>';
+            }
+            document.getElementById('reviewList').innerHTML = html;
+            document.getElementById('totalPrice').textContent = 'Total: $' + total;
+        }
+
+        function confirm() {
+            alert('Booking confirmed! Your tickets will be sent to your email. See you at the show! 🎭');
         }
     </script>
 </body>
