@@ -14,11 +14,12 @@ footer:
     home: /nyc/home/
     next: /new-york/landmarks/
 ---
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ shopping_area.name }} - Digital Closet</title>
+    <title>NYC Shopping Centers</title>
     <style>
         * {
             margin: 0;
@@ -56,13 +57,59 @@ footer:
             opacity: 0.95;
         }
 
+        /* Shopping Center Selection */
+        .center-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .center-card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .center-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
+        }
+
+        .center-card.selected {
+            border-color: #ffd700;
+            background: #2a2a2a;
+        }
+
+        .center-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .center-card h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .center-card p {
+            color: #ccc;
+            font-size: 0.95em;
+        }
+
         /* Gender Selection Screen */
         .gender-selection {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 60vh;
             gap: 40px;
+            margin-top: 40px;
         }
 
         .gender-card {
@@ -83,7 +130,7 @@ footer:
             box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
         }
 
-        .gender-card h2 {
+        .gender-card h3 {
             font-size: 2.5em;
             margin-bottom: 20px;
             color: #ffd700;
@@ -99,45 +146,8 @@ footer:
             margin-bottom: 20px;
         }
 
-        /* Hide shopping section initially */
-        .shopping-content {
-            display: none;
-        }
-
-        .area-info {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid #ffd700;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .area-info h2 {
-            color: #ffd700;
-            margin-bottom: 10px;
-        }
-
-        .area-info p {
-            color: #ccc;
-            margin-bottom: 10px;
-        }
-
-        .stores-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .store-badge {
-            background: rgba(255, 215, 0, 0.2);
-            color: #ffd700;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            border: 1px solid #ffd700;
+        .hidden {
+            display: none !important;
         }
 
         .back-button {
@@ -156,6 +166,24 @@ footer:
         .back-button:hover {
             background: rgba(255, 215, 0, 0.3);
             transform: translateY(-2px);
+        }
+
+        .area-info {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .area-info h2 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .area-info p {
+            color: #ccc;
         }
 
         .wardrobe-section {
@@ -283,110 +311,13 @@ footer:
             color: #ffd700;
         }
 
-        .post-section {
-            margin-top: 60px;
-            padding: 40px;
-            background: #0a0a0a;
-            border-radius: 15px;
-            border-top: 3px solid #ffd700;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .post-section h2 {
-            text-align: center;
-            color: #ffd700;
-            font-size: 2em;
-            margin-bottom: 30px;
-        }
-
-        .outfit-preview {
-            background: #1a1a1a;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .outfit-preview h3 {
-            color: #ffd700;
-            margin-bottom: 15px;
-        }
-
-        .preview-item {
-            padding: 15px;
-            background: #2a2a2a;
-            border-radius: 8px;
-        }
-
-        .preview-item strong {
-            color: #ffd700;
-        }
-
-        .preview-item p {
-            color: #ccc;
-            margin-top: 10px;
-            font-size: 0.95em;
-        }
-
-        .caption-section {
-            margin-bottom: 20px;
-        }
-
-        .caption-section label {
-            display: block;
-            color: #ffd700;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .caption-section textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ffd700;
-            background: #1a1a1a;
-            color: white;
-            min-height: 80px;
-            font-family: Georgia, serif;
-            box-sizing: border-box;
-            resize: vertical;
-        }
-
-        .caption-section textarea:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .post-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a2332;
-            border: none;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .post-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-        }
-
-        .post-status {
-            text-align: center;
-            margin-top: 15px;
-            min-height: 25px;
-            color: #ffd700;
-            font-weight: 600;
-        }
-
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
+            }
+
+            .center-selection {
+                grid-template-columns: 1fr;
             }
 
             .gender-selection {
@@ -402,51 +333,80 @@ footer:
             .wardrobe-section {
                 padding: 20px;
             }
-
-            .post-section {
-                padding: 20px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Welcome to {{ shopping_area.name }}!</h1>
-            <p class="subtitle">{{ shopping_area.description }}</p>
+            <h1>NYC Shopping Experience</h1>
+            <p class="subtitle">Choose your shopping destination</p>
         </header>
 
-        <!-- Gender Selection Screen -->
-        <div id="gender-selection" class="gender-selection">
-            <div class="gender-card" onclick="selectGender('women')">
-                <div class="gender-icon">👗</div>
-                <h2>Her Look</h2>
-                <p>Shop women's designer fashion</p>
-            </div>
+        <!-- Shopping Center Selection -->
+        <div id="center-selection-screen">
+            <div class="center-selection">
+                <div class="center-card" onclick="selectCenter('east-river')">
+                    <div class="center-icon">🏬</div>
+                    <h2>East River Plaza</h2>
+                    <p>Affordable fashion & everyday essentials</p>
+                </div>
 
-            <div class="gender-card" onclick="selectGender('men')">
-                <div class="gender-icon">👔</div>
-                <h2>His Look</h2>
-                <p>Shop men's designer fashion</p>
+                <div class="center-card" onclick="selectCenter('macys')">
+                    <div class="center-icon">🏢</div>
+                    <h2>Macy's Herald Square</h2>
+                    <p>Classic department store elegance</p>
+                </div>
+
+                <div class="center-card" onclick="selectCenter('soho')">
+                    <div class="center-icon">✨</div>
+                    <h2>SoHo Center</h2>
+                    <p>Trendy & fashion-forward styles</p>
+                </div>
+
+                <div class="center-card" onclick="selectCenter('columbus')">
+                    <div class="center-icon">💎</div>
+                    <h2>Columbus Circle</h2>
+                    <p>Luxury designer boutiques</p>
+                </div>
             </div>
         </div>
 
-        <!-- Shopping Content (Hidden Initially) -->
-        <div id="shopping-content" class="shopping-content">
-            <button class="back-button" onclick="resetSelection()">← Change Selection</button>
+        <!-- Gender Selection Screen -->
+        <div id="gender-selection-screen" class="hidden">
+            <button class="back-button" onclick="backToCenter()">← Change Shopping Center</button>
+            
+            <div class="area-info">
+                <h2 id="selected-center-name"></h2>
+                <p id="selected-center-desc"></p>
+            </div>
+
+            <div class="gender-selection">
+                <div class="gender-card" onclick="selectGender('women')">
+                    <div class="gender-icon">👗</div>
+                    <h3>Women's</h3>
+                    <p>Shop women's fashion</p>
+                </div>
+
+                <div class="gender-card" onclick="selectGender('men')">
+                    <div class="gender-icon">👔</div>
+                    <h3>Men's</h3>
+                    <p>Shop men's fashion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Content -->
+        <div id="shopping-content" class="hidden">
+            <button class="back-button" onclick="backToGender()">← Change Selection</button>
 
             <div class="area-info">
-                <h2>📍 Shopping in {{ shopping_area.area }}</h2>
-                <p>After your breakfast, explore these luxury stores:</p>
-                <div class="stores-list">
-                    {% for store in shopping_area.stores %}
-                    <span class="store-badge">{{ store }}</span>
-                    {% endfor %}
-                </div>
+                <h2 id="shopping-area-title"></h2>
+                <p id="shopping-area-subtitle"></p>
             </div>
 
             <div class="wardrobe-section">
-                <h2 class="section-title" id="section-title">Designer Look</h2>
+                <h2 class="section-title" id="section-title">Your Look</h2>
                 
                 <div class="outfit-grid">
                     <div class="clothing-item">
@@ -482,137 +442,260 @@ footer:
 
                 <div class="action-buttons">
                     <button class="btn" onclick="randomOutfit()">✨ Surprise Me!</button>
-                    <button class="btn" onclick="saveOutfit()">💾 Save</button>
+                    <button class="btn" onclick="saveOutfit()">💾 Save Outfit</button>
                 </div>
 
-                <div class="status-message" id="status">Shop luxury!</div>
-            </div>
-
-            <!-- Post Section -->
-            <div class="post-section">
-                <h2>✨ Post Your {{ shopping_area.name }} Look ✨</h2>
-                
-                <div class="outfit-preview">
-                    <h3>Your Selected Outfit:</h3>
-                    <div class="preview-item">
-                        <strong id="preview-title">Your Look:</strong>
-                        <p id="preview-outfit"></p>
-                    </div>
-                </div>
-
-                <div class="caption-section">
-                    <label for="caption">Add a Caption (optional):</label>
-                    <textarea id="caption" placeholder="What do you think about this look at {{ shopping_area.name }}?"></textarea>
-                </div>
-
-                <button class="post-button" onclick="postOutfit()">📸 Post Your {{ shopping_area.name }} Outfit</button>
-
-                <div class="post-status" id="post-status"></div>
+                <div class="status-message" id="status">Ready to shop!</div>
             </div>
         </div>
     </div>
 
     <script>
-        const wardrobes = {
-            women: {
-                top: [
-                    { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/8B4513?text=Silk+Blouse' },
-                    { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Cashmere+Sweater' },
-                    { name: 'Designer Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Blazer' },
-                    { name: 'Satin Top', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Satin+Top' },
-                    { name: 'Luxury Cardigan', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Cardigan' }
-                ],
-                bottom: [
-                    { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Pencil+Skirt' },
-                    { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Designer+Trousers' },
-                    { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=A-Line+Skirt' },
-                    { name: 'Tailored Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Tailored+Pants' },
-                    { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=Midi+Skirt' }
-                ],
-                shoes: [
-                    { name: 'Designer Heels', image: 'https://via.placeholder.com/300x200/B22222/FFFFFF?text=Designer+Heels' },
-                    { name: 'Patent Pumps', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Patent+Pumps' },
-                    { name: 'Leather Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Leather+Boots' },
-                    { name: 'Stilettos', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Stilettos' },
-                    { name: 'Ankle Boots', image: 'https://via.placeholder.com/300x200/696969/FFFFFF?text=Ankle+Boots' }
-                ]
+        const shoppingCenters = {
+            'east-river': {
+                name: 'East River Plaza',
+                description: 'Affordable fashion & everyday essentials',
+                women: {
+                    top: [
+                        { name: 'Basic Cotton T-Shirt', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Cotton+T-Shirt' },
+                        { name: 'Casual Hoodie', image: 'https://via.placeholder.com/300x400/87CEEB/000000?text=Hoodie' },
+                        { name: 'Graphic Tee', image: 'https://via.placeholder.com/300x400/DDA0DD/000000?text=Graphic+Tee' },
+                        { name: 'Tank Top', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Tank+Top' },
+                        { name: 'Sweatshirt', image: 'https://via.placeholder.com/300x400/98FB98/000000?text=Sweatshirt' }
+                    ],
+                    bottom: [
+                        { name: 'Skinny Jeans', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=Skinny+Jeans' },
+                        { name: 'Leggings', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Leggings' },
+                        { name: 'Denim Shorts', image: 'https://via.placeholder.com/300x400/6495ED/FFFFFF?text=Denim+Shorts' },
+                        { name: 'Joggers', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Joggers' },
+                        { name: 'Casual Skirt', image: 'https://via.placeholder.com/300x400/FF69B4/FFFFFF?text=Casual+Skirt' }
+                    ],
+                    shoes: [
+                        { name: 'Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Sneakers' },
+                        { name: 'Canvas Shoes', image: 'https://via.placeholder.com/300x200/FF6347/FFFFFF?text=Canvas+Shoes' },
+                        { name: 'Sandals', image: 'https://via.placeholder.com/300x200/DEB887/000000?text=Sandals' },
+                        { name: 'Slip-ons', image: 'https://via.placeholder.com/300x200/000080/FFFFFF?text=Slip-ons' }
+                    ]
+                },
+                men: {
+                    top: [
+                        { name: 'Basic T-Shirt', image: 'https://via.placeholder.com/300x400/ADD8E6/000000?text=T-Shirt' },
+                        { name: 'Hoodie', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Hoodie' },
+                        { name: 'Graphic Tee', image: 'https://via.placeholder.com/300x400/F4A460/000000?text=Graphic+Tee' },
+                        { name: 'Flannel Shirt', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Flannel' },
+                        { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo' }
+                    ],
+                    bottom: [
+                        { name: 'Jeans', image: 'https://via.placeholder.com/300x400/4169E1/FFFFFF?text=Jeans' },
+                        { name: 'Cargo Pants', image: 'https://via.placeholder.com/300x400/556B2F/FFFFFF?text=Cargo+Pants' },
+                        { name: 'Joggers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Joggers' },
+                        { name: 'Shorts', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Shorts' },
+                        { name: 'Chinos', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=Chinos' }
+                    ],
+                    shoes: [
+                        { name: 'Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Sneakers' },
+                        { name: 'Canvas Shoes', image: 'https://via.placeholder.com/300x200/000080/FFFFFF?text=Canvas' },
+                        { name: 'Casual Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Boots' },
+                        { name: 'Sandals', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Sandals' }
+                    ]
+                }
             },
-            men: {
-                top: [
-                    { name: 'Dress Shirt', image: 'https://via.placeholder.com/300x400/E0FFFF/000080?text=Dress+Shirt' },
-                    { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo+Shirt' },
-                    { name: 'Suit Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Suit+Jacket' },
-                    { name: 'Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Sweater' },
-                    { name: 'Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Blazer' }
-                ],
-                bottom: [
-                    { name: 'Tailored Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Tailored+Trousers' },
-                    { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Dress+Pants' },
-                    { name: 'Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Chinos' },
-                    { name: 'Suit Pants', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Suit+Pants' },
-                    { name: 'Slacks', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Slacks' }
-                ],
-                shoes: [
-                    { name: 'Oxford Shoes', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Oxford+Shoes' },
-                    { name: 'Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Loafers' },
-                    { name: 'Derby Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Derby+Shoes' },
-                    { name: 'Dress Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Dress+Boots' },
-                    { name: 'Brogues', image: 'https://via.placeholder.com/300x200/8B7355/FFFFFF?text=Brogues' }
-                ]
+            'macys': {
+                name: 'Macy\'s Herald Square',
+                description: 'Classic department store elegance',
+                women: {
+                    top: [
+                        { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/000000?text=Silk+Blouse' },
+                        { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Cashmere' },
+                        { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
+                        { name: 'Button-Up Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/4682B4?text=Button+Up' },
+                        { name: 'Cardigan', image: 'https://via.placeholder.com/300x400/FFDAB9/000000?text=Cardigan' }
+                    ],
+                    bottom: [
+                        { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Pencil+Skirt' },
+                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Dress+Pants' },
+                        { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=A-Line+Skirt' },
+                        { name: 'Wide-Leg Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Trousers' },
+                        { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/4B0082/FFFFFF?text=Midi+Skirt' }
+                    ],
+                    shoes: [
+                        { name: 'Pumps', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Pumps' },
+                        { name: 'Heeled Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Heeled+Boots' },
+                        { name: 'Flats', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Flats' },
+                        { name: 'Ankle Boots', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Ankle+Boots' }
+                    ]
+                },
+                men: {
+                    top: [
+                        { name: 'Dress Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/000080?text=Dress+Shirt' },
+                        { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo' },
+                        { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
+                        { name: 'V-Neck Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=V-Neck' },
+                        { name: 'Sport Coat', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Sport+Coat' }
+                    ],
+                    bottom: [
+                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Dress+Pants' },
+                        { name: 'Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Chinos' },
+                        { name: 'Suit Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Suit+Pants' },
+                        { name: 'Khakis', image: 'https://via.placeholder.com/300x400/BDB76B/000000?text=Khakis' },
+                        { name: 'Slacks', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Slacks' }
+                    ],
+                    shoes: [
+                        { name: 'Oxford Shoes', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Oxfords' },
+                        { name: 'Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Loafers' },
+                        { name: 'Derby Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Derby' },
+                        { name: 'Dress Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Dress+Boots' }
+                    ]
+                }
+            },
+            'soho': {
+                name: 'SoHo Center',
+                description: 'Trendy & fashion-forward styles',
+                women: {
+                    top: [
+                        { name: 'Crop Top', image: 'https://via.placeholder.com/300x400/FF69B4/FFFFFF?text=Crop+Top' },
+                        { name: 'Off-Shoulder Top', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Off-Shoulder' },
+                        { name: 'Mesh Top', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Mesh+Top' },
+                        { name: 'Statement Blouse', image: 'https://via.placeholder.com/300x400/9370DB/FFFFFF?text=Statement' },
+                        { name: 'Leather Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Leather+Jacket' }
+                    ],
+                    bottom: [
+                        { name: 'High-Waist Jeans', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=High-Waist' },
+                        { name: 'Faux Leather Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Leather+Pants' },
+                        { name: 'Mini Skirt', image: 'https://via.placeholder.com/300x400/FF1493/FFFFFF?text=Mini+Skirt' },
+                        { name: 'Wide-Leg Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Wide-Leg' },
+                        { name: 'Plaid Skirt', image: 'https://via.placeholder.com/300x400/8B0000/FFFFFF?text=Plaid+Skirt' }
+                    ],
+                    shoes: [
+                        { name: 'Platform Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Platform+Boots' },
+                        { name: 'Chunky Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Chunky' },
+                        { name: 'Heeled Sandals', image: 'https://via.placeholder.com/300x200/FFD700/000000?text=Heeled+Sandals' },
+                        { name: 'Combat Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Combat+Boots' }
+                    ]
+                },
+                men: {
+                    top: [
+                        { name: 'Designer T-Shirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Tee' },
+                        { name: 'Denim Jacket', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=Denim+Jacket' },
+                        { name: 'Bomber Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Bomber' },
+                        { name: 'Oversized Hoodie', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Oversized' },
+                        { name: 'Turtleneck', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Turtleneck' }
+                    ],
+                    bottom: [
+                        { name: 'Skinny Jeans', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Skinny+Jeans' },
+                        { name: 'Ripped Jeans', image: 'https://via.placeholder.com/300x400/4169E1/FFFFFF?text=Ripped+Jeans' },
+                        { name: 'Jogger Pants', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Joggers' },
+                        { name: 'Track Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Track+Pants' },
+                        { name: 'Cargo Joggers', image: 'https://via.placeholder.com/300x400/556B2F/FFFFFF?text=Cargo' }
+                    ],
+                    shoes: [
+                        { name: 'High-Top Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=High-Tops' },
+                        { name: 'Chelsea Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Chelsea+Boots' },
+                        { name: 'Designer Sneakers', image: 'https://via.placeholder.com/300x200/FF4500/FFFFFF?text=Designer' },
+                        { name: 'Combat Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Combat' }
+                    ]
+                }
+            },
+            'columbus': {
+                name: 'Columbus Circle',
+                description: 'Luxury designer boutiques',
+                women: {
+                    top: [
+                        { name: 'Designer Silk Blouse', image: 'https://via.placeholder.com/300x400/F5F5DC/000000?text=Designer+Silk' },
+                        { name: 'Couture Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Couture+Blazer' },
+                        { name: 'Luxury Knit', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Knit' },
+                        { name: 'Satin Top', image: 'https://via.placeholder.com/300x400/FFE4E1/000000?text=Satin+Top' },
+                        { name: 'Velvet Jacket', image: 'https://via.placeholder.com/300x400/8B008B/FFFFFF?text=Velvet' }
+                    ],
+                    bottom: [
+                        { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Trousers' },
+                        { name: 'Haute Couture Skirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Haute+Couture' },
+                        { name: 'Luxury Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Luxury+Pants' },
+                        { name: 'Pleated Skirt', image: 'https://via.placeholder.com/300x400/4B0082/FFFFFF?text=Pleated' },
+                        { name: 'Wide-Leg Trousers', image: 'https://via.placeholder.com/300x400/2C3E50/FFFFFF?text=Wide-Leg' }
+                    ],
+                    shoes: [
+                        { name: 'Designer Heels', image: 'https://via.placeholder.com/300x200/B22222/FFFFFF?text=Designer+Heels' },
+                        { name: 'Luxury Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Luxury+Boots' },
+                        { name: 'Patent Pumps', image: 'https://via.placeholder.com/300x200/8B0000/FFFFFF?text=Patent+Pumps' },
+                        { name: 'Stilettos', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Stilettos' }
+                    ]
+                },
+                men: {
+                    top: [
+                        { name: 'Designer Suit Jacket', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Designer+Suit' },
+                        { name: 'Luxury Dress Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/000080?text=Luxury+Shirt' },
+                        { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Cashmere' },
+                        { name: 'Tailored Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Tailored' },
+                        { name: 'Designer Polo', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Polo' }
+                    ],
+                    bottom: [
+                        { name: 'Tailored Suit Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Suit+Pants' },
+                        { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Trousers' },
+                        { name: 'Luxury Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Luxury+Chinos' },
+                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Dress+Pants' },
+                        { name: 'Wool Trousers', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Wool+Trousers' }
+                    ],
+                    shoes: [
+                        { name: 'Italian Leather Oxfords', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Italian+Oxfords' },
+                        { name: 'Designer Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Designer+Loafers' },
+                        { name: 'Luxury Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Luxury+Boots' },
+                        { name: 'Patent Dress Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Patent+Shoes' }
+                    ]
+                }
             }
         };
 
-        const phrases = {
-            women: [
-                "Absolutely fabulous!",
-                "Très chic!",
-                "Designer perfection!",
-                "Pure elegance!",
-                "Simply divine!",
-                "Stunning choice!"
-            ],
-            men: [
-                "Sharp and sophisticated!",
-                "Dapper excellence!",
-                "Timeless style!",
-                "Classic elegance!",
-                "Refined taste!",
-                "Impeccably tailored!"
-            ]
-        };
-
+        let selectedCenter = null;
         let selectedGender = null;
         let currentSelection = { top: 0, bottom: 0, shoes: 0 };
 
-        function selectGender(gender) {
-            selectedGender = gender;
-            document.getElementById('gender-selection').style.display = 'none';
-            document.getElementById('shopping-content').style.display = 'block';
+        function selectCenter(centerId) {
+            selectedCenter = centerId;
+            document.getElementById('center-selection-screen').classList.add('hidden');
+            document.getElementById('gender-selection-screen').classList.remove('hidden');
             
-            // Update title
-            const title = gender === 'women' ? 'Her Designer Look' : 'His Designer Look';
-            document.getElementById('section-title').textContent = title;
-            document.getElementById('preview-title').textContent = gender === 'women' ? 'Her Look:' : 'His Look:';
-            
-            updateDisplay();
-            updateOutfitPreview();
+            const center = shoppingCenters[centerId];
+            document.getElementById('selected-center-name').textContent = '📍 ' + center.name;
+            document.getElementById('selected-center-desc').textContent = center.description;
         }
 
-        function resetSelection() {
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('gender-selection-screen').classList.add('hidden');
+            document.getElementById('shopping-content').classList.remove('hidden');
+            
+            const center = shoppingCenters[selectedCenter];
+            document.getElementById('shopping-area-title').textContent = center.name;
+            document.getElementById('shopping-area-subtitle').textContent = `Shopping ${gender === 'women' ? "Women's" : "Men's"} Fashion`;
+            document.getElementById('section-title').textContent = gender === 'women' ? "Her Look" : "His Look";
+            
+            updateDisplay();
+        }
+
+        function backToCenter() {
+            selectedCenter = null;
             selectedGender = null;
             currentSelection = { top: 0, bottom: 0, shoes: 0 };
-            document.getElementById('gender-selection').style.display = 'flex';
-            document.getElementById('shopping-content').style.display = 'none';
-            document.getElementById('caption').value = '';
-            document.getElementById('post-status').textContent = '';
+            document.getElementById('center-selection-screen').classList.remove('hidden');
+            document.getElementById('gender-selection-screen').classList.add('hidden');
+            document.getElementById('shopping-content').classList.add('hidden');
+        }
+
+        function backToGender() {
+            selectedGender = null;
+            currentSelection = { top: 0, bottom: 0, shoes: 0 };
+            document.getElementById('gender-selection-screen').classList.remove('hidden');
+            document.getElementById('shopping-content').classList.add('hidden');
         }
 
         function updateDisplay() {
-            if (!selectedGender) return;
+            if (!selectedCenter || !selectedGender) return;
 
-            const topItem = wardrobes[selectedGender].top[currentSelection.top];
-            const bottomItem = wardrobes[selectedGender].bottom[currentSelection.bottom];
-            const shoesItem = wardrobes[selectedGender].shoes[currentSelection.shoes];
+            const wardrobe = shoppingCenters[selectedCenter][selectedGender];
+            const topItem = wardrobe.top[currentSelection.top];
+            const bottomItem = wardrobe.bottom[currentSelection.bottom];
+            const shoesItem = wardrobe.shoes[currentSelection.shoes];
 
             document.getElementById('top-display').innerHTML = `<img src="${topItem.image}" alt="${topItem.name}">`;
             document.getElementById('bottom-display').innerHTML = `<img src="${bottomItem.image}" alt="${bottomItem.name}">`;
@@ -622,85 +705,50 @@ footer:
             document.getElementById('bottom-name').textContent = bottomItem.name;
             document.getElementById('shoes-name').textContent = shoesItem.name;
 
-            const randomPhrase = phrases[selectedGender][Math.floor(Math.random() * phrases[selectedGender].length)];
+            const phrases = [
+                "Looking great!",
+                "Perfect choice!",
+                "Stylish!",
+                "Fashion forward!",
+                "Excellent taste!",
+                "Love it!"
+            ];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
             document.getElementById('status').textContent = randomPhrase;
         }
 
         function nextItem(category) {
-            currentSelection[category] = (currentSelection[category] + 1) % wardrobes[selectedGender][category].length;
+            const wardrobe = shoppingCenters[selectedCenter][selectedGender];
+            currentSelection[category] = (currentSelection[category] + 1) % wardrobe[category].length;
             updateDisplay();
-            updateOutfitPreview();
         }
 
         function prevItem(category) {
-            currentSelection[category] = (currentSelection[category] - 1 + wardrobes[selectedGender][category].length) % wardrobes[selectedGender][category].length;
+            const wardrobe = shoppingCenters[selectedCenter][selectedGender];
+            currentSelection[category] = (currentSelection[category] - 1 + wardrobe[category].length) % wardrobe[category].length;
             updateDisplay();
-            updateOutfitPreview();
         }
 
         function randomOutfit() {
-            currentSelection.top = Math.floor(Math.random() * wardrobes[selectedGender].top.length);
-            currentSelection.bottom = Math.floor(Math.random() * wardrobes[selectedGender].bottom.length);
-            currentSelection.shoes = Math.floor(Math.random() * wardrobes[selectedGender].shoes.length);
+            const wardrobe = shoppingCenters[selectedCenter][selectedGender];
+            currentSelection.top = Math.floor(Math.random() * wardrobe.top.length);
+            currentSelection.bottom = Math.floor(Math.random() * wardrobe.bottom.length);
+            currentSelection.shoes = Math.floor(Math.random() * wardrobe.shoes.length);
             updateDisplay();
-            updateOutfitPreview();
-            document.getElementById('status').textContent = "✨ Surprise! Pure luxury! ✨";
+            document.getElementById('status').textContent = "✨ Surprise! ✨";
         }
 
         function saveOutfit() {
+            const wardrobe = shoppingCenters[selectedCenter][selectedGender];
             const outfit = {
-                top: wardrobes[selectedGender].top[currentSelection.top].name,
-                bottom: wardrobes[selectedGender].bottom[currentSelection.bottom].name,
-                shoes: wardrobes[selectedGender].shoes[currentSelection.shoes].name
-            };
-            console.log(`Saved ${selectedGender} outfit:`, outfit);
-            document.getElementById('status').textContent = "💾 Outfit saved! Impeccable taste!";
-        }
-
-        function updateOutfitPreview() {
-            if (!selectedGender) return;
-            
-            const outfit = `${wardrobes[selectedGender].top[currentSelection.top].name} + ${wardrobes[selectedGender].bottom[currentSelection.bottom].name} + ${wardrobes[selectedGender].shoes[currentSelection.shoes].name}`;
-            document.getElementById('preview-outfit').textContent = outfit;
-        }
-
-        function postOutfit() {
-            const statusDiv = document.getElementById('post-status');
-            
-            const outfitData = {
+                center: shoppingCenters[selectedCenter].name,
                 gender: selectedGender,
-                top: wardrobes[selectedGender].top[currentSelection.top].name,
-                bottom: wardrobes[selectedGender].bottom[currentSelection.bottom].name,
-                shoes: wardrobes[selectedGender].shoes[currentSelection.shoes].name,
-                caption: document.getElementById('caption').value || '',
-                shopping_area: "{{ shopping_area.name }}"
+                top: wardrobe.top[currentSelection.top].name,
+                bottom: wardrobe.bottom[currentSelection.bottom].name,
+                shoes: wardrobe.shoes[currentSelection.shoes].name
             };
-            
-            statusDiv.textContent = '⏳ Posting...';
-            
-            fetch('/api/post-outfit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(outfitData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    statusDiv.textContent = '✅ Posted! Shopping at {{ shopping_area.name }}!';
-                    statusDiv.style.color = '#51cf66';
-                    document.getElementById('caption').value = ''; 
-                } else {
-                    statusDiv.textContent = `❌ Error: ${data.error}`;
-                    statusDiv.style.color = '#ff6b6b';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                statusDiv.textContent = '❌ Failed to post. Please try again.';
-                statusDiv.style.color = '#ff6b6b';
-            });
+            console.log('Saved outfit:', outfit);
+            document.getElementById('status').textContent = "💾 Outfit saved!";
         }
     </script>
 </body>
