@@ -946,6 +946,44 @@ footer:
             font-weight: 600;
         }
 
+        /* Add to existing styles */
+        .closed {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .open-late {
+            color: #51cf66;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .update-note {
+            font-style: italic;
+            color: #ffed4a;
+            border-top: 1px solid #2d4a7c;
+            margin-top: 5px;
+            padding-top: 5px;
+        }
+
+        .data-notification {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* MET loading animation */
+        .met-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .content-grid {
@@ -967,6 +1005,62 @@ footer:
             .met-building, .icecream-building, .empire-building, .ukrainian-building {
                 transform: translateX(-50%) scale(0.8);
             }
+        }
+
+        /* ============================================
+           LIVE HOURS INTEGRATION STYLES
+           ============================================ */
+
+        /* Animation for highlighting updated data */
+        @keyframes highlight {
+            0% { background-color: rgba(255, 215, 0, 0.3); }
+            100% { background-color: transparent; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Loading spinner */
+        .live-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #2d4a7c;
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px auto;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .status-open {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .status-closed {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .live-hours {
+            font-weight: bold;
+            color: #FFD700 !important;
+        }
+
+        .hours-loading {
+            text-align: center;
+            padding: 20px !important;
         }
     </style>
 </head>
@@ -1360,6 +1454,173 @@ footer:
     </footer>
 
     <script>
+        // ============================================
+        // LIVE MUSEUM HOURS INTEGRATION
+        // ============================================
+
+        // Function to fetch live hours from Flask API
+        async function fetchMuseumHours(museumName) {
+            try {
+                // Map museum names to API endpoints
+                const apiMap = {
+                    'met': 'http://localhost:5002/api/met',
+                    'icecream': 'http://localhost:5002/api/icecream',
+                    'ukrainian': 'http://localhost:5002/api/ukrainian',
+                    'empire': 'http://localhost:5002/api/empire'
+                };
+
+                console.log(`Fetching ${museumName} hours from ${apiMap[museumName]}`);
+                const response = await fetch(apiMap[museumName]);
+                const data = await response.json();
+                
+                console.log(`Received ${museumName} data:`, data.data);
+                return data.data;
+            } catch (error) {
+                console.error(`Error fetching ${museumName} hours:`, error);
+                return null;
+            }
+        }
+
+        // Update hours for a specific museum section
+        async function updateMuseumHours(museumId) {
+            console.log(`Updating hours for: ${museumId}`);
+            const museumName = museumId.replace('-section', '');
+            const hoursList = document.querySelector(`#${museumId} .hours-list`);
+            
+            if (!hoursList) {
+                console.error(`Could not find hours list for ${museumId}`);
+                return;
+            }
+            
+            // Store original content
+            const originalContent = hoursList.innerHTML;
+            
+            // Add loading indicator
+            hoursList.innerHTML = `
+                <li class="hours-loading">
+                    <div class="live-loading-spinner"></div>
+                    <div>Fetching live hours...</div>
+                </li>
+            `;
+            
+            try {
+                // Fetch from API
+                const museumData = await fetchMuseumHours(museumName);
+                
+                if (museumData) {
+                    console.log(`Updating UI with ${museumName} data`);
+                    // Update with scraped data
+                    hoursList.innerHTML = `
+                        <li><span>Live Hours</span><span class="live-hours">${museumData.hours}</span></li>
+                        <li><span>Status</span><span class="status-badge status-open">${museumData.status.toUpperCase()}</span></li>
+                        <li><span>Address</span><span>${museumData.address}</span></li>
+                        <li><span>Phone</span><span>${museumData.phone}</span></li>
+                        <li class="update-note"><span>Last Updated</span><span>${museumData.last_updated}</span></li>
+                    `;
+                    
+                    // Add error message if exists
+                    if (museumData.error) {
+                        hoursList.innerHTML += `
+                            <li style="color: #e74c3c;"><span>Note</span><span>${museumData.error}</span></li>
+                        `;
+                    }
+                    
+                    // Add highlight animation
+                    hoursList.style.animation = "highlight 2s ease";
+                    setTimeout(() => hoursList.style.animation = "", 2000);
+                } else {
+                    console.log('No data received, showing original content');
+                    // Fall back to original content
+                    hoursList.innerHTML = originalContent;
+                }
+            } catch (error) {
+                console.error('Error updating hours:', error);
+                hoursList.innerHTML = originalContent;
+            }
+        }
+
+        // Add refresh buttons to each museum section
+        function addRefreshButtons() {
+            console.log('Adding refresh buttons...');
+            const sections = ['met', 'icecream', 'ukrainian', 'empire'];
+            
+            sections.forEach(museumId => {
+                const section = document.getElementById(`${museumId}-section`);
+                if (!section) {
+                    console.warn(`Section ${museumId}-section not found`);
+                    return;
+                }
+                
+                // Find the interactive buttons container
+                const buttonsContainer = section.querySelector('.interactive-buttons');
+                if (!buttonsContainer) {
+                    console.warn(`Buttons container not found in ${museumId}-section`);
+                    return;
+                }
+                
+                // Check if button already exists
+                if (buttonsContainer.querySelector('.refresh-hours-btn')) {
+                    console.log(`Refresh button already exists for ${museumId}`);
+                    return;
+                }
+                
+                // Create refresh button
+                const refreshButton = document.createElement('button');
+                refreshButton.className = 'btn btn-primary refresh-hours-btn';
+                refreshButton.innerHTML = '<span>🔄</span> Update Live Hours';
+                refreshButton.onclick = () => {
+                    console.log(`Refresh button clicked for ${museumId}`);
+                    updateMuseumHours(`${museumId}-section`);
+                };
+                
+                // Add to container (before the website button)
+                const websiteBtn = buttonsContainer.querySelector('button');
+                if (websiteBtn) {
+                    console.log(`Adding button before website button for ${museumId}`);
+                    buttonsContainer.insertBefore(refreshButton, websiteBtn);
+                } else {
+                    console.log(`Adding button to container for ${museumId}`);
+                    buttonsContainer.appendChild(refreshButton);
+                }
+                
+                console.log(`Added refresh button to ${museumId}`);
+            });
+        }
+
+        // Test if API is reachable
+        async function testAPIConnection() {
+            try {
+                console.log('Testing API connection...');
+                const response = await fetch('http://localhost:5002/api/test');
+                const data = await response.json();
+                console.log('API test result:', data);
+                
+                if (data.success) {
+                    console.log('✅ API connection successful!');
+                } else {
+                    console.warn('⚠️ API returned but with errors');
+                }
+            } catch (error) {
+                console.error('❌ API connection failed:', error);
+                // Don't alert - just log to console
+            }
+        }
+
+        // Initialize live data
+        function initializeLiveData() {
+            console.log('Initializing live museum hours...');
+            
+            // Test the API connection
+            testAPIConnection();
+            
+            // Add buttons to each museum
+            addRefreshButtons();
+        }
+
+        // ============================================
+        // EXISTING ANIMATION FUNCTIONS
+        // ============================================
+
         // Create stars for Empire State section
         function createStars() {
             const starsContainer = document.getElementById('stars-container');
@@ -1550,18 +1811,25 @@ footer:
                 });
             });
         });
-        
-        // Initialize animations
+
+        // ============================================
+        // INITIALIZE EVERYTHING
+        // ============================================
+
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            
+            // 1. Setup animations
             createStars();
             createBuildingSections();
             createSprinkles();
             createBuildingLights();
             
+            // 2. Setup scroll tracking
             window.addEventListener('scroll', updateProgressIndicator);
             updateProgressIndicator();
             
-            // Navbar scroll effect
+            // 3. Setup navbar scroll effect
             window.addEventListener('scroll', function() {
                 const nav = document.querySelector('nav');
                 if (window.scrollY > 100) {
@@ -1572,6 +1840,9 @@ footer:
                     nav.style.boxShadow = '0 2px 15px rgba(0,0,0,0.3)';
                 }
             });
+            
+            // 4. Setup live museum hours (ADDED!)
+            setTimeout(initializeLiveData, 1000);
         });
     </script>
 </body>
