@@ -1463,10 +1463,10 @@ footer:
             try {
                 // Map museum names to API endpoints
                 const apiMap = {
-                    'met': 'http://localhost:5002/api/met',
-                    'icecream': 'http://localhost:5002/api/icecream',
-                    'ukrainian': 'http://localhost:5002/api/ukrainian',
-                    'empire': 'http://localhost:5002/api/empire'
+                    'met': 'http://localhost:8587/api/met',
+                    'icecream': 'http://localhost:8587/api/icecream',
+                    'ukrainian': 'http://localhost:8587/api/ukrainian',
+                    'empire': 'http://localhost:8587/api/empire'
                 };
 
                 console.log(`Fetching ${museumName} hours from ${apiMap[museumName]}`);
@@ -1591,7 +1591,7 @@ footer:
         async function testAPIConnection() {
             try {
                 console.log('Testing API connection...');
-                const response = await fetch('http://localhost:5002/api/test');
+                const response = await fetch('http://localhost:8587/api/test');
                 const data = await response.json();
                 console.log('API test result:', data);
                 
