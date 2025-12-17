@@ -744,8 +744,17 @@ footer:
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
                 shoes: wardrobe.shoes[currentSelection.shoes].name
             };
-            console.log('Saved outfit:', outfit);
-            document.getElementById('status').textContent = "💾 Outfit saved!";
+            // Persist the saved outfit to localStorage and navigate to the post page
+            try {
+                localStorage.setItem('savedOutfit', JSON.stringify(outfit));
+                console.log('savedOutfit stored:', localStorage.getItem('savedOutfit'));
+                // give brief feedback then navigate to the posting page (use canonical permalink)
+                document.getElementById('status').textContent = "💾 Outfit saved! Redirecting to post...";
+                setTimeout(() => { window.location.href = '/student/new-york/shopping/post/'; }, 600);
+            } catch (e) {
+                console.error('Failed to save outfit:', e);
+                document.getElementById('status').textContent = "❌ Failed to save outfit locally.";
+            }
         }
     </script>
 </body>
