@@ -608,7 +608,7 @@ footer:
                         { name: 'Velvet Jacket', image: 'https://via.placeholder.com/300x400/8B008B/FFFFFF?text=Velvet' }
                     ],
                     bottom: [
-                        { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Trousers' },
+                        { name: 'Light Blue Baggy Jeans', image: 'https://image.hm.com/assets/hm/f8/a1/f8a167f63390ecd1df2bc08a500f54a08acac22e.jpg?imwidth=1536' },
                         { name: 'Haute Couture Skirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Haute+Couture' },
                         { name: 'Luxury Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Luxury+Pants' },
                         { name: 'Pleated Skirt', image: 'https://via.placeholder.com/300x400/4B0082/FFFFFF?text=Pleated' },
