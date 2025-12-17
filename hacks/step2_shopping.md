@@ -501,11 +501,11 @@ footer:
                 }
             },
             'macys': {
-                name: 'Macy\'s Herald Square',
+                name: 'Macy's Herald Square',
                 description: 'Classic department store elegance',
                 women: {
                     top: [
-                        { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/000000?text=Silk+Blouse' },
+                        { name: 'White Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/26347896_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
                         { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Cashmere' },
                         { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
                         { name: 'Button-Up Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/4682B4?text=Button+Up' },
