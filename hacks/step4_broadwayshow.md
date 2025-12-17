@@ -541,7 +541,7 @@ footer:
 
   // refresh reaction counts every 5 seconds
   function refreshReactions() {
-    fetch(getURL)
+    fetch(getURL,reactOptions)
       .then(response => response.json())
       .then(data => {
         for (const row of data) {
@@ -559,7 +559,7 @@ footer:
 
   // handle love/dislike reactions
   function reaction(type, postURL, elemID) {
-    fetch(postURL, reactOptions)
+    fetch(postURL)
       .then(response => {
         if (response.status !== 200) {
           error("PUT API response failure: " + response.status);

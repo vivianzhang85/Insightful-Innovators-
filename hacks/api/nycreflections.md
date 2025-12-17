@@ -10,6 +10,7 @@ author: "Insightful Innocators"
 date: 2025-11-20
 microblog: true
 ---
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -83,7 +84,6 @@ microblog: true
   .step:last-child::after {
     display: none;
   }
-
 </style>
 </head>
 <body>
@@ -95,23 +95,49 @@ microblog: true
   <!-- Attractions Journey -->
   <div class="journey">
     <h2>Attractions Page Journey</h2>
-    <div class="step">Choose attractions (Ukrainian Museum, Ice Cream Museum, MET Museum, Empire State Building)</div>
-    <div class="step">Incorporate highlights, reviews, ratings, animation, interactive activity, live-updating hours</div>
-    <div class="step">Web scraping with BeautifulSoup</div>
-    <div class="step">Connect backend to frontend to fetch data</div>
-    <div class="step">Test endpoints in Postman</div>
+    <div class="step">Choose attractions for each NYC location</div>
+    <div class="step">Add highlights, reviews, ratings, animations, and interactive elements</div>
+    <div class="step">Scrape live hours using BeautifulSoup</div>
+    <div class="step">Connect backend endpoints to frontend</div>
+    <div class="step">Test all endpoints in Postman</div>
   </div>
 
   <!-- Broadway Journey -->
   <div class="journey">
     <h2>Broadway Page Journey</h2>
-    <div class="step">Choose Broadway shows</div>
-    <div class="step">Use Jokes API as template for lyrics implementation</div>
-    <div class="step">Test lyrics endpoints in backend via Postman</div>
-    <div class="step">Fetch data to frontend for interactive display</div>
+    <div class="step">Select Broadway shows to feature</div>
+    <div class="step">Use Jokes API structure as a model for lyrics integration</div>
+    <div class="step">Test lyrics endpoints in the backend with Postman</div>
+    <div class="step">Fetch and display data interactively on the frontend</div>
+  </div>
+
+  <!-- Breakfast Journey -->
+  <div class="journey">
+    <h2>Breakfast Page Journey</h2>
+    <div class="step">Select breakfast locations: East Village, Soho, Upper East Side, and Midtown</div>
+    <div class="step">Choose restaurants (Sarabeth’s, Jack’s Wife Freda, Shuka, Ess-a-Bagel)</div>
+    <div class="step">Create custom menus for each restaurant</div>
+    <div class="step">Build an interactive frontend to add multiple items to a custom menu</div>
+    <div class="step">Scrape live restaurant hours using BeautifulSoup</div>
+    <div class="step">Develop and test backend endpoints in Postman</div>
+    <div class="step">Fetch backend data into the breakfast frontend</div>
+    <div class="step">Troubleshoot connections to fully link frontend and backend</div>
+  </div>
+
+  <!-- Shopping Journey -->
+  <div class="journey">
+    <h2>Shopping Page Journey</h2>
+    <div class="step">Design concept for users to build and post outfits from curated selections</div>
+    <div class="step">Research and select four New York-based shops</div>
+    <div class="step">Scrape real product images directly from shop websites</div>
+    <div class="step">Integrate authentication API to log in and track users</div>
+    <div class="step">Confirm post API functionality for sharing outfits</div>
+    <div class="step">Connect scraped images to frontend for realistic outfit displays</div>
+    <div class="step">Create an authentic, interactive shopping experience using real data</div>
   </div>
 
 </div>
 
 </body>
 </html>
+
