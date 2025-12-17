@@ -14,7 +14,6 @@ footer:
     home: /nyc/home/
     next: /new-york/landmarks/
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -501,11 +500,11 @@ footer:
                 }
             },
             'macys': {
-                name: 'Macy\'s Herald Square',
+                name: 'Macy's Herald Square',
                 description: 'Classic department store elegance',
                 women: {
                     top: [
-                        { name: 'Silk Blouse', image: 'https://via.placeholder.com/300x400/FFE4E1/000000?text=Silk+Blouse' },
+                        { name: 'White Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/26347896_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
                         { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Cashmere' },
                         { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
                         { name: 'Button-Up Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/4682B4?text=Button+Up' },
@@ -601,46 +600,43 @@ footer:
                 description: 'Luxury designer boutiques',
                 women: {
                     top: [
-                        { name: 'Designer Silk Blouse', image: 'https://via.placeholder.com/300x400/F5F5DC/000000?text=Designer+Silk' },
-                        { name: 'Couture Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Couture+Blazer' },
-                        { name: 'Luxury Knit', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Luxury+Knit' },
-                        { name: 'Satin Top', image: 'https://via.placeholder.com/300x400/FFE4E1/000000?text=Satin+Top' },
-                        { name: 'Velvet Jacket', image: 'https://via.placeholder.com/300x400/8B008B/FFFFFF?text=Velvet' }
+                        { name: 'Cream Knit Sweater', image: 'https://image.hm.com/assets/hm/5a/a9/5aa96ad24ca61307f2fd557199d2c37316495b72.jpg?imwidth=2160' },
+                        { name: 'Cream Cardigan', image: 'https://image.hm.com/assets/hm/49/5a/495a728ace736a9858fc0c58d4fd53c1301499c6.jpg?imwidth=2160' },
+                        { name: 'Long-Sleaved Jersey Top', image: 'https://image.hm.com/assets/hm/fd/b0/fdb01fd25e177172f290cf7c3cd8b548591f6eb1.jpg?imwidth=2160' },
+                        { name: 'Oversized Boatneck Sweater', image: 'https://image.hm.com/assets/hm/07/c8/07c86252327a71cd0a1b97c6b5c6cbaba3f16873.jpg?imwidth=2160' },
+                        { name: 'Black Hoodie', image: 'https://image.hm.com/assets/hm/67/c6/67c65b95233364e5c312e4fc7f36eda04251323d.jpg?imwidth=657' }
                     ],
                     bottom: [
                         { name: 'Light Blue Baggy Jeans', image: 'https://image.hm.com/assets/hm/f8/a1/f8a167f63390ecd1df2bc08a500f54a08acac22e.jpg?imwidth=1536' },
-                        { name: 'Haute Couture Skirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Haute+Couture' },
-                        { name: 'Luxury Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Luxury+Pants' },
-                        { name: 'Pleated Skirt', image: 'https://via.placeholder.com/300x400/4B0082/FFFFFF?text=Pleated' },
-                        { name: 'Wide-Leg Trousers', image: 'https://via.placeholder.com/300x400/2C3E50/FFFFFF?text=Wide-Leg' }
+                        { name: 'Black Pleated Mini Skirt', image: 'https://image.hm.com/assets/hm/0e/ea/0eea470eab0ef124cc191d3b1e2c8b04e3d4cf80.jpg?imwidth=396' },
+                        { name: 'Flared Low Jeans', image: 'https://image.hm.com/assets/hm/1b/67/1b67cbc902c9736c9fa89eb2ebc548062731eb16.jpg?imwidth=657' },
+                        { name: 'Dressy Mini Skirt', image: 'https://image.hm.com/assets/hm/4d/1d/4d1d5e2b834d9afe152d7169ae98e8ed77136244.jpg?imwidth=657' },
+                        { name: 'Dark Blue Baggy Jeans', image: 'https://image.hm.com/assets/hm/1c/92/1c924704a2fd8de7965831f055c1f421f4e4a02e.jpg?imwidth=1536' }
                     ],
                     shoes: [
-                        { name: 'Designer Heels', image: 'https://via.placeholder.com/300x200/B22222/FFFFFF?text=Designer+Heels' },
-                        { name: 'Luxury Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Luxury+Boots' },
-                        { name: 'Patent Pumps', image: 'https://via.placeholder.com/300x200/8B0000/FFFFFF?text=Patent+Pumps' },
-                        { name: 'Stilettos', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Stilettos' }
+                        { name: 'Sneakers', image: 'https://image.hm.com/assets/hm/b8/9e/b89ed253c72a9f66549c31c868340d52e9988477.jpg?imwidth=2160' },
+                        { name: 'Warm-lined Boots', image: 'https://image.hm.com/assets/hm/9b/90/9b90c6cbf772d2d8195e0b4359e36d01174147fa.jpg?imwidth=2160' },
+                        { name: 'Birkenstock Sandals', image: 'https://cdn.fleetfeet.com/productTile/products/151183_left.jpg' },
+                        { name: 'Heeled Slingbacks', image: 'https://image.hm.com/assets/hm/df/2b/df2b10db22e3561154471fafc8ff422098309334.jpg?imwidth=657' }
                     ]
                 },
                 men: {
                     top: [
-                        { name: 'Designer Suit Jacket', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Designer+Suit' },
-                        { name: 'Luxury Dress Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/000080?text=Luxury+Shirt' },
-                        { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Cashmere' },
-                        { name: 'Tailored Blazer', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Tailored' },
-                        { name: 'Designer Polo', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Polo' }
+                        { name: 'Black Sweater', image: 'https://image.hm.com/assets/hm/9a/77/9a77c0f49d87abe822edcabd76cb25d7ff41044e.jpg?imwidth=2160' },
+                        { name: 'Loose Fit Half-Zip Sweatshirt', image: 'https://image.hm.com/assets/hm/1d/9c/1d9cad8c0834c59489037805c885fb5d5a240e2f.jpg?imwidth=2160' },
+                        { name: 'Loose Fit Scuba Hoodie', image: 'https://image.hm.com/assets/hm/75/fb/75fb2c3e06bad89c2755f7f76cae3485bfd559d8.jpg?imwidth=2160' },
+                        { name: 'Regular-Fit Rib-Knit Cotton Sweater', image: 'https://image.hm.com/assets/hm/e9/94/e99416b0bac9e59a6e3480cba0a242fb44e8db8c.jpg?imwidth=2160' },
                     ],
                     bottom: [
-                        { name: 'Tailored Suit Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Suit+Pants' },
-                        { name: 'Designer Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Designer+Trousers' },
-                        { name: 'Luxury Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Luxury+Chinos' },
-                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Dress+Pants' },
-                        { name: 'Wool Trousers', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Wool+Trousers' }
+                        { name: 'Baggy Darted Jeans', image: 'https://image.hm.com/assets/hm/89/d8/89d87ebd0a209c702474f3f79c6bbeb24d72d451.jpg?imwidth=657' },
+                        { name: 'Light Blue Jeans', image: 'https://image.hm.com/assets/hm/db/5c/db5ca18fca0db5d6a8b6a05a131601a2c0780507.jpg?imwidth=657' },
+                        { name: 'Fairfax Baggy Jeans', image: 'https://image.hm.com/assets/hm/dc/98/dc987f075569a9e8afb546dd6288344c6cc7a614.jpg?imwidth=2160' },
+                        { name: 'Loose-Fit Sweatpants', image: 'https://image.hm.com/assets/hm/ec/ed/ecedfe5492def4518cbd18ba0946a0215b48a1fe.jpg?imwidth=657' }
                     ],
                     shoes: [
-                        { name: 'Italian Leather Oxfords', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Italian+Oxfords' },
-                        { name: 'Designer Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Designer+Loafers' },
-                        { name: 'Luxury Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Luxury+Boots' },
-                        { name: 'Patent Dress Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Patent+Shoes' }
+                        { name: 'Brown Sneakers', image: 'https://image.hm.com/assets/hm/d2/80/d280bb63e27922efc6a171e0fb14b93f407abced.jpg?imwidth=2160' },
+                        { name: 'Chunky Sneakers', image: 'https://image.hm.com/assets/hm/91/8e/918e07a0ef4eec4b511b269b208a83a790d10dd5.jpg?imwidth=2160' },
+                        { name: 'White Sneakers', image: 'https://image.hm.com/assets/hm/fb/8d/fb8d78018ef31d1891a4e96c7ad7b0bb80348db8.jpg?imwidth=2160' }
                     ]
                 }
             }
@@ -747,8 +743,17 @@ footer:
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
                 shoes: wardrobe.shoes[currentSelection.shoes].name
             };
-            console.log('Saved outfit:', outfit);
-            document.getElementById('status').textContent = "💾 Outfit saved!";
+            // Persist the saved outfit to localStorage and navigate to the post page
+            try {
+                localStorage.setItem('savedOutfit', JSON.stringify(outfit));
+                console.log('savedOutfit stored:', localStorage.getItem('savedOutfit'));
+                // give brief feedback then navigate to the posting page (use canonical permalink)
+                document.getElementById('status').textContent = "💾 Outfit saved! Redirecting to post...";
+                setTimeout(() => { window.location.href = '/student/new-york/shopping/post/'; }, 600);
+            } catch (e) {
+                console.error('Failed to save outfit:', e);
+                document.getElementById('status').textContent = "❌ Failed to save outfit locally.";
+            }
         }
     </script>
 </body>
