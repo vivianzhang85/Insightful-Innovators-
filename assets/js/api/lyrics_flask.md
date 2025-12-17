@@ -32,10 +32,11 @@ show_reading_time: false
   const DISLIKE = "dislike";
 
   // prepare fetch urls
-  const url = `${pythonURI}/api/lyrics`;
-  const getURL = url + "/";
-  const loveURL = url + "/love/";
-  const dislikeURL = url + "/dislike/";
+  // const url = `${pythonURI}/api/lyrics`;
+  const url = `http://127.0.0.1:8587/api/lyrics`;
+  const getURL = url + "";
+  const loveURL = url + "/love";
+  const dislikeURL = url + "/dislike";
 
   // prepare PUT options
   const reactOptions = {
@@ -44,7 +45,8 @@ show_reading_time: false
   };
 
   // fetch all lyrics
-  fetch(getURL, fetchOptions)
+  //fetch(getURL, fetchOptions)
+  fetch(getURL)
     .then(response => {
       if (response.status !== 200) {
         error("GET API response failure: " + response.status);
@@ -64,7 +66,7 @@ show_reading_time: false
           loveBtn.id = LOVE + row.id;
           loveBtn.innerHTML = row.love;
           loveBtn.onclick = () => {
-            reaction(LOVE, loveURL + row.id, loveBtn.id);
+            reaction(LOVE, loveURL +"/", + row.id, loveBtn.id);
           };
           love.appendChild(loveBtn);
 
@@ -86,12 +88,12 @@ show_reading_time: false
       });
     })
     .catch(err => {
-      error(err + ": " + getURL);
+      error(err + ": " + getURL + " " + str(fetchOptions));
     });
 
   // refresh reaction counts every 5 seconds
   function refreshReactions() {
-    fetch(getURL, fetchOptions)
+    fetch(getURL)
       .then(response => response.json())
       .then(data => {
         for (const row of data) {
