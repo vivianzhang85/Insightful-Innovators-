@@ -345,25 +345,25 @@ footer:
         <!-- Shopping Center Selection -->
         <div id="center-selection-screen">
             <div class="center-selection">
-                <div class="center-card" onclick="selectCenter('east-river')">
+                <div class="center-card" data-center="east-river">
                     <div class="center-icon">🏬</div>
                     <h2>East River Plaza</h2>
                     <p>Affordable fashion & everyday essentials</p>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('macys')">
+                <div class="center-card" data-center="macys">
                     <div class="center-icon">🏢</div>
                     <h2>Macy's Herald Square</h2>
                     <p>Classic department store elegance</p>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('soho')">
+                <div class="center-card" data-center="soho">
                     <div class="center-icon">✨</div>
                     <h2>SoHo Center</h2>
                     <p>Trendy & fashion-forward styles</p>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('columbus')">
+                <div class="center-card" data-center="columbus">
                     <div class="center-icon">💎</div>
                     <h2>Columbus Circle</h2>
                     <p>Luxury designer boutiques</p>
