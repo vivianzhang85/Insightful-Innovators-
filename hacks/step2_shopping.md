@@ -484,14 +484,14 @@ footer:
                     bottom: [
                         { name: 'Dark Blue Jeans', image: 'https://target.scene7.com/is/image/Target/GUEST_d9cf97d8-2f05-4ef3-af6c-1065b649bf4e?wid=1200&hei=1200&qlt=80' },
                         { name: 'Baggy Utility Pants', image: 'https://target.scene7.com/is/image/Target/GUEST_44c96d3a-3ee5-407c-8035-14d1336bb299?wid=1200&hei=1200&qlt=80' },
-                        { name: 'Joggers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Joggers' },
-                        { name: 'Shorts', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Shorts' },
+                        { name: 'Brown Pants', image: 'https://target.scene7.com/is/image/Target/GUEST_ad55d77f-8054-47a0-bd03-a0483d019352?qlt=85&fmt=webp&hei=500&wid=500' },
+                        { name: 'Cargo Pants', image: 'https://target.scene7.com/is/image/Target/GUEST_5209e381-b85d-491d-b66c-fe19ec091349?qlt=85&fmt=webp&hei=500&wid=500' },
                     ],
                     shoes: [
-                        { name: 'Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Sneakers' },
-                        { name: 'Canvas Shoes', image: 'https://via.placeholder.com/300x200/000080/FFFFFF?text=Canvas' },
-                        { name: 'Casual Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Boots' },
-                        { name: 'Sandals', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Sandals' }
+                        { name: 'Brown Shoes', image: 'https://target.scene7.com/is/image/Target/GUEST_9d157095-ebd9-4032-8504-9882ec5f683a?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Dockers Men Shoes', image: 'https://target.scene7.com/is/image/Target/GUEST_27f79b0c-c324-4e5c-a61d-b0c8709f6989?wid=1200&hei=1200&qlt=80' },
+                        { name: 'White Sneakers', image: 'https://target.scene7.com/is/image/Target/GUEST_1933b21b-f55d-4a14-9f65-4c00fcc80134?qlt=85&fmt=webp&hei=500&wid=500' },
+                        { name: 'Leather Shoes', image: 'https://target.scene7.com/is/image/Target/GUEST_4bfb83b0-234a-4283-b2ca-c0b415152535?qlt=85&fmt=webp&hei=500&wid=500' }
                     ]
                 }
             },
@@ -501,45 +501,41 @@ footer:
                 women: {
                     top: [
                         { name: 'White Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/26347896_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
-                        { name: 'Cashmere Sweater', image: 'https://via.placeholder.com/300x400/E6E6FA/000000?text=Cashmere' },
-                        { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
-                        { name: 'Button-Up Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/4682B4?text=Button+Up' },
-                        { name: 'Cardigan', image: 'https://via.placeholder.com/300x400/FFDAB9/000000?text=Cardigan' }
+                        { name: 'Cream Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/31049706_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
+                        { name: 'Grey Striped Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/31049706_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
+                        { name: 'Blue Striped Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/34690286_fpx.tif?qlt=85,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=240&hei=293' },
                     ],
                     bottom: [
-                        { name: 'Pencil Skirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Pencil+Skirt' },
-                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Dress+Pants' },
-                        { name: 'A-Line Skirt', image: 'https://via.placeholder.com/300x400/800000/FFFFFF?text=A-Line+Skirt' },
-                        { name: 'Wide-Leg Trousers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Trousers' },
-                        { name: 'Midi Skirt', image: 'https://via.placeholder.com/300x400/4B0082/FFFFFF?text=Midi+Skirt' }
+                        { name: 'Bootcut Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/8/optimized/34492948_fpx.tif?op_sharpen=1&wid=1500&fit=fit%2C1&fmt=webp' },
+                        { name: 'Blue Baggy Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/3/optimized/34816643_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Light Wash Baggy Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/8/optimized/25060138_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Black Sweatpants', image: 'https://slimages.macysassets.com/is/image/MCY/products/0/optimized/30437390_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
                     ],
                     shoes: [
-                        { name: 'Pumps', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Pumps' },
-                        { name: 'Heeled Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Heeled+Boots' },
-                        { name: 'Flats', image: 'https://via.placeholder.com/300x200/C0C0C0/000000?text=Flats' },
-                        { name: 'Ankle Boots', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Ankle+Boots' }
+                        { name: 'Adidas', image: 'https://slimages.macysassets.com/is/image/MCY/products/3/optimized/31271463_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Ugg Tasman', image: 'https://slimages.macysassets.com/is/image/MCY/products/8/optimized/33636358_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'White Platform Sneakers', image: 'https://slimages.macysassets.com/is/image/MCY/products/4/optimized/24150204_fpx.tif?op_sharpen=1&wid=700&fit=fit,1&fmt=webp' },
+                        { name: 'Nikes', image: 'https://slimages.macysassets.com/is/image/MCY/products/1/optimized/28841871_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' }
                     ]
                 },
                 men: {
                     top: [
-                        { name: 'Dress Shirt', image: 'https://via.placeholder.com/300x400/F0F8FF/000080?text=Dress+Shirt' },
-                        { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo' },
-                        { name: 'Blazer', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Blazer' },
-                        { name: 'V-Neck Sweater', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=V-Neck' },
-                        { name: 'Sport Coat', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Sport+Coat' }
+                        { name: 'Blue Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/1/optimized/34421941_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Cream Hoodie', image: 'https://slimages.macysassets.com/is/image/MCY/products/9/optimized/28131229_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Red Quarter-Zip', image: 'https://slimages.macysassets.com/is/image/MCY/products/0/optimized/34871670_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Black Sweater', image: 'https://slimages.macysassets.com/is/image/MCY/products/3/optimized/34876543_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' }
                     ],
                     bottom: [
-                        { name: 'Dress Pants', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Dress+Pants' },
-                        { name: 'Chinos', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Chinos' },
-                        { name: 'Suit Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Suit+Pants' },
-                        { name: 'Khakis', image: 'https://via.placeholder.com/300x400/BDB76B/000000?text=Khakis' },
-                        { name: 'Slacks', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Slacks' }
+                        { name: 'Medium Blue Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/1/optimized/33255971_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Black Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/1/optimized/27686001_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Light Blue Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/2/optimized/31838162_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Dark Blue Jeans', image: 'https://slimages.macysassets.com/is/image/MCY/products/4/optimized/33159924_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
                     ],
                     shoes: [
-                        { name: 'Oxford Shoes', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Oxfords' },
-                        { name: 'Loafers', image: 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Loafers' },
-                        { name: 'Derby Shoes', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Derby' },
-                        { name: 'Dress Boots', image: 'https://via.placeholder.com/300x200/2F4F4F/FFFFFF?text=Dress+Boots' }
+                        { name: 'White Sneakers', image: 'https://slimages.macysassets.com/is/image/MCY/products/9/optimized/32120719_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Adidas', image: 'https://slimages.macysassets.com/is/image/MCY/products/2/optimized/34109882_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Brown Sneaker', image: 'https://slimages.macysassets.com/is/image/MCY/products/4/optimized/31392084_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' },
+                        { name: 'Black and White Nikes', image: 'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/32221626_fpx.tif?qlt=55,0&resMode=sharp2&op_usm=1.75,0.3,2,0&fmt=webp&wid=684&hei=834' }
                     ]
                 }
             },
