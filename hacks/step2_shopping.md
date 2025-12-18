@@ -456,40 +456,36 @@ footer:
                 description: 'Affordable fashion & everyday essentials',
                 women: {
                     top: [
-                        { name: 'Basic Cotton T-Shirt', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Cotton+T-Shirt' },
-                        { name: 'Casual Hoodie', image: 'https://via.placeholder.com/300x400/87CEEB/000000?text=Hoodie' },
-                        { name: 'Graphic Tee', image: 'https://via.placeholder.com/300x400/DDA0DD/000000?text=Graphic+Tee' },
-                        { name: 'Tank Top', image: 'https://via.placeholder.com/300x400/F0E68C/000000?text=Tank+Top' },
-                        { name: 'Sweatshirt', image: 'https://via.placeholder.com/300x400/98FB98/000000?text=Sweatshirt' }
+                        { name: 'Red Long-Sleeve', image: 'https://target.scene7.com/is/image/Target/GUEST_49359324-e894-4de5-8dbf-6503e0661b83?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Grey Sweater', image: 'https://target.scene7.com/is/image/Target/GUEST_db9c98bf-5cf5-4892-881b-4d81e4e278c9?wid=1000&hei=1000&qlt=80&fmt=webp' },
+                        { name: 'Cream Sweater', image: 'https://target.scene7.com/is/image/Target/GUEST_b6932887-f0a4-4a95-ac72-995aac2e4c2b?wid=1000&hei=1000&qlt=80&fmt=webp' },
+                        { name: 'White Hoodie', image: 'https://target.scene7.com/is/image/Target/GUEST_31f5583e-e190-483a-a087-92040e57443b?wid=1200&hei=1200&qlt=80' },
                     ],
                     bottom: [
-                        { name: 'Skinny Jeans', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=Skinny+Jeans' },
-                        { name: 'Leggings', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Leggings' },
-                        { name: 'Denim Shorts', image: 'https://via.placeholder.com/300x400/6495ED/FFFFFF?text=Denim+Shorts' },
-                        { name: 'Joggers', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Joggers' },
-                        { name: 'Casual Skirt', image: 'https://via.placeholder.com/300x400/FF69B4/FFFFFF?text=Casual+Skirt' }
+                        { name: 'Grey Sweats', image: 'https://target.scene7.com/is/image/Target/GUEST_21b65932-7ea1-4e82-92b9-79b19ba0caa4?wid=1000&hei=1000&qlt=80&fmt=webp' },
+                        { name: 'Flare Pants', image: 'https://target.scene7.com/is/image/Target/GUEST_dff2f97b-febc-4ca3-9ab5-8d6c78ffc557?wid=1000&hei=1000&qlt=80&fmt=webp' },
+                        { name: 'Light Blue Jeans', image: 'https://target.scene7.com/is/image/Target/GUEST_8d88d561-dffe-4dae-a7f9-af9c809f054c?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Black Jeans', image: 'https://target.scene7.com/is/image/Target/GUEST_25dca9f0-804e-4952-a8be-0fa54c239050?wid=1200&hei=1200&qlt=80' },
                     ],
                     shoes: [
-                        { name: 'Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Sneakers' },
-                        { name: 'Canvas Shoes', image: 'https://via.placeholder.com/300x200/FF6347/FFFFFF?text=Canvas+Shoes' },
-                        { name: 'Sandals', image: 'https://via.placeholder.com/300x200/DEB887/000000?text=Sandals' },
-                        { name: 'Slip-ons', image: 'https://via.placeholder.com/300x200/000080/FFFFFF?text=Slip-ons' }
+                        { name: 'White Sneakers', image: 'https://target.scene7.com/is/image/Target/GUEST_220298a7-b188-404a-acfe-4f680957ba68?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Reebok', image: 'https://target.scene7.com/is/image/Target/GUEST_72ac4900-d657-473c-a708-192c9e81edef?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Red Sneakers', image: 'https://target.scene7.com/is/image/Target/GUEST_89089a42-5009-4794-909a-c8a35da75209?qlt=85&fmt=webp&hei=500&wid=500' },
+                        { name: 'Clogs', image: 'https://target.scene7.com/is/image/Target/GUEST_a578e0f7-85df-4cca-8d10-a371d0ef863e?qlt=85&fmt=webp&hei=500&wid=500' }
                     ]
                 },
                 men: {
                     top: [
-                        { name: 'Basic T-Shirt', image: 'https://via.placeholder.com/300x400/ADD8E6/000000?text=T-Shirt' },
-                        { name: 'Hoodie', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Hoodie' },
-                        { name: 'Graphic Tee', image: 'https://via.placeholder.com/300x400/F4A460/000000?text=Graphic+Tee' },
-                        { name: 'Flannel Shirt', image: 'https://via.placeholder.com/300x400/8B4513/FFFFFF?text=Flannel' },
-                        { name: 'Polo Shirt', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Polo' }
+                        { name: 'Cream Quarter Zip', image: 'https://target.scene7.com/is/image/Target/GUEST_7231c7a4-45a6-4b1b-b153-8b1fb6b2d834?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Black Sweater', image: 'https://target.scene7.com/is/image/Target/GUEST_13e94bdd-f53d-41e6-8682-9f4c8f3d7d9d?qlt=85&fmt=webp&hei=500&wid=500' },
+                        { name: 'Black Hoodie', image: 'https://target.scene7.com/is/image/Target/GUEST_d32e3820-0485-4d1e-ae24-ef27ffedd289?wid=1200&hei=1200&qlt=80e' },
+                        { name: 'Grey Crewneck', image: 'https://target.scene7.com/is/image/Target/GUEST_e48c1890-4761-482c-9cdf-37908d270950?wid=1200&hei=1200&qlt=80' },
                     ],
                     bottom: [
-                        { name: 'Jeans', image: 'https://via.placeholder.com/300x400/4169E1/FFFFFF?text=Jeans' },
-                        { name: 'Cargo Pants', image: 'https://via.placeholder.com/300x400/556B2F/FFFFFF?text=Cargo+Pants' },
+                        { name: 'Dark Blue Jeans', image: 'https://target.scene7.com/is/image/Target/GUEST_d9cf97d8-2f05-4ef3-af6c-1065b649bf4e?wid=1200&hei=1200&qlt=80' },
+                        { name: 'Baggy Utility Pants', image: 'https://target.scene7.com/is/image/Target/GUEST_44c96d3a-3ee5-407c-8035-14d1336bb299?wid=1200&hei=1200&qlt=80' },
                         { name: 'Joggers', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Joggers' },
                         { name: 'Shorts', image: 'https://via.placeholder.com/300x400/D2B48C/000000?text=Shorts' },
-                        { name: 'Chinos', image: 'https://via.placeholder.com/300x400/8B7355/FFFFFF?text=Chinos' }
                     ],
                     shoes: [
                         { name: 'Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Sneakers' },
