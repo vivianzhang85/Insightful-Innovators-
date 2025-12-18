@@ -544,46 +544,41 @@ footer:
                 description: 'Trendy & fashion-forward styles',
                 women: {
                     top: [
-                        { name: 'Crop Top', image: 'https://via.placeholder.com/300x400/FF69B4/FFFFFF?text=Crop+Top' },
-                        { name: 'Off-Shoulder Top', image: 'https://via.placeholder.com/300x400/FFB6C1/000000?text=Off-Shoulder' },
-                        { name: 'Mesh Top', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Mesh+Top' },
-                        { name: 'Statement Blouse', image: 'https://via.placeholder.com/300x400/9370DB/FFFFFF?text=Statement' },
-                        { name: 'Leather Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Leather+Jacket' }
+                        { name: 'Cardigan', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw25212bff/hi-res/4KC1263050010T.jpg?sw=720' },
+                        { name: 'Grey Sweater', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw7dfae91c/hi-res/UKC4251028080T.jpg?sw=720' },
+                        { name: 'Pink Cardigan', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwd8fd1eca/hi-res/1KC3243037680T.jpg?sw=720' },
+                        { name: 'Black Sweater', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwa9cf105c/hi-res/1KC3231017001T.jpg?sw=720' },
                     ],
                     bottom: [
-                        { name: 'High-Waist Jeans', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=High-Waist' },
-                        { name: 'Faux Leather Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Leather+Pants' },
-                        { name: 'Mini Skirt', image: 'https://via.placeholder.com/300x400/FF1493/FFFFFF?text=Mini+Skirt' },
-                        { name: 'Wide-Leg Pants', image: 'https://via.placeholder.com/300x400/708090/FFFFFF?text=Wide-Leg' },
-                        { name: 'Plaid Skirt', image: 'https://via.placeholder.com/300x400/8B0000/FFFFFF?text=Plaid+Skirt' }
+                        { name: 'Light Blue Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwa30a5a88/hi-res/4DC3254819470CT.jpg?sw=720' },
+                        { name: 'Black Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf91ee7f1/hi-res/4DC1264112031T.jpg?sw=720 },
+                        { name: 'Dark Blue Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwfb11e5f1/hi-res/4DC1264967401B.jpg?sw=680' },
+                        { name: 'Denim Skirt', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf2670642/hi-res/4DC1265107400CT.jpg?sw=720' },
                     ],
                     shoes: [
-                        { name: 'Platform Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Platform+Boots' },
-                        { name: 'Chunky Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=Chunky' },
-                        { name: 'Heeled Sandals', image: 'https://via.placeholder.com/300x200/FFD700/000000?text=Heeled+Sandals' },
-                        { name: 'Combat Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Combat+Boots' }
+                        { name: 'Black Heels', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf3da7778/hi-res/30321S033001F.jpg?sw=720' },
+                        { name: 'Black Sandals', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw41bf844d/hi-res/30325S002001F.jpg?sw=1440' },
+                        { name: 'Black Loafers', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw4c201ad2/hi-res/30325F004206F.jpg?sw=720' },
+                        { name: 'White Sneaker', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwa777f891/hi-res/30325SN033120F.jpg?sw=720' }
                     ]
                 },
                 men: {
                     top: [
-                        { name: 'Designer T-Shirt', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Designer+Tee' },
-                        { name: 'Denim Jacket', image: 'https://via.placeholder.com/300x400/4682B4/FFFFFF?text=Denim+Jacket' },
-                        { name: 'Bomber Jacket', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Bomber' },
-                        { name: 'Oversized Hoodie', image: 'https://via.placeholder.com/300x400/696969/FFFFFF?text=Oversized' },
-                        { name: 'Turtleneck', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Turtleneck' }
+                        { name: 'Cream Zip-Up', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwcaaa8fbc/hi-res/UCC1262300216AT.jpg?sw=720' },
+                        { name: 'Black Sweater', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw12927071/hi-res/6KC1261118001T.jpg?sw=720' },
+                        { name: 'Grey Quarter Zip', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwbfcc8de1/hi-res/UCC4251864029CT.jpg?sw=720' },
+                        { name: 'Grey Sweatedr', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw76d8db4e/hi-res/6KC1261118085T.jpg?sw=720' },
                     ],
                     bottom: [
-                        { name: 'Skinny Jeans', image: 'https://via.placeholder.com/300x400/191970/FFFFFF?text=Skinny+Jeans' },
-                        { name: 'Ripped Jeans', image: 'https://via.placeholder.com/300x400/4169E1/FFFFFF?text=Ripped+Jeans' },
-                        { name: 'Jogger Pants', image: 'https://via.placeholder.com/300x400/2F4F4F/FFFFFF?text=Joggers' },
-                        { name: 'Track Pants', image: 'https://via.placeholder.com/300x400/000000/FFFFFF?text=Track+Pants' },
-                        { name: 'Cargo Joggers', image: 'https://via.placeholder.com/300x400/556B2F/FFFFFF?text=Cargo' }
+                        { name: 'Black Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw716b5904/hi-res/6DC1264959020AT.jpg?sw=720' },
+                        { name: 'Cream Sweats', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw94e4ef28/hi-res/UCC1264441216AT.jpg?sw=720' },
+                        { name: 'Dark Blue Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw872cf4a6/hi-res/6DC3254830473T.jpg?sw=720' },
+                        { name: 'Black Sweatpants', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwa30c8921/hi-res/UCC4254432001T.jpg?sw=720' },
                     ],
                     shoes: [
-                        { name: 'High-Top Sneakers', image: 'https://via.placeholder.com/300x200/FFFFFF/000000?text=High-Tops' },
-                        { name: 'Chelsea Boots', image: 'https://via.placeholder.com/300x200/654321/FFFFFF?text=Chelsea+Boots' },
-                        { name: 'Designer Sneakers', image: 'https://via.placeholder.com/300x200/FF4500/FFFFFF?text=Designer' },
-                        { name: 'Combat Boots', image: 'https://via.placeholder.com/300x200/000000/FFFFFF?text=Combat' }
+                        { name: 'Green Jordans', image: 'https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/e90ccffa-5cde-4a15-8eb1-490519e16aa1/WMNS+AIR+JORDAN+1+RETRO+HI+OG.png' },
+                        { name: 'White Sneakers', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw3d9190ab/hi-res/30325SN034120F.jpg?sw=720' },
+                        { name: 'Brown Sneakers', image: 'https://kizik.com/cdn/shop/files/MVEG2501_Mens_Vegas_2_Mole-Whitecap_Gray_Lateral-2048x2048-ae00118.png?v=1756927347&width=600' },
                     ]
                 }
             },
