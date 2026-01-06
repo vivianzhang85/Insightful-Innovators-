@@ -1,3 +1,4 @@
+
 ---
 layout: post
 title: "Step 2 Shopping"
@@ -345,25 +346,25 @@ footer:
         <!-- Shopping Center Selection -->
         <div id="center-selection-screen">
             <div class="center-selection">
-                <div class="center-card" data-center="east-river">
+                <div class="center-card" onclick="selectCenter('east-river')">
                     <div class="center-icon">🏬</div>
                     <h2>East River Plaza</h2>
                     <p>Affordable fashion & everyday essentials</p>
                 </div>
 
-                <div class="center-card" data-center="macys">
+                <div class="center-card" onclick="selectCenter('macys')">
                     <div class="center-icon">🏢</div>
                     <h2>Macy's Herald Square</h2>
                     <p>Classic department store elegance</p>
                 </div>
 
-                <div class="center-card" data-center="soho">
+                <div class="center-card" onclick="selectCenter('soho')">
                     <div class="center-icon">✨</div>
                     <h2>SoHo Center</h2>
                     <p>Trendy & fashion-forward styles</p>
                 </div>
 
-                <div class="center-card" data-center="columbus">
+                <div class="center-card" onclick="selectCenter('columbus')">
                     <div class="center-icon">💎</div>
                     <h2>Columbus Circle</h2>
                     <p>Luxury designer boutiques</p>
@@ -496,7 +497,7 @@ footer:
                 }
             },
             'macys': {
-                name: 'Macy's Herald Square',
+                name: "Macy's Herald Square",
                 description: 'Classic department store elegance',
                 women: {
                     top: [
@@ -551,7 +552,7 @@ footer:
                     ],
                     bottom: [
                         { name: 'Light Blue Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwa30a5a88/hi-res/4DC3254819470CT.jpg?sw=720' },
-                        { name: 'Black Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf91ee7f1/hi-res/4DC1264112031T.jpg?sw=720 },
+                        { name: 'Black Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf91ee7f1/hi-res/4DC1264112031T.jpg?sw=720' },
                         { name: 'Dark Blue Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwfb11e5f1/hi-res/4DC1264967401B.jpg?sw=680' },
                         { name: 'Denim Skirt', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwf2670642/hi-res/4DC1265107400CT.jpg?sw=720' },
                     ],
@@ -567,7 +568,7 @@ footer:
                         { name: 'Cream Zip-Up', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwcaaa8fbc/hi-res/UCC1262300216AT.jpg?sw=720' },
                         { name: 'Black Sweater', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw12927071/hi-res/6KC1261118001T.jpg?sw=720' },
                         { name: 'Grey Quarter Zip', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dwbfcc8de1/hi-res/UCC4251864029CT.jpg?sw=720' },
-                        { name: 'Grey Sweatedr', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw76d8db4e/hi-res/6KC1261118085T.jpg?sw=720' },
+                        { name: 'Grey Sweater', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw76d8db4e/hi-res/6KC1261118085T.jpg?sw=720' },
                     ],
                     bottom: [
                         { name: 'Black Jeans', image: 'https://www.alexanderwang.com/dw/image/v2/BCCC_PRD/on/demandware.static/-/Sites-master/default/dw716b5904/hi-res/6DC1264959020AT.jpg?sw=720' },
@@ -730,11 +731,9 @@ footer:
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
                 shoes: wardrobe.shoes[currentSelection.shoes].name
             };
-            // Persist the saved outfit to localStorage and navigate to the post page
             try {
                 localStorage.setItem('savedOutfit', JSON.stringify(outfit));
                 console.log('savedOutfit stored:', localStorage.getItem('savedOutfit'));
-                // give brief feedback then navigate to the posting page (use canonical permalink)
                 document.getElementById('status').textContent = "💾 Outfit saved! Redirecting to post...";
                 setTimeout(() => { window.location.href = '/student/new-york/shopping/post/'; }, 600);
             } catch (e) {
