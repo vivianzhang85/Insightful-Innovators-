@@ -263,7 +263,7 @@ footer:
     <div class="container">
         <h1>WELCOME TO NEW YORK</h1>
         <p class="subtitle">The City That Never Sleeps</p>
-        <a href="{{ site.baseurl }}/new-york/breakfast/" class="start-button">
+        <a href="{{ site.baseurl }}/newyork/tripinfo/" class="start-button">
             Click Here to Start Planning Your Day
         </a>
     </div>

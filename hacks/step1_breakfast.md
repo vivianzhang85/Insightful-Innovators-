@@ -390,6 +390,52 @@ footer:
       color: #f59e0b;
     }
     
+    /* Navigation Button Styles */
+    .nav-to-landmarks {
+      margin-top: 50px;
+      margin-bottom: 50px;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 15px;
+      border: 2px solid #ffd700;
+    }
+    
+    .nav-to-landmarks h2 {
+      color: #fbbf24;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    
+    .nav-to-landmarks p {
+      color: #cbd5e1;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    
+    .landmarks-btn {
+      display: inline-block;
+      padding: 20px 50px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #1a1a2e;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .landmarks-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+      background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       .location-grid,
@@ -403,6 +449,11 @@ footer:
       
       .restaurant-card h3 {
         font-size: 24px;
+      }
+      
+      .landmarks-btn {
+        padding: 15px 35px;
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -525,6 +576,15 @@ footer:
           <span>📦</span> Confirm Order
         </button>
       </div>
+    </div>
+
+    <!-- Navigation to Landmarks Page -->
+    <div class="nav-to-landmarks">
+      <h2>Ready for the Next Adventure?</h2>
+      <p>With a full stomach, let's move on to picking your ideal attraction to sight see!</p>
+      <a href="{{ site.baseurl }}/new-york/landmarks/" class="landmarks-btn">
+        🗽 Explore NYC Landmarks
+      </a>
     </div>
   </div>
 
@@ -783,162 +843,4 @@ footer:
           
           hoursHtml += `
             <div class="update-note">
-              <strong>Source:</strong> ${hoursData.source || 'Live API'} 
-              | <strong>Updated:</strong> ${new Date().toLocaleTimeString()}
-            </div>
-          `;
-          
-          hoursContainer.innerHTML = hoursHtml;
-          
-          // Animation
-          hoursContainer.style.animation = "pulse 1s ease";
-          setTimeout(() => hoursContainer.style.animation = "", 1000);
-          
-        } else {
-          throw new Error('No hours data');
-        }
-      } catch (error) {
-        console.error('Error refreshing hours:', error);
-        
-        // Show fallback hours
-        hoursContainer.innerHTML = `
-          <div class="hours-display">
-            <div class="day-hour"><span class="day">Monday - Friday:</span><span class="time">8:00 AM - 10:00 PM</span></div>
-            <div class="day-hour"><span class="day">Saturday - Sunday:</span><span class="time">9:00 AM - 11:00 PM</span></div>
-          </div>
-          <div class="update-note">
-            ⚠️ Showing fallback hours - Live data unavailable
-          </div>
-        `;
-      }
-    }
-
-    function showMenu() {
-      if (!currentRestaurant) return;
-      
-      const restaurantData = MENU_DATA[currentRestaurant];
-      const menuGrid = document.getElementById('menuGrid');
-      
-      let html = '';
-      restaurantData.items.forEach((item, index) => {
-        html += `
-          <div class="menu-item">
-            <h4>${item.name}</h4>
-            <div class="price">$${item.price}</div>
-            <p>${item.desc}</p>
-            <button class="btn" onclick="addToOrder(${index})">
-              <span>➕</span> Add to Order
-            </button>
-          </div>
-        `;
-      });
-      
-      menuGrid.innerHTML = html;
-    }
-
-    function addToOrder(index) {
-      if (!currentRestaurant) return;
-      
-      const item = MENU_DATA[currentRestaurant].items[index];
-      cart.push({name: item.name, price: item.price, custom: false});
-      updateOrderDisplay();
-    }
-
-    function addCustom() {
-      const input = document.getElementById('customInput');
-      const value = input.value.trim();
-      
-      if (value) {
-        cart.push({name: value, price: 0, custom: true});
-        input.value = '';
-        updateOrderDisplay();
-      }
-    }
-
-    function removeItem(index) {
-      cart.splice(index, 1);
-      updateOrderDisplay();
-    }
-
-    function updateOrderDisplay() {
-      const orderList = document.getElementById('orderList');
-      
-      if (cart.length === 0) {
-        orderList.innerHTML = '<p style="text-align: center; color: #64748b;">No items yet</p>';
-      } else {
-        let html = '';
-        cart.forEach((item, index) => {
-          html += `
-            <div class="order-item">
-              <div>${item.name}
-                ${item.custom ? '<span style="background: #a855f7; padding: 2px 8px; border-radius: 4px; font-size: 12px;">Custom</span>' : ''}
-              </div>
-              <div>
-                ${!item.custom ? `<span style="color: #fbbf24; margin-right: 15px;">$${item.price}</span>` : ''}
-                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-              </div>
-            </div>
-          `;
-        });
-        orderList.innerHTML = html;
-      }
-    }
-
-    function showReview() {
-      const restaurantData = MENU_DATA[currentRestaurant];
-      const reviewHeader = document.getElementById('reviewHeader');
-      const reviewList = document.getElementById('reviewList');
-      
-      reviewHeader.innerHTML = `
-        <div style="background: linear-gradient(135deg, #f59e0b, #f97316); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-          <h3 style="margin: 0;">${restaurantData.name}</h3>
-          <p style="margin: 5px 0 0 0;">${restaurantData.location}</p>
-        </div>
-      `;
-      
-      let html = '';
-      let total = 0;
-      
-      cart.forEach(item => {
-        total += item.price;
-        html += `
-          <div class="order-item">
-            <div>${item.name}
-              ${item.custom ? '<span style="background: #a855f7; padding: 2px 8px; border-radius: 4px; font-size: 12px;">Custom</span>' : ''}
-            </div>
-            ${!item.custom ? `<div style="color: #fbbf24;">$${item.price}</div>` : '<div style="color: #94a3b8;">Custom Price</div>'}
-          </div>
-        `;
-      });
-      
-      reviewList.innerHTML = html;
-      document.getElementById('totalPrice').textContent = `Total: $${total}`;
-    }
-
-    function confirmOrder() {
-      const restaurantData = MENU_DATA[currentRestaurant];
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      
-      alert(`✅ Order confirmed!\n\nRestaurant: ${restaurantData.name}\nItems: ${cart.length}\nTotal: $${total}\n\nThank you for your order!`);
-      
-      // Reset
-      cart = [];
-      goToStep(1);
-    }
-
-    // ============================================
-    // INITIALIZATION
-    // ============================================
-
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('NYC Breakfast Explorer Loaded');
-      
-      // Test API connection
-      testAPIConnection();
-      
-      // Load initial hours
-      setTimeout(fetchAllBreakfastHours, 500);
-    });
-  </script>
-</body>
-</html>
+              <strong>Source
