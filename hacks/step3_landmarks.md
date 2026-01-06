@@ -1448,6 +1448,13 @@ footer:
 
     <!-- Footer -->
     <footer>
+    <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid #FFD700; border-radius: 15px; padding: 40px; margin-bottom: 30px; text-align: center;">
+    <h2 style="color: #FFD700; margin-bottom: 20px; font-size: 2rem;">Ready to Shop?</h2>
+    <p style="color: #fff; font-size: 1.2rem; margin-bottom: 30px;">Time to refresh your wardrobe with some NYC fashion!</p>
+    <a href="{{ site.baseurl }}/new-york/shopping/" style="display: inline-block; padding: 20px 50px; font-size: 1.3rem; font-weight: bold; color: #1a2332; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: none; border-radius: 50px; cursor: pointer; text-decoration: none; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
+        🛍️ Go Shopping in NYC
+    </a>
+</div>
         <div class="copyright">
             <p>&copy; 2023 NYC Landmarks Experience. All rights reserved.</p>
         </div>
