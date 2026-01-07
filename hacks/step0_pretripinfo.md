@@ -308,7 +308,7 @@ next: /newyork/itinerary/
             </div>
             <button class="reset-btn" onclick="resetForm()">Plan Another Trip</button>
             <div class="breakfast-nav">
-                <a href="{{ site.baseurl }}/new-york/breakfast/" class="breakfast-btn">
+                <a href="/new-york/breakfast/" class="breakfast-btn">
                     🍳 Hungry? It's time to pick your breakfast spot!
                 </a>
             </div>
@@ -319,7 +319,7 @@ next: /newyork/itinerary/
         <h3>🗽 Your NYC Trip</h3>
         
         <div class="itinerary-item" id="tripInfoItem">
-            <div class="itinerary-label">Trip Dates</div>
+            <div class="itinerary-label">📅 Trip Dates</div>
             <div class="itinerary-value" id="tripDatesValue">
                 <span class="itinerary-empty">Not set yet</span>
             </div>
@@ -332,16 +332,16 @@ next: /newyork/itinerary/
             </div>
         </div>
         
-        <div class="itinerary-item incomplete" id="shoppingItem">
-            <div class="itinerary-label">🛍️ Shopping</div>
-            <div class="itinerary-value" id="shoppingValue">
+        <div class="itinerary-item incomplete" id="landmarksItem">
+            <div class="itinerary-label">🗽 Landmarks</div>
+            <div class="itinerary-value" id="landmarksValue">
                 <span class="itinerary-empty">Not selected</span>
             </div>
         </div>
         
-        <div class="itinerary-item incomplete" id="landmarksItem">
-            <div class="itinerary-label">🗽 Landmarks</div>
-            <div class="itinerary-value" id="landmarksValue">
+        <div class="itinerary-item incomplete" id="shoppingItem">
+            <div class="itinerary-label">🛍️ Shopping</div>
+            <div class="itinerary-value" id="shoppingValue">
                 <span class="itinerary-empty">Not selected</span>
             </div>
         </div>
@@ -373,8 +373,8 @@ next: /newyork/itinerary/
             return stored ? JSON.parse(stored) : {
                 tripInfo: null,
                 breakfast: null,
-                shopping: null,
                 landmarks: null,
+                shopping: null,
                 broadway: null
             };
         }
@@ -396,15 +396,15 @@ next: /newyork/itinerary/
                 document.getElementById('breakfastItem').classList.remove('incomplete');
             }
             
+            if (itinerary.landmarks) {
+                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            }
+            
             if (itinerary.shopping) {
                 document.getElementById('shoppingValue').innerHTML = 
                     `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
                 document.getElementById('shoppingItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.landmarks) {
-                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-                document.getElementById('landmarksItem').classList.remove('incomplete');
             }
             
             if (itinerary.broadway) {
@@ -438,15 +438,15 @@ next: /newyork/itinerary/
             saveItinerary(itinerary);
         }
 
-        function saveShoppingChoice(centerName, gender) {
-            const itinerary = getItinerary();
-            itinerary.shopping = { center: centerName, gender: gender };
-            saveItinerary(itinerary);
-        }
-
         function saveLandmarkVisit(landmarkName) {
             const itinerary = getItinerary();
             itinerary.landmarks = landmarkName;
+            saveItinerary(itinerary);
+        }
+
+        function saveShoppingChoice(centerName, gender) {
+            const itinerary = getItinerary();
+            itinerary.shopping = { center: centerName, gender: gender };
             saveItinerary(itinerary);
         }
 
