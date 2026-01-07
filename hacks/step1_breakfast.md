@@ -794,7 +794,7 @@ footer:
     <div class="nav-to-landmarks">
       <h2>Ready for the Next Adventure?</h2>
       <p>With a full stomach, let's move on to picking your ideal attraction to sight see!</p>
-      <a href="/new-york/landmarks/" class="landmarks-btn">
+      <a href="/student/new-york/landmarks/" class="landmarks-btn">
         🗽 Explore NYC Landmarks
       </a>
     </div>
