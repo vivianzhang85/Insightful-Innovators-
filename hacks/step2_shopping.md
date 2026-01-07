@@ -728,7 +728,11 @@ footer:
                 gender: selectedGender,
                 top: wardrobe.top[currentSelection.top].name,
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
-                shoes: wardrobe.shoes[currentSelection.shoes].name
+                shoes: wardrobe.shoes[currentSelection.shoes].name,
+                // include image URLs so the post page can render a stacked outfit
+                topImage: wardrobe.top[currentSelection.top].image,
+                bottomImage: wardrobe.bottom[currentSelection.bottom].image,
+                shoesImage: wardrobe.shoes[currentSelection.shoes].image
             };
             try {
                 localStorage.setItem('savedOutfit', JSON.stringify(outfit));
