@@ -14,6 +14,22 @@ footer:
     home: /nyc/home/
     next: /new-york/shopping/
 ---
+---
+layout: post
+title: "Step 1 Breakfast"
+description: "Breakfast time hits, and in NYC that means one thing: pick your spot and dive in."
+permalink: /new-york/breakfast/
+parent: "Analytics/Admin"
+team: "Insightful Innovators"
+submodule: 1
+author: "Insightful Innocators"
+date: 2025-11-20
+microblog: true
+footer: 
+    previous: /new-york/landmarks/
+    home: /nyc/home/
+    next: /new-york/shopping/
+---
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -579,6 +595,14 @@ footer:
       margin: 0 auto 10px auto;
     }
     
+    .hours-header {
+      margin: 30px 0 20px 0;
+      color: #fbbf24;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #f59e0b;
+      padding-bottom: 10px;
+    }
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -635,20 +659,6 @@ footer:
       <h1>🍳 NYC Breakfast Explorer</h1>
       <p>Choose your perfect morning meal with live restaurant hours</p>
       <div class="live-data-indicator" id="apiStatus">🔌 Connecting to API...</div>
-    </div>
-
-    <!-- Live Hours Section -->
-    <div class="live-hours-container">
-      <h2>🕒 Live Restaurant Hours</h2>
-      <div id="liveHoursContainer">
-        <div class="hours-loading">
-          <div class="live-loading-spinner"></div>
-          <div>Fetching live restaurant hours...</div>
-        </div>
-      </div>
-      <button class="btn refresh-btn" onclick="fetchAllBreakfastHours()">
-        <span>🔄</span> Refresh All Hours
-      </button>
     </div>
 
     <!-- Restaurant Selection Grid -->
@@ -728,10 +738,21 @@ footer:
           <h3 id="restaurantName">Loading...</h3>
           <div class="restaurant-location" id="restaurantLocation"></div>
         </div>
-        <div id="restaurantHours"></div>
-        <button class="btn refresh-btn" onclick="refreshCurrentRestaurant()">
-          <span>🔄</span> Update Live Hours
-        </button>
+        <p id="restaurantDescription"></p>
+        
+        <!-- Hours section moved here (AFTER restaurant selection) -->
+        <div id="hoursSection">
+          <h2 class="hours-header">🕒 Live Restaurant Hours</h2>
+          <div id="restaurantHours">
+            <div class="hours-loading">
+              <div class="live-loading-spinner"></div>
+              <div>Fetching live hours...</div>
+            </div>
+          </div>
+          <button class="btn refresh-btn" onclick="refreshCurrentRestaurant()">
+            <span>🔄</span> Update Live Hours
+          </button>
+        </div>
       </div>
       
       <h3 style="margin: 30px 0 20px 0; color: #fbbf24;">Menu Highlights</h3>
@@ -795,7 +816,7 @@ footer:
     </div>
   </div>
 
-  <div class="itinerary-tracker" id="itineraryTracker">
+  <div class="itinerary-tracker hidden" id="itineraryTracker">
     <h3>🗽 Your NYC Trip</h3>
     
     <div class="itinerary-item" id="tripInfoItem">
@@ -988,6 +1009,7 @@ footer:
       sarabeths: {
         name: "Sarabeth's",
         location: "Upper West Side",
+        description: "A beloved NYC institution known for its legendary homemade jams and elegant brunch classics. Perfect for a refined, upscale breakfast experience.",
         items: [
           {name: 'Lemon Ricotta Pancakes', price: 18, desc: 'Fluffy pancakes with fresh lemon zest'},
           {name: 'Eggs Benedict', price: 22, desc: 'Poached eggs on English muffin'},
@@ -998,6 +1020,7 @@ footer:
       jacks: {
         name: "Jack's Wife Frida",
         location: "SoHo",
+        description: "Mediterranean-inspired breakfast with bold Mexican flavors. A trendy spot with colorful dishes and creative twists on morning favorites.",
         items: [
           {name: 'Shakshuka', price: 19, desc: 'Poached eggs in spicy tomato sauce'},
           {name: 'Avocado Toast', price: 16, desc: 'Sourdough with smashed avocado'},
@@ -1008,6 +1031,7 @@ footer:
       ess: {
         name: "Ess a Bagel",
         location: "Midtown East",
+        description: "The ultimate NYC bagel experience. Hand-rolled, kettle-boiled bagels that are crispy outside and pillowy inside. A true New York classic.",
         items: [
           {name: 'Everything Bagel', price: 5, desc: 'With cream cheese'},
           {name: 'Lox and Bagel', price: 18, desc: 'Nova lox with cream cheese'},
@@ -1018,6 +1042,7 @@ footer:
       shuka: {
         name: "Shuka",
         location: "East Village",
+        description: "Modern Mediterranean cuisine with Israeli breakfast specialties. Fresh, vibrant dishes featuring tahini, hummus, and perfectly spiced shakshuka.",
         items: [
           {name: 'Israeli Breakfast', price: 22, desc: 'Eggs, hummus, tahini, salad'},
           {name: 'Halloumi Scramble', price: 19, desc: 'With grilled halloumi cheese'},
@@ -1059,6 +1084,43 @@ footer:
       }
     }
 
+    // Format hours in Sunday-Saturday order
+    function formatHoursInChronologicalOrder(hoursData) {
+      const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let html = '';
+      
+      if (hoursData.hours && typeof hoursData.hours === 'object') {
+        // Filter to only include days in our chronological order
+        const filteredHours = {};
+        dayOrder.forEach(day => {
+          if (hoursData.hours[day]) {
+            filteredHours[day] = hoursData.hours[day];
+          }
+        });
+        
+        // Add any remaining days not in our standard order
+        Object.entries(hoursData.hours).forEach(([day, time]) => {
+          if (!filteredHours[day]) {
+            filteredHours[day] = time;
+          }
+        });
+        
+        // Display in chronological order
+        Object.entries(filteredHours).forEach(([day, time]) => {
+          html += `
+            <div class="day-hour">
+              <span class="day">${day}:</span>
+              <span class="time">${time}</span>
+            </div>
+          `;
+        });
+      } else if (typeof hoursData.hours === 'string') {
+        html += `<div class="day-hour"><span class="time">${hoursData.hours}</span></div>`;
+      }
+      
+      return html;
+    }
+
     // Fetch hours for a specific restaurant
     async function fetchRestaurantHours(restaurantKey) {
       const restaurant = RESTAURANT_MAP[restaurantKey];
@@ -1077,78 +1139,6 @@ footer:
       } catch (error) {
         console.error(`Network error for ${restaurant.name}:`, error);
         return null;
-      }
-    }
-
-    // Fetch all restaurant hours
-    async function fetchAllBreakfastHours() {
-      const container = document.getElementById('liveHoursContainer');
-      const originalContent = container.innerHTML;
-      
-      container.innerHTML = `
-        <div class="hours-loading">
-          <div class="live-loading-spinner"></div>
-          <div>Scraping live hours from restaurant websites...</div>
-        </div>
-      `;
-      
-      try {
-        const response = await fetch(API_BASE_URL);
-        const data = await response.json();
-        
-        if (data.success && data.data) {
-          let html = '';
-          
-          data.data.forEach(restaurant => {
-            const hours = restaurant.hours || {};
-            
-            html += `
-              <div class="restaurant-card">
-                <h3>${restaurant.restaurant}</h3>
-                <p><strong>📍 Location:</strong> ${restaurant.location}</p>
-                <div class="hours-display">
-                  ${Object.entries(hours).map(([day, time]) => `
-                    <div class="day-hour">
-                      <span class="day">${day}:</span>
-                      <span class="time">${time}</span>
-                    </div>
-                  `).join('')}
-                </div>
-                <div class="update-note">
-                  <strong>Source:</strong> ${restaurant.source || 'API'} 
-                  | <strong>Last Updated:</strong> ${new Date().toLocaleTimeString()}
-                </div>
-              </div>
-            `;
-          });
-          
-          container.innerHTML = html;
-          
-          // Highlight animation
-          container.style.animation = "pulse 1s ease";
-          setTimeout(() => container.style.animation = "", 1000);
-          
-        } else {
-          throw new Error('No data received');
-        }
-      } catch (error) {
-        console.error('Error fetching all hours:', error);
-        container.innerHTML = originalContent;
-        
-        // Show fallback hours
-        const fallbackHours = `
-          <div class="restaurant-card">
-            <h3>Jack's Wife Freda</h3>
-            <p>📍 SoHo, New York</p>
-            <div class="hours-display">
-              <div class="day-hour"><span class="day">Monday - Thursday:</span><span class="time">8:00 AM - 10:00 PM</span></div>
-              <div class="day-hour"><span class="day">Friday - Sunday:</span><span class="time">9:00 AM - 11:00 PM</span></div>
-            </div>
-            <div class="update-note">⚠️ Showing fallback hours - API connection failed</div>
-          </div>
-        `;
-        
-        container.innerHTML = fallbackHours;
       }
     }
 
@@ -1172,6 +1162,7 @@ footer:
       const restaurantData = MENU_DATA[restaurantKey];
       document.getElementById('restaurantName').textContent = restaurantData.name;
       document.getElementById('restaurantLocation').textContent = `📍 ${restaurantData.location}`;
+      document.getElementById('restaurantDescription').textContent = restaurantData.description;
       
       // Fetch live hours
       await refreshCurrentRestaurant();
@@ -1201,18 +1192,8 @@ footer:
         if (hoursData) {
           let hoursHtml = `<div class="hours-display">`;
           
-          if (hoursData.hours && typeof hoursData.hours === 'object') {
-            Object.entries(hoursData.hours).forEach(([day, time]) => {
-              hoursHtml += `
-                <div class="day-hour">
-                  <span class="day">${day}:</span>
-                  <span class="time">${time}</span>
-                </div>
-              `;
-            });
-          } else {
-            hoursHtml += `<div class="day-hour"><span class="time">${hoursData.hours || 'Hours not available'}</span></div>`;
-          }
+          // Use chronological order formatting
+          hoursHtml += formatHoursInChronologicalOrder(hoursData);
           
           hoursHtml += `</div>`;
           
@@ -1336,7 +1317,7 @@ footer:
     document.addEventListener('DOMContentLoaded', () => {
       initItinerary();
       testAPIConnection();
-      fetchAllBreakfastHours();
+      // Removed fetchAllBreakfastHours() since we now show hours after selection
     });
   </script>
 </body>
