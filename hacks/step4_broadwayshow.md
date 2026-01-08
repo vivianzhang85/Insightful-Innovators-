@@ -14,7 +14,6 @@ footer:
     home: /nyc/home/
     next: /new-york/breakfast
 ---
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -170,6 +169,14 @@ footer:
             margin-top: 20px;
         }
         
+        .btn-itinerary {
+            background: linear-gradient(90deg, #4f46e5, #4338ca);
+            color: white;
+            margin-left: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
         .back-btn {
             background: transparent;
             border: 1px solid #64748b;
@@ -239,14 +246,139 @@ footer:
             margin-bottom: 20px;
         }
         
+        /* Itinerary Tracker Sidebar */
+        .itinerary-tracker {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            background: rgba(26, 35, 50, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid #ffd700;
+            z-index: 9999;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .itinerary-tracker h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-align: center;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+        }
+
+        .itinerary-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .itinerary-item.incomplete {
+            border-left-color: #666;
+            opacity: 0.6;
+        }
+
+        .itinerary-label {
+            font-size: 0.85rem;
+            color: #ffd700;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .itinerary-value {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .itinerary-empty {
+            color: #999;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .clear-itinerary-btn {
+            width: 100%;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .clear-itinerary-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .toggle-tracker-btn {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background: #ffd700;
+            color: #1a2332;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s;
+        }
+
+        .toggle-tracker-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .itinerary-tracker.hidden {
+            display: none;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
         @media (max-width: 768px) {
             .playhouse-grid, .show-grid {
                 grid-template-columns: 1fr;
+            }
+            .itinerary-tracker {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+            }
+            .button-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .button-row .btn {
+                width: 100%;
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
+    <button class="toggle-tracker-btn" onclick="toggleItineraryTracker()">
+        📋 My Itinerary
+    </button>
+
     <div class="container">
         <header>
             <div style="font-size: 4em;">🎭</div>
@@ -315,7 +447,152 @@ footer:
         </div>
     </div>
 
+    <div class="itinerary-tracker" id="itineraryTracker">
+        <h3>🗽 Your NYC Trip</h3>
+        
+        <div class="itinerary-item" id="tripInfoItem">
+            <div class="itinerary-label">📅 Trip Dates</div>
+            <div class="itinerary-value" id="tripDatesValue">
+                <span class="itinerary-empty">Not set yet</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="breakfastItem">
+            <div class="itinerary-label">🍳 Breakfast</div>
+            <div class="itinerary-value" id="breakfastValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="landmarksItem">
+            <div class="itinerary-label">🗽 Landmarks</div>
+            <div class="itinerary-value" id="landmarksValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="shoppingItem">
+            <div class="itinerary-label">🛍️ Shopping</div>
+            <div class="itinerary-value" id="shoppingValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="broadwayItem">
+            <div class="itinerary-label">🎭 Broadway</div>
+            <div class="itinerary-value" id="broadwayValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <button class="clear-itinerary-btn" onclick="clearItinerary()">
+            Clear All Selections
+        </button>
+    </div>
+
     <script>
+        // ============================================
+        // ITINERARY TRACKER JAVASCRIPT
+        // ============================================
+
+        function initItinerary() {
+            const itinerary = getItinerary();
+            updateItineraryDisplay(itinerary);
+        }
+
+        function getItinerary() {
+            const stored = localStorage.getItem('nycItinerary');
+            return stored ? JSON.parse(stored) : {
+                tripInfo: null,
+                breakfast: null,
+                landmarks: null,
+                shopping: null,
+                broadway: null
+            };
+        }
+
+        function saveItinerary(itinerary) {
+            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+            updateItineraryDisplay(itinerary);
+        }
+
+        function updateItineraryDisplay(itinerary) {
+            if (itinerary.tripInfo) {
+                document.getElementById('tripDatesValue').innerHTML = 
+                    `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+                document.getElementById('tripInfoItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.breakfast) {
+                document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+                document.getElementById('breakfastItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.landmarks) {
+                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.shopping) {
+                document.getElementById('shoppingValue').innerHTML = 
+                    `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
+                document.getElementById('shoppingItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.broadway) {
+                document.getElementById('broadwayValue').innerHTML = 
+                    `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
+                document.getElementById('broadwayItem').classList.remove('incomplete');
+            }
+        }
+
+        function clearItinerary() {
+            if (confirm('Are you sure you want to clear your entire itinerary?')) {
+                localStorage.removeItem('nycItinerary');
+                location.reload();
+            }
+        }
+
+        function toggleItineraryTracker() {
+            const tracker = document.getElementById('itineraryTracker');
+            tracker.classList.toggle('hidden');
+        }
+
+        function saveTripInfo(month, startDate, endDate) {
+            const itinerary = getItinerary();
+            itinerary.tripInfo = { month, startDate, endDate };
+            saveItinerary(itinerary);
+        }
+
+        function saveBreakfastChoice(restaurantName) {
+            const itinerary = getItinerary();
+            itinerary.breakfast = restaurantName;
+            saveItinerary(itinerary);
+        }
+
+        function saveLandmarkVisit(landmarkName) {
+            const itinerary = getItinerary();
+            itinerary.landmarks = landmarkName;
+            saveItinerary(itinerary);
+        }
+
+        function saveShoppingChoice(centerName, gender) {
+            const itinerary = getItinerary();
+            itinerary.shopping = { center: centerName, gender: gender };
+            saveItinerary(itinerary);
+        }
+
+        function saveBroadwayChoice(theaterName, showName) {
+            const itinerary = getItinerary();
+            itinerary.broadway = { theater: theaterName, show: showName };
+            saveItinerary(itinerary);
+            alert(`🎭 Added "${showName}" at ${theaterName} to your itinerary!`);
+        }
+
+        // ============================================
+        // BROADWAY PAGE SPECIFIC FUNCTIONS
+        // ============================================
+
         var data = {
             majestic: {
                 name: 'Majestic Theatre',
@@ -387,10 +664,17 @@ footer:
                 html += '<div class="price">$' + item.price + '</div>';
                 html += '<p>' + item.desc + '</p>';
                 html += '<div class="showtimes">🎟️ ' + item.showtimes + '</div>';
-                html += '<button class="btn" style="margin-top: 10px;" onclick="addItem(' + i + ')">Book Tickets</button>';
+                html += '<div class="button-row">';
+                html += '<button class="btn" onclick="addItem(' + i + ')">Book Tickets</button>';
+                html += '<button class="btn btn-itinerary" onclick="addToItinerary(\'' + current.name + '\', \'' + item.name + '\')">Add to Itinerary</button>';
+                html += '</div>';
                 html += '</div>';
             }
             document.getElementById('showGrid').innerHTML = html;
+        }
+
+        function addToItinerary(theaterName, showName) {
+            saveBroadwayChoice(theaterName, showName);
         }
 
         function addItem(idx) {
@@ -451,142 +735,9 @@ footer:
         function confirm() {
             alert('Booking confirmed! Your tickets will be sent to your email. See you at the show! 🎭');
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initItinerary);
     </script>
 </body>
 </html>
-
-<!-- HTML table fragment for page -->
-<table>
-  <thead>
-    <tr>
-      <th>Lyric</th>
-      <th>❤️ Love</th>
-      <th>👎 Dislike</th>
-    </tr>
-  </thead>
-  <tbody id="result">
-    <!-- JavaScript-generated rows -->
-  </tbody>
-</table>
-
-<script type="module">
-  import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
-
-  // prepare HTML defined "result" container for new output
-  const resultContainer = document.getElementById("result");
-
-  // reaction keys
-  const LOVE = "love";
-  const DISLIKE = "dislike";
-
-  // prepare fetch urls
-  // const url = `${pythonURI}/api/lyrics`;
-  const url = `http://127.0.0.1:8587/api/lyrics`;
-  const getURL = url + "";
-  const loveURL = url + "/love";
-  const dislikeURL = url + "/dislike";
-
-  // prepare PUT options
-  const reactOptions = {
-    ...fetchOptions,
-    method: "PUT",
-  };
-
-  // fetch all lyrics
-  //fetch(getURL, fetchOptions)
-  fetch(getURL)
-    .then(response => {
-      if (response.status !== 200) {
-        error("GET API response failure: " + response.status);
-        return;
-      }
-      response.json().then(data => {
-        for (const row of data) {
-          const tr = document.createElement("tr");
-
-          // lyric text
-          const lyric = document.createElement("td");
-          lyric.innerHTML = `${row.id}. ${row.lyric}`;
-
-          // love button
-          const love = document.createElement("td");
-          const loveBtn = document.createElement("button");
-          loveBtn.id = LOVE + row.id;
-          loveBtn.innerHTML = row.love;
-          loveBtn.onclick = () => {
-            reaction(LOVE, loveURL +"/", + row.id, loveBtn.id);
-          };
-          love.appendChild(loveBtn);
-
-          // dislike button
-          const dislike = document.createElement("td");
-          const dislikeBtn = document.createElement("button");
-          dislikeBtn.id = DISLIKE + row.id;
-          dislikeBtn.innerHTML = row.dislike;
-          dislikeBtn.onclick = () => {
-            reaction(DISLIKE, dislikeURL + row.id, dislikeBtn.id);
-          };
-          dislike.appendChild(dislikeBtn);
-
-          tr.appendChild(lyric);
-          tr.appendChild(love);
-          tr.appendChild(dislike);
-          resultContainer.appendChild(tr);
-        }
-      });
-    })
-    .catch(err => {
-      error(err + ": " + getURL + " " + str(fetchOptions));
-    });
-
-  // refresh reaction counts every 5 seconds
-  function refreshReactions() {
-    fetch(getURL,reactOptions)
-      .then(response => response.json())
-      .then(data => {
-        for (const row of data) {
-          const loveBtn = document.getElementById(LOVE + row.id);
-          if (loveBtn) loveBtn.innerHTML = row.love;
-
-          const dislikeBtn = document.getElementById(DISLIKE + row.id);
-          if (dislikeBtn) dislikeBtn.innerHTML = row.dislike;
-        }
-      })
-      .catch(err => console.error("Refresh error:", err));
-  }
-
-  setInterval(refreshReactions, 5000);
-
-  // handle love/dislike reactions
-  function reaction(type, postURL, elemID) {
-    fetch(postURL)
-      .then(response => {
-        if (response.status !== 200) {
-          error("PUT API response failure: " + response.status);
-          return;
-        }
-        response.json().then(data => {
-          if (type === LOVE)
-            document.getElementById(elemID).innerHTML = data.love;
-          else if (type === DISLIKE)
-            document.getElementById(elemID).innerHTML = data.dislike;
-          else
-            error("Unknown reaction type: " + type);
-        });
-      })
-      .catch(err => {
-        error(err + " " + postURL);
-      });
-  }
-
-  // error handler
-  function error(err) {
-    console.error(err);
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 3;
-    td.innerHTML = err;
-    tr.appendChild(td);
-    resultContainer.appendChild(tr);
-  }
-</script>
