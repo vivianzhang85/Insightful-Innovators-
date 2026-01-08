@@ -505,6 +505,52 @@ footer:
             box-shadow: 0 6px 16px rgba(255, 215, 0, 0.3);
         }
 
+        /* Broadway Navigation Section */
+        .nav-to-broadway {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+        }
+        
+        .nav-to-broadway h2 {
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .nav-to-broadway p {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .broadway-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .broadway-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -536,6 +582,11 @@ footer:
 
             .center-card-buttons {
                 flex-direction: column;
+            }
+
+            .broadway-btn {
+                padding: 15px 35px;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -693,6 +744,15 @@ footer:
 
                 <div class="status-message" id="status">Ready to shop!</div>
             </div>
+        </div>
+
+        <!-- Broadway Navigation Section -->
+        <div class="nav-to-broadway">
+            <h2>Ready for Broadway?</h2>
+            <p>After shopping, enjoy a spectacular Broadway show in NYC!</p>
+            <a href="http://localhost:4600/student/new-york/broadway/" class="broadway-btn">
+                🎭 See Broadway Shows
+            </a>
         </div>
     </div>
 
