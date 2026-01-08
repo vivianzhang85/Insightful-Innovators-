@@ -14,6 +14,7 @@ footer:
     home: /nyc/home/
     next: /new-york/shopping/
 ---
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -974,6 +975,54 @@ footer:
     }
 
     // ============================================
+    // DATE FILTERING FUNCTIONS
+    // ============================================
+
+    // Get selected days from itinerary
+    function getSelectedDays() {
+        const itinerary = getItinerary();
+        if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
+            return null; // Return null if no dates are selected
+        }
+        
+        const month = itinerary.tripInfo.month;
+        const dateRange = parseDateRange(month, itinerary.tripInfo.startDate, itinerary.tripInfo.endDate);
+        
+        if (!dateRange) return null;
+        
+        // Get unique days of the week from the date range
+        const selectedDays = new Set();
+        const currentDate = new Date(dateRange.start);
+        
+        while (currentDate <= dateRange.end) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            selectedDays.add(dayName);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        return Array.from(selectedDays);
+    }
+
+    // Parse date range from stored format
+    function parseDateRange(month, startStr, endStr) {
+        try {
+            const currentYear = new Date().getFullYear();
+            
+            // Extract day numbers
+            const startDay = parseInt(startStr.match(/\d+/)[0]);
+            const endDay = parseInt(endStr.match(/\d+/)[0]);
+            
+            const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
+            const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
+            
+            return { start: startDate, end: endDate };
+        } catch (error) {
+            console.error('Error parsing dates:', error);
+            return null;
+        }
+    }
+
+    // ============================================
     // LIVE BREAKFAST HOURS INTEGRATION
     // ============================================
 
@@ -1068,36 +1117,39 @@ footer:
       }
     }
 
-    // Format hours in Sunday-Saturday order
-    function formatHoursInChronologicalOrder(hoursData) {
+    // MODIFIED: Format hours with date filtering
+    function formatHoursInChronologicalOrder(hoursData, selectedDays = null) {
       const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let html = '';
       
       if (hoursData.hours && typeof hoursData.hours === 'object') {
-        // Filter to only include days in our chronological order
-        const filteredHours = {};
-        dayOrder.forEach(day => {
-          if (hoursData.hours[day]) {
-            filteredHours[day] = hoursData.hours[day];
-          }
+        // Filter days based on selected itinerary dates
+        let daysToDisplay = dayOrder;
+        if (selectedDays && selectedDays.length > 0) {
+            daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
+        }
+        
+        // Display only filtered days
+        daysToDisplay.forEach(day => {
+            if (hoursData.hours[day]) {
+                html += `
+                    <div class="day-hour">
+                      <span class="day">${day}:</span>
+                      <span class="time">${hoursData.hours[day]}</span>
+                    </div>
+                `;
+            }
         });
         
-        // Add any remaining days not in our standard order
-        Object.entries(hoursData.hours).forEach(([day, time]) => {
-          if (!filteredHours[day]) {
-            filteredHours[day] = time;
-          }
-        });
-        
-        // Display in chronological order
-        Object.entries(filteredHours).forEach(([day, time]) => {
-          html += `
-            <div class="day-hour">
-              <span class="day">${day}:</span>
-              <span class="time">${time}</span>
-            </div>
-          `;
-        });
+        // Show message if no hours for selected days
+        if (html === '' && Object.keys(hoursData.hours).length > 0) {
+            html = `
+                <div class="day-hour">
+                    <span class="day">Note:</span>
+                    <span class="time">No hours available for selected dates</span>
+                </div>
+            `;
+        }
       } else if (typeof hoursData.hours === 'string') {
         html += `<div class="day-hour"><span class="time">${hoursData.hours}</span></div>`;
       }
@@ -1156,6 +1208,7 @@ footer:
       goToStep(2);
     }
 
+    // MODIFIED: Refresh restaurant with date filtering
     async function refreshCurrentRestaurant() {
       if (!currentRestaurant) return;
       
@@ -1176,8 +1229,20 @@ footer:
         if (hoursData) {
           let hoursHtml = `<div class="hours-display">`;
           
-          // Use chronological order formatting
-          hoursHtml += formatHoursInChronologicalOrder(hoursData);
+          // Get selected days from itinerary
+          const selectedDays = getSelectedDays();
+          
+          // Add subtle indicator if filtering is active
+          if (selectedDays && selectedDays.length > 0) {
+            hoursHtml += `
+              <div style="margin-bottom: 10px; padding: 8px; background: rgba(255, 215, 0, 0.05); border-radius: 6px; font-size: 0.9rem; color: #ffd700;">
+                📅 Showing hours for: ${selectedDays.join(', ')}
+              </div>
+            `;
+          }
+          
+          // Use filtered chronological order formatting
+          hoursHtml += formatHoursInChronologicalOrder(hoursData, selectedDays);
           
           hoursHtml += `</div>`;
           
@@ -1189,6 +1254,7 @@ footer:
             <div class="update-note">
               <strong>Source:</strong> ${hoursData.source || 'Live API'} 
               | <strong>Updated:</strong> ${new Date().toLocaleTimeString()}
+              ${selectedDays ? ` | <strong>Filtered by itinerary</strong>` : ''}
             </div>
           `;
           
@@ -1198,11 +1264,19 @@ footer:
         }
       } catch (error) {
         console.error('Error fetching hours:', error);
+        
+        // Get selected days for error message
+        const selectedDays = getSelectedDays();
+        let errorMessage = 'Unable to fetch live hours';
+        if (selectedDays) {
+          errorMessage += ` for selected dates`;
+        }
+        
         hoursContainer.innerHTML = `
           <div class="hours-display">
             <div class="day-hour">
               <span class="day">Status:</span>
-              <span class="time" style="color: #ef4444;">Unable to fetch live hours</span>
+              <span class="time" style="color: #ef4444;">${errorMessage}</span>
             </div>
           </div>
           <div class="update-note">⚠️ Showing fallback information</div>
@@ -1301,7 +1375,18 @@ footer:
     document.addEventListener('DOMContentLoaded', () => {
       initItinerary();
       testAPIConnection();
-      // Removed fetchAllBreakfastHours() since we now show hours after selection
+      
+      // Update API status if dates are set
+      const itinerary = getItinerary();
+      if (itinerary.tripInfo) {
+        const selectedDays = getSelectedDays();
+        if (selectedDays) {
+          const statusIndicator = document.getElementById('apiStatus');
+          if (statusIndicator && statusIndicator.textContent.includes('✅')) {
+            statusIndicator.textContent = '✅ API Connected | 📅 Date Filter Active';
+          }
+        }
+      }
     });
   </script>
 </body>
