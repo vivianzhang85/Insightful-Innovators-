@@ -1,25 +1,24 @@
 ---
 layout: post
-title: "Step 1 Breakfast"
-description: "Breakfast time hits, and in NYC that means one thing: pick your spot and dive in."
-permalink: /new-york/breakfast/
+title: "Step 4 Broadway & Lyrics"
+description: "Experience Broadway magic and vote on show lyrics! Choose your show and participate in lyric voting."
+permalink: /new-york/broadway/
 parent: "Analytics/Admin"
 team: "Insightful Innovators"
-submodule: 1
+submodule: 4
 author: "Insightful Innocators"
 date: 2025-11-20
 microblog: true
 footer: 
-    previous: /new-york/landmarks/
+    previous: /new-york/shopping/
     home: /nyc/home/
-    next: /new-york/shopping/
+    next: /new-york/breakfast/
 ---
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NYC Breakfast Explorer</title>
+  <title>🎭 Broadway Show Selector & Lyrics Voting</title>
   <style>
     * {
       margin: 0;
@@ -31,7 +30,7 @@ footer:
       margin: 0;
       padding: 20px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
       color: white;
       min-height: 100vh;
     }
@@ -47,141 +46,287 @@ footer:
       padding: 20px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
-      border: 2px solid #f59e0b;
+      border: 2px solid #8b5cf6;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899, #3b82f6);
     }
     
     .header h1 {
       font-size: 48px;
       margin: 0 0 10px 0;
-      color: #fbbf24;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      color: #f0abfc;
+      text-shadow: 2px 2px 4px rgba(139, 92, 246, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
     
     .header p {
       font-size: 1.2rem;
       color: #cbd5e1;
+      max-width: 800px;
+      margin: 0 auto;
     }
     
-    .live-hours-container {
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin: 30px 0;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      padding: 10px;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 10px;
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .tab:hover {
+      background: rgba(139, 92, 246, 0.2);
+      color: #f0abfc;
+    }
+    
+    .tab.active {
+      background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+      color: white;
+      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .live-data-container {
       margin: 30px 0;
       padding: 25px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 15px;
-      border-left: 5px solid #10b981;
+      border-left: 5px solid #8b5cf6;
     }
     
-    .live-hours-container h2 {
-      color: #10b981;
+    .live-data-container h2 {
+      color: #f0abfc;
       margin-bottom: 20px;
       font-size: 1.8rem;
-    }
-    
-    .restaurant-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 25px;
-      margin: 20px 0;
-      border: 2px solid transparent;
-      transition: all 0.3s;
-    }
-    
-    .restaurant-card:hover {
-      transform: translateY(-5px);
-      border-color: #f59e0b;
-      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-    }
-    
-    .restaurant-card h3 {
-      margin: 0 0 15px 0;
-      font-size: 28px;
-      color: #f59e0b;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     
-    .restaurant-card .badge {
+    .date-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .date-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    
+    .date-card:hover {
+      transform: translateY(-5px);
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .date-card.selected {
+      background: rgba(139, 92, 246, 0.2);
+      border-color: #f0abfc;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+    }
+    
+    .date-card .date {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #f0abfc;
+    }
+    
+    .date-card .day {
+      color: #c4b5fd;
+      margin-bottom: 5px;
+    }
+    
+    .show-card {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.1), rgba(0, 0, 0, 0.3));
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .show-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    }
+    
+    .show-card:hover {
+      transform: translateY(-5px);
+      border-color: #f0abfc;
+      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+    }
+    
+    .show-card h3 {
+      margin: 0 0 15px 0;
+      font-size: 28px;
+      color: #f0abfc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .show-badge {
       display: inline-block;
       padding: 5px 15px;
-      background: rgba(245, 158, 11, 0.2);
+      background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+      color: white;
       border-radius: 20px;
       font-size: 12px;
       margin: 10px 0;
     }
     
-    .restaurant-card p {
-      line-height: 1.6;
-      color: #cbd5e1;
+    .show-theater {
+      color: #c4b5fd;
       margin: 10px 0;
+      font-size: 1.1rem;
     }
     
-    .hours-display {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      border-radius: 10px;
+    .show-description {
+      line-height: 1.6;
+      color: #cbd5e1;
       margin: 15px 0;
     }
     
-    .day-hour {
+    .availability-display {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    
+    .availability-header {
       display: flex;
       justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(139, 92, 246, 0.3);
     }
     
-    .day-hour:last-child {
-      border-bottom: none;
+    .availability-header h4 {
+      color: #f0abfc;
+      font-size: 1.3rem;
     }
     
-    .day-hour .day {
+    .price-tag {
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 25px;
       font-weight: bold;
-      color: #fbbf24;
+      font-size: 1.1rem;
     }
     
-    .day-hour .time {
-      color: #10b981;
-      font-weight: bold;
-    }
-    
-    .menu-grid {
+    .performance-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
     }
     
-    .menu-item {
+    .performance-card {
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 20px;
-      transition: transform 0.3s;
+      text-align: center;
+      transition: all 0.3s;
+      border: 2px solid transparent;
     }
     
-    .menu-item:hover {
-      transform: scale(1.02);
+    .performance-card:hover {
+      transform: scale(1.05);
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
     }
     
-    .menu-item h4 {
-      margin: 0 0 5px 0;
-      color: #fbbf24;
-      font-size: 1.2rem;
+    .performance-card.sold-out {
+      background: rgba(239, 68, 68, 0.1);
+      opacity: 0.7;
     }
     
-    .menu-item .price {
+    .performance-card.sold-out:hover {
+      border-color: #ef4444;
+    }
+    
+    .performance-time {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f0abfc;
+      margin-bottom: 10px;
+    }
+    
+    .performance-price {
       color: #10b981;
       font-weight: bold;
-      font-size: 20px;
-      margin: 5px 0;
-    }
-    
-    .menu-item p {
-      color: #94a3b8;
-      font-size: 14px;
+      font-size: 1.2rem;
       margin: 10px 0;
     }
     
+    .performance-status {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .status-available {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+    
+    .status-sold-out {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+    
+    .status-limited {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+    
     .btn {
-      background: linear-gradient(90deg, #f59e0b, #f97316);
+      background: linear-gradient(90deg, #8b5cf6, #7c3aed);
       color: white;
       border: none;
       padding: 12px 24px;
@@ -197,18 +342,22 @@ footer:
     
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
     }
     
     .btn-primary {
-      background: linear-gradient(90deg, #10b981, #059669);
+      background: linear-gradient(90deg, #ec4899, #db2777);
       width: 100%;
       margin-top: 20px;
       justify-content: center;
     }
     
+    .btn-secondary {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+    }
+    
     .refresh-btn {
-      background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+      background: linear-gradient(90deg, #10b981, #059669);
       margin-top: 10px;
     }
     
@@ -232,198 +381,254 @@ footer:
       color: white;
     }
     
-    .order-section {
+    .selection-section {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       padding: 30px;
+      margin: 20px 0;
     }
     
-    .order-item {
+    .selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .selection-card {
       background: rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      border-radius: 8px;
-      margin: 10px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .custom-input {
-      width: 100%;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #475569;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      margin: 10px 0;
-    }
-    
-    .custom-input:focus {
-      outline: none;
-      border-color: #a855f7;
-    }
-    
-    .remove-btn {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s;
+      border: 2px solid transparent;
       cursor: pointer;
     }
     
-    .total {
+    .selection-card:hover {
+      transform: translateY(-5px);
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .selection-card.selected {
+      background: rgba(139, 92, 246, 0.2);
+      border-color: #f0abfc;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+    }
+    
+    .selection-card h4 {
+      margin: 0 0 10px 0;
+      color: #f0abfc;
+      font-size: 1.3rem;
+    }
+    
+    .ticket-quantity {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+    
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .quantity-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .quantity-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .quantity-display {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #f0abfc;
+      min-width: 50px;
+      text-align: center;
+    }
+    
+    .total-price {
       font-size: 28px;
       text-align: right;
       margin: 20px 0;
-      color: #fbbf24;
+      color: #f0abfc;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
     }
     
-    .restaurant-info {
+    .show-info {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(139, 92, 246, 0.3);
     }
     
-    .restaurant-location {
-      color: #f59e0b;
-      font-weight: bold;
-    }
-    
-    .restaurant-cuisine {
-      background: rgba(139, 92, 246, 0.2);
-      color: #c4b5fd;
+    .show-type {
+      background: linear-gradient(90deg, #ec4899, #db2777);
+      color: white;
       padding: 5px 10px;
       border-radius: 12px;
       font-size: 0.8rem;
     }
     
-    .location-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin: 20px 0;
-    }
-    
-    .location-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 25px;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-      position: relative;
-    }
-    
-    .location-card:hover {
-      transform: translateY(-5px);
-      border-color: #f59e0b;
-      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-    }
-    
-    .location-card h3 {
-      margin: 0 0 10px 0;
-      font-size: 24px;
-      color: #f59e0b;
-    }
-
-    .location-card-footer {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .view-menu-btn {
-      flex: 1;
-      background: linear-gradient(90deg, #f59e0b, #f97316);
+    .live-data-indicator {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #8b5cf6;
       color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-
-    .view-menu-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
-    }
-
-    .quick-add-btn {
-      background: linear-gradient(90deg, #ffd700, #ffed4e);
-      color: #1a1a2e;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .quick-add-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
-    }
-
-    .quick-add-btn.added {
-      background: linear-gradient(90deg, #10b981, #059669);
-      color: white;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-left: 10px;
+      animation: pulse 2s infinite;
     }
     
-    .nav-to-landmarks {
-      margin-top: 50px;
-      margin-bottom: 50px;
+    .live-data-indicator.updating {
+      background: #f59e0b;
+    }
+    
+    .live-data-indicator.offline {
+      background: #ef4444;
+    }
+    
+    .availability-loading {
       text-align: center;
       padding: 40px;
-      background: rgba(255, 215, 0, 0.1);
-      border-radius: 15px;
-      border: 2px solid #ffd700;
+      color: #94a3b8;
     }
     
-    .nav-to-landmarks h2 {
+    .live-loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px auto;
+    }
+    
+    .availability-header {
+      margin: 30px 0 20px 0;
+      color: #f0abfc;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 10px;
+    }
+    
+    /* Lyrics Voting Section */
+    .lyrics-section {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(0, 0, 0, 0.3));
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+      border: 2px solid #f59e0b;
+    }
+    
+    .lyrics-section h2 {
       color: #fbbf24;
       margin-bottom: 20px;
-      font-size: 2rem;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
-    .nav-to-landmarks p {
-      color: #cbd5e1;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+    .lyrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
     }
     
-    .landmarks-btn {
-      display: inline-block;
-      padding: 20px 50px;
-      font-size: 1.3rem;
+    .lyrics-table thead {
+      background: rgba(245, 158, 11, 0.2);
+    }
+    
+    .lyrics-table th {
+      padding: 15px;
+      text-align: left;
+      color: #fbbf24;
       font-weight: bold;
-      color: #1a1a2e;
-      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      border-bottom: 2px solid #f59e0b;
     }
     
-    .landmarks-btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
-      background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    .lyrics-table td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-
+    
+    .lyrics-table tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .lyrics-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .lyric-text {
+      color: #f0f0f0;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    
+    .vote-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 80px;
+    }
+    
+    .love-btn {
+      background: linear-gradient(90deg, #ef4444, #dc2626);
+      color: white;
+    }
+    
+    .love-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+    }
+    
+    .dislike-btn {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+    }
+    
+    .dislike-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+    
+    .vote-count {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
     /* Itinerary Tracker Sidebar */
     .itinerary-tracker {
       position: fixed;
@@ -545,49 +750,128 @@ footer:
       color: white;
     }
 
-    .live-data-indicator {
-      display: inline-block;
-      padding: 4px 12px;
-      background: #4CAF50;
+    .quick-add-btn {
+      background: linear-gradient(90deg, #ffd700, #ffed4e);
+      color: #1a1a2e;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .quick-add-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+    }
+
+    .quick-add-btn.added {
+      background: linear-gradient(90deg, #10b981, #059669);
       color: white;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      margin-left: 10px;
-      animation: pulse 2s infinite;
     }
-    
-    .live-data-indicator.updating {
-      background: #FF9800;
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
     }
-    
-    .live-data-indicator.offline {
-      background: #F44336;
+
+    .nav-btn {
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
     }
-    
-    .hours-loading {
-      text-align: center;
+
+    .nav-btn-prev {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+    }
+
+    .nav-btn-prev:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .nav-btn-next {
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: white;
+    }
+
+    .nav-btn-next:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .confirmation-section {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(0, 0, 0, 0.3));
+      border-radius: 15px;
       padding: 40px;
-      color: #94a3b8;
+      margin: 30px 0;
+      text-align: center;
+      border: 2px solid #10b981;
+    }
+
+    .confirmation-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .confirmation-title {
+      color: #f0abfc;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-details {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: #c4b5fd;
+    }
+
+    .detail-value {
+      color: #f0abfc;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      display: none;
     }
     
-    .live-loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top: 4px solid #f59e0b;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 10px auto;
+    .tab-content.active {
+      display: block;
     }
-    
-    .hours-header {
-      margin: 30px 0 20px 0;
-      color: #fbbf24;
-      font-size: 1.8rem;
-      border-bottom: 2px solid #f59e0b;
-      padding-bottom: 10px;
-    }
-    
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -598,18 +882,9 @@ footer:
       50% { opacity: 0.7; }
     }
     
-    .update-note {
-      font-style: italic;
-      color: #94a3b8;
-      font-size: 0.9rem;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
     @media (max-width: 768px) {
-      .location-grid,
-      .menu-grid {
+      .selection-grid,
+      .performance-grid {
         grid-template-columns: 1fr;
       }
       
@@ -617,19 +892,33 @@ footer:
         font-size: 36px;
       }
       
-      .restaurant-card h3 {
+      .show-card h3 {
         font-size: 24px;
       }
       
-      .landmarks-btn {
-        padding: 15px 35px;
-        font-size: 1.1rem;
+      .nav-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .nav-btn {
+        width: 100%;
+        justify-content: center;
       }
 
       .itinerary-tracker {
         width: 90%;
         right: 5%;
         left: 5%;
+      }
+      
+      .date-selector {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .lyrics-table {
+        display: block;
+        overflow-x: auto;
       }
     }
   </style>
@@ -641,166 +930,252 @@ footer:
 
   <div class="container">
     <div class="header">
-      <h1>🍳 NYC Breakfast Explorer</h1>
-      <p>Choose your perfect morning meal with live restaurant hours</p>
-      <div class="live-data-indicator" id="apiStatus">🔌 Connecting to API...</div>
+      <h1>🎭 Broadway Experience</h1>
+      <p>Choose your Broadway show and vote on famous lyrics from musicals. Experience the magic of theater!</p>
+      <div class="live-data-indicator" id="apiStatus">🔌 Connecting to Broadway API...</div>
     </div>
 
-    <!-- Restaurant Selection Grid -->
-    <div id="step1" class="step active">
-      <h2 style="text-align: center; margin-bottom: 30px; color: #fbbf24;">Choose Your Breakfast Spot</h2>
-      <div class="location-grid">
-        <div class="location-card">
-          <h3>Sarabeth's</h3>
-          <div class="badge">Elegant & Classic</div>
-          <p>📍 Upper West Side</p>
-          <p>A beloved NYC institution known for its legendary homemade jams and elegant brunch classics. Perfect for a refined, upscale breakfast experience.</p>
-          <div class="restaurant-cuisine">Breakfast & Pastries</div>
-          <div class="location-card-footer">
-            <button class="view-menu-btn" onclick="selectRestaurant('sarabeths')">
-              <span>📖</span> View Menu
-            </button>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('sarabeths', event)" data-restaurant="sarabeths">
-              <span>⭐</span> Add
-            </button>
-          </div>
-        </div>
-        <div class="location-card">
-          <h3>Jack's Wife Frida</h3>
-          <div class="badge">Bold & Trendy</div>
-          <p>📍 SoHo</p>
-          <p>Mediterranean-inspired breakfast with bold Mexican flavors. A trendy spot with colorful dishes and creative twists on morning favorites.</p>
-          <div class="restaurant-cuisine">Mediterranean</div>
-          <div class="location-card-footer">
-            <button class="view-menu-btn" onclick="selectRestaurant('jacks')">
-              <span>📖</span> View Menu
-            </button>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('jacks', event)" data-restaurant="jacks">
-              <span>⭐</span> Add
-            </button>
-          </div>
-        </div>
-        <div class="location-card">
-          <h3>Ess a Bagel</h3>
-          <div class="badge">Authentic & Iconic</div>
-          <p>📍 Midtown East</p>
-          <p>The ultimate NYC bagel experience. Hand-rolled, kettle-boiled bagels that are crispy outside and pillowy inside. A true New York classic.</p>
-          <div class="restaurant-cuisine">Bagels & Deli</div>
-          <div class="location-card-footer">
-            <button class="view-menu-btn" onclick="selectRestaurant('ess')">
-              <span>📖</span> View Menu
-            </button>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('ess', event)" data-restaurant="ess">
-              <span>⭐</span> Add
-            </button>
-          </div>
-        </div>
-        <div class="location-card">
-          <h3>Shuka</h3>
-          <div class="badge">Fresh & Vibrant</div>
-          <p>📍 East Village</p>
-          <p>Modern Mediterranean cuisine with Israeli breakfast specialties. Fresh, vibrant dishes featuring tahini, hummus, and perfectly spiced shakshuka.</p>
-          <div class="restaurant-cuisine">Mediterranean</div>
-          <div class="location-card-footer">
-            <button class="view-menu-btn" onclick="selectRestaurant('shuka')">
-              <span>📖</span> View Menu
-            </button>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('shuka', event)" data-restaurant="shuka">
-              <span>⭐</span> Add
-            </button>
-          </div>
-        </div>
-      </div>
+    <!-- Tab Navigation -->
+    <div class="tab-container">
+      <button class="tab active" onclick="switchTab('shows')">🎟️ Show Selection</button>
+      <button class="tab" onclick="switchTab('lyrics')">🎵 Lyrics Voting</button>
     </div>
 
-    <!-- Restaurant Details & Menu -->
-    <div class="step" id="step2">
-      <button class="btn back-btn" onclick="goToStep(1)">
-        <span>←</span> Back to Restaurants
-      </button>
-      <div class="restaurant-card" id="restaurantDetails">
-        <div class="restaurant-info">
-          <h3 id="restaurantName">Loading...</h3>
-          <div class="restaurant-location" id="restaurantLocation"></div>
-        </div>
-        <p id="restaurantDescription"></p>
+    <!-- Shows Tab Content -->
+    <div id="shows-tab" class="tab-content active">
+      <!-- Show Selection Grid -->
+      <div id="step1" class="step active">
+        <h2 style="text-align: center; margin-bottom: 30px; color: #f0abfc;">Choose Your Broadway Show</h2>
         
-        <!-- Hours section moved here (AFTER restaurant selection) -->
-        <div id="hoursSection">
-          <h2 class="hours-header">🕒 Live Restaurant Hours</h2>
-          <div id="restaurantHours">
-            <div class="hours-loading">
-              <div class="live-loading-spinner"></div>
-              <div>Fetching live hours...</div>
+        <div class="date-selector">
+          <div class="date-card selected" onclick="selectDate('2026-06-05')">
+            <div class="day">Friday</div>
+            <div class="date">June 5</div>
+          </div>
+          <div class="date-card" onclick="selectDate('2026-06-06')">
+            <div class="day">Saturday</div>
+            <div class="date">June 6</div>
+          </div>
+          <div class="date-card" onclick="selectDate('2026-06-07')">
+            <div class="day">Sunday</div>
+            <div class="date">June 7</div>
+          </div>
+          <div class="date-card" onclick="selectDate('2026-06-08')">
+            <div class="day">Monday</div>
+            <div class="date">June 8</div>
+          </div>
+          <div class="date-card" onclick="selectDate('2026-06-09')">
+            <div class="day">Tuesday</div>
+            <div class="date">June 9</div>
+          </div>
+        </div>
+        
+        <div class="selection-grid">
+          <div class="selection-card" onclick="selectShow('hamilton')">
+            <h4>🎭 Hamilton</h4>
+            <div class="show-theater">Richard Rodgers Theatre</div>
+            <p>The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.</p>
+            <div class="show-badge">Most Popular</div>
+            <button class="quick-add-btn" onclick="quickAddToItinerary('hamilton', event)" data-show="hamilton">
+              <span>⭐</span> Add to Itinerary
+            </button>
+          </div>
+          
+          <div class="selection-card" onclick="selectShow('lionking')">
+            <h4>🦁 The Lion King</h4>
+            <div class="show-theater">Minskoff Theatre</div>
+            <p>The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.</p>
+            <div class="show-badge">Family Favorite</div>
+            <button class="quick-add-btn" onclick="quickAddToItinerary('lionking', event)" data-show="lionking">
+              <span>⭐</span> Add to Itinerary
+            </button>
+          </div>
+          
+          <div class="selection-card" onclick="selectShow('wicked')">
+            <h4>🧙‍♀️ Wicked</h4>
+            <div class="show-theater">Gershwin Theatre</div>
+            <p>The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.</p>
+            <div class="show-badge">Longest Running</div>
+            <button class="quick-add-btn" onclick="quickAddToItinerary('wicked', event)" data-show="wicked">
+              <span>⭐</span> Add to Itinerary
+            </button>
+          </div>
+          
+          <div class="selection-card" onclick="selectShow('hadestown')">
+            <h4>⚡ Hadestown</h4>
+            <div class="show-theater">Walter Kerr Theatre</div>
+            <p>An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.</p>
+            <div class="show-badge">Tony Winner</div>
+            <button class="quick-add-btn" onclick="quickAddToItinerary('hadestown', event)" data-show="hadestown">
+              <span>⭐</span> Add to Itinerary
+            </button>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="goToStep(2)">
+          <span>🎟️</span> Check Live Availability
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Show Details & Availability -->
+      <div class="step" id="step2">
+        <button class="btn back-btn" onclick="goToStep(1)">
+          <span>←</span> Back to Shows
+        </button>
+        
+        <div class="show-card">
+          <div class="show-info">
+            <h3 id="showName">Loading...</h3>
+            <div class="show-type" id="showType"></div>
+          </div>
+          <div class="show-theater" id="showTheater"></div>
+          <p id="showDescription"></p>
+          
+          <!-- Live Availability Section -->
+          <div id="availabilitySection">
+            <h2 class="availability-header">📅 Live Ticket Availability</h2>
+            <div class="availability-display">
+              <div class="availability-header">
+                <h4>Available Performances</h4>
+                <div class="price-tag" id="priceRange">Loading...</div>
+              </div>
+              <div id="availabilityData">
+                <div class="availability-loading">
+                  <div class="live-loading-spinner"></div>
+                  <div>Checking real-time Broadway.com availability...</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn refresh-btn" onclick="refreshAvailability()">
+              <span>🔄</span> Refresh Live Availability
+            </button>
+          </div>
+        </div>
+        
+        <!-- Ticket Selection -->
+        <div class="selection-section">
+          <h3 style="color: #f0abfc; margin-bottom: 20px;">Select Your Tickets</h3>
+          
+          <div class="ticket-quantity">
+            <div style="flex: 1;">
+              <h4 style="color: #c4b5fd; margin-bottom: 10px;">Number of Tickets</h4>
+              <p style="color: #cbd5e1;">Select how many tickets you need for the selected performance.</p>
+            </div>
+            <div class="quantity-control">
+              <button class="quantity-btn" onclick="adjustQuantity(-1)" id="decreaseBtn">-</button>
+              <div class="quantity-display" id="ticketQuantity">2</div>
+              <button class="quantity-btn" onclick="adjustQuantity(1)" id="increaseBtn">+</button>
             </div>
           </div>
-          <button class="btn refresh-btn" onclick="refreshCurrentRestaurant()">
-            <span>🔄</span> Update Live Hours
+          
+          <div class="total-price" id="estimatedTotal">
+            Estimated Total: $0
+          </div>
+        </div>
+        
+        <button class="btn add-to-itinerary-btn" id="addToItineraryBtn" onclick="addBroadwayToItinerary()">
+          <span>⭐</span> Add to My Itinerary
+        </button>
+
+        <button class="btn btn-primary" onclick="goToStep(3)">
+          <span>✅</span> Confirm Selection
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- Confirmation Section -->
+      <div class="step" id="step3">
+        <button class="btn back-btn" onclick="goToStep(2)">
+          <span>←</span> Back to Tickets
+        </button>
+        
+        <div class="confirmation-section">
+          <div class="confirmation-icon">🎉</div>
+          <h2 class="confirmation-title">Broadway Tickets Reserved!</h2>
+          
+          <div class="confirmation-details">
+            <div class="detail-item">
+              <span class="detail-label">Show:</span>
+              <span class="detail-value" id="confirmShow">Hamilton</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Theater:</span>
+              <span class="detail-value" id="confirmTheater">Richard Rodgers Theatre</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Date:</span>
+              <span class="detail-value" id="confirmDate">Friday, June 5, 2026</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Tickets:</span>
+              <span class="detail-value" id="confirmTickets">2 tickets</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Price per Ticket:</span>
+              <span class="detail-value" id="confirmPrice">$250</span>
+            </div>
+            <div class="detail-item" style="border-top: 2px solid #f0abfc; padding-top: 15px; margin-top: 10px;">
+              <span class="detail-label" style="font-size: 1.2rem;">Total Cost:</span>
+              <span class="detail-value" style="font-size: 1.2rem; color: #10b981;" id="confirmTotal">$500</span>
+            </div>
+          </div>
+          
+          <p style="color: #cbd5e1; margin: 20px 0; font-size: 1.1rem;">
+            Your tickets have been added to your itinerary. You'll receive a confirmation email with your e-tickets.
+          </p>
+          
+          <button class="btn btn-primary" onclick="completeReservation()">
+            <span>📧</span> Send Confirmation Email
           </button>
         </div>
       </div>
-      
-      <h3 style="margin: 30px 0 20px 0; color: #fbbf24;">Menu Highlights</h3>
-      <div class="menu-grid" id="menuGrid"></div>
-      
-      <button class="btn add-to-itinerary-btn" id="addToItineraryBtn" onclick="addBreakfastToItinerary()">
-        <span>⭐</span> Add to My Itinerary
-      </button>
-
-      <button class="btn btn-primary" onclick="goToStep(3)">
-        <span>📝</span> Continue to Order
-        <span>→</span>
-      </button>
     </div>
 
-    <!-- Order Section -->
-    <div class="step" id="step3">
-      <button class="btn back-btn" onclick="goToStep(2)">
-        <span>←</span> Back to Menu
-      </button>
-      <div class="order-section">
-        <h2 style="color: #fbbf24; margin-bottom: 20px;">Your Order</h2>
-        <div id="orderList"></div>
+    <!-- Lyrics Voting Tab Content -->
+    <div id="lyrics-tab" class="tab-content">
+      <div class="lyrics-section">
+        <h2>🎵 Broadway Lyrics Voting</h2>
+        <p style="color: #cbd5e1; margin-bottom: 20px; font-size: 1.1rem;">
+          Vote on your favorite lyrics from famous Broadway musicals. Click ❤️ for lyrics you love and 👎 for those you dislike!
+        </p>
         
-        <h3 style="margin-top: 30px; color: #fbbf24;">Add Custom Item</h3>
-        <input type="text" class="custom-input" id="customInput" placeholder="E.g., Gluten-free waffle with almond butter">
-        <button class="btn" onclick="addCustom()">
-          <span>➕</span> Add Custom Item
-        </button>
-      </div>
-      <button class="btn btn-primary" onclick="goToStep(4)">
-        <span>✅</span> Review Order
-        <span>→</span>
-      </button>
-    </div>
-
-    <!-- Order Confirmation -->
-    <div class="step" id="step4">
-      <div class="order-section">
-        <h2 style="color: #fbbf24; margin-bottom: 20px;">Order Confirmation</h2>
-        <div id="reviewHeader"></div>
-        <div id="reviewList"></div>
-        <div class="total" id="totalPrice">Total: $0</div>
+        <table class="lyrics-table">
+          <thead>
+            <tr>
+              <th style="width: 60%">Lyric</th>
+              <th style="width: 20%">❤️ Love</th>
+              <th style="width: 20%">👎 Dislike</th>
+            </tr>
+          </thead>
+          <tbody id="lyricsResult">
+            <!-- JavaScript-generated rows will appear here -->
+          </tbody>
+        </table>
         
-        <button class="btn back-btn" onclick="goToStep(3)">
-          <span>←</span> Edit Order
-        </button>
-        <button class="btn btn-primary" onclick="confirmOrder()">
-          <span>📦</span> Confirm Order
-        </button>
+        <div style="margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 10px;">
+          <h4 style="color: #fbbf24; margin-bottom: 10px;">🎭 Vote for Your Favorites!</h4>
+          <p style="color: #cbd5e1; font-size: 0.95rem;">
+            Lyrics are automatically refreshed every 5 seconds. Your votes are recorded in real-time!
+            Currently showing lyrics from <strong>Hamilton</strong>, <strong>Wicked</strong>, <strong>The Lion King</strong>, and more.
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- Navigation to Landmarks Page -->
-    <div class="nav-to-landmarks">
-      <h2>Ready for the Next Adventure?</h2>
-      <p>With a full stomach, let's move on to picking your ideal attraction to sight see!</p>
-      <a href="/student/new-york/landmarks/" class="landmarks-btn">
-        🗽 Explore NYC Landmarks
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <a href="/new-york/shopping/" class="nav-btn nav-btn-prev">
+        <span>←</span> Previous: Shopping
+      </a>
+      <a href="/new-york/breakfast/" class="nav-btn nav-btn-next">
+        Next: Breakfast
+        <span>→</span>
       </a>
     </div>
   </div>
 
+  <!-- Itinerary Tracker Sidebar -->
   <div class="itinerary-tracker hidden" id="itineraryTracker">
     <h3>🗽 Your NYC Trip</h3>
     
@@ -811,28 +1186,28 @@ footer:
       </div>
     </div>
     
-    <div class="itinerary-item incomplete" id="breakfastItem">
+    <div class="itinerary-item" id="breakfastItem">
       <div class="itinerary-label">🍳 Breakfast</div>
       <div class="itinerary-value" id="breakfastValue">
         <span class="itinerary-empty">Not selected</span>
       </div>
     </div>
     
-    <div class="itinerary-item incomplete" id="landmarksItem">
+    <div class="itinerary-item" id="landmarksItem">
       <div class="itinerary-label">🗽 Landmarks</div>
       <div class="itinerary-value" id="landmarksValue">
         <span class="itinerary-empty">Not selected</span>
       </div>
     </div>
     
-    <div class="itinerary-item incomplete" id="shoppingItem">
+    <div class="itinerary-item" id="shoppingItem">
       <div class="itinerary-label">🛍️ Shopping</div>
       <div class="itinerary-value" id="shoppingValue">
         <span class="itinerary-empty">Not selected</span>
       </div>
     </div>
     
-    <div class="itinerary-item incomplete" id="broadwayItem">
+    <div class="itinerary-item" id="broadwayItem">
       <div class="itinerary-label">🎭 Broadway</div>
       <div class="itinerary-value" id="broadwayValue">
         <span class="itinerary-empty">Not selected</span>
@@ -869,35 +1244,57 @@ footer:
     function saveItinerary(itinerary) {
       localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
       updateItineraryDisplay(itinerary);
+      updateQuickAddButtons();
+      updateAddButton();
     }
 
     function updateItineraryDisplay(itinerary) {
+      // Trip Info
       if (itinerary.tripInfo) {
         document.getElementById('tripDatesValue').innerHTML = 
           `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
         document.getElementById('tripInfoItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
+        document.getElementById('tripInfoItem').classList.add('incomplete');
       }
       
+      // Breakfast
       if (itinerary.breakfast) {
         document.getElementById('breakfastValue').textContent = itinerary.breakfast;
         document.getElementById('breakfastItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('breakfastItem').classList.add('incomplete');
       }
       
+      // Landmarks
       if (itinerary.landmarks) {
         document.getElementById('landmarksValue').textContent = itinerary.landmarks;
         document.getElementById('landmarksItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('landmarksItem').classList.add('incomplete');
       }
       
+      // Shopping
       if (itinerary.shopping) {
         document.getElementById('shoppingValue').innerHTML = 
           `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
         document.getElementById('shoppingItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('shoppingItem').classList.add('incomplete');
       }
       
+      // Broadway
       if (itinerary.broadway) {
         document.getElementById('broadwayValue').innerHTML = 
-          `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
+          `${itinerary.broadway.show}<br><small>${itinerary.broadway.theater}</small>`;
         document.getElementById('broadwayItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('broadwayItem').classList.add('incomplete');
       }
     }
 
@@ -913,35 +1310,58 @@ footer:
       tracker.classList.toggle('hidden');
     }
 
-    function addBreakfastToItinerary() {
-      if (!currentRestaurant) return;
+    function addBroadwayToItinerary() {
+      if (!currentShow) {
+        alert('Please select a show first!');
+        return;
+      }
       
-      const restaurantData = MENU_DATA[currentRestaurant];
+      const showData = SHOW_DATA[currentShow];
       const itinerary = getItinerary();
-      itinerary.breakfast = restaurantData.name;
+      
+      itinerary.broadway = {
+        show: showData.name,
+        theater: showData.theater,
+        date: selectedDate,
+        tickets: ticketQuantity,
+        pricePerTicket: showData.price,
+        total: ticketQuantity * showData.price
+      };
+      
       saveItinerary(itinerary);
       
+      // Update button state
       const btn = document.getElementById('addToItineraryBtn');
       btn.classList.add('added');
       btn.innerHTML = '<span>✓</span> Added to Itinerary';
       
+      // Show success message
+      showToast(`${showData.name} added to your itinerary!`);
+      
+      // Reset button after 3 seconds
       setTimeout(() => {
         updateAddButton();
-      }, 2000);
+      }, 3000);
     }
 
     function updateAddButton() {
       const itinerary = getItinerary();
       const btn = document.getElementById('addToItineraryBtn');
-      if (btn && itinerary.breakfast && currentRestaurant) {
-        const restaurantData = MENU_DATA[currentRestaurant];
-        if (itinerary.breakfast === restaurantData.name) {
+      
+      if (!btn) return;
+      
+      if (itinerary.broadway && currentShow) {
+        const showData = SHOW_DATA[currentShow];
+        if (itinerary.broadway.show === showData.name) {
           btn.classList.add('added');
           btn.innerHTML = '<span>✓</span> Added to Itinerary';
         } else {
           btn.classList.remove('added');
           btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
         }
+      } else {
+        btn.classList.remove('added');
+        btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
       }
     }
 
@@ -950,10 +1370,10 @@ footer:
       const buttons = document.querySelectorAll('.quick-add-btn');
       
       buttons.forEach((btn) => {
-        const restaurantKey = btn.getAttribute('data-restaurant');
-        const restaurantData = MENU_DATA[restaurantKey];
+        const showKey = btn.getAttribute('data-show');
+        const showData = SHOW_DATA[showKey];
         
-        if (itinerary.breakfast === restaurantData.name) {
+        if (itinerary.broadway && itinerary.broadway.show === showData.name) {
           btn.classList.add('added');
           btn.innerHTML = '<span>✓</span> Added';
         } else {
@@ -963,144 +1383,304 @@ footer:
       });
     }
 
-    function quickAddToItinerary(restaurantKey, event) {
+    function quickAddToItinerary(showKey, event) {
       event.stopPropagation();
       
-      const restaurantData = MENU_DATA[restaurantKey];
+      // First select the show
+      currentShow = showKey;
+      const showData = SHOW_DATA[showKey];
+      
+      // Update UI to show selected show
+      document.getElementById('showName').textContent = showData.name;
+      document.getElementById('showTheater').textContent = `📍 ${showData.theater}`;
+      document.getElementById('showType').textContent = showData.type;
+      document.getElementById('showDescription').textContent = showData.description;
+      document.getElementById('priceRange').textContent = showData.priceRange;
+      
+      // Calculate initial total
+      updateTotal();
+      
+      // Then add to itinerary
       const itinerary = getItinerary();
-      itinerary.breakfast = restaurantData.name;
+      itinerary.broadway = {
+        show: showData.name,
+        theater: showData.theater,
+        date: selectedDate,
+        tickets: ticketQuantity,
+        pricePerTicket: showData.price,
+        total: ticketQuantity * showData.price
+      };
+      
       saveItinerary(itinerary);
       
-      updateQuickAddButtons();
+      // Show success message
+      showToast(`${showData.name} added to your itinerary!`);
+      
+      // Navigate to step 2 to show details
+      goToStep(2);
+    }
+
+    // Toast notification function
+    function showToast(message) {
+      // Remove existing toast if any
+      const existingToast = document.querySelector('.toast-notification');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = 'toast-notification';
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+        z-index: 10001;
+        animation: slideIn 0.3s ease-out;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      `;
+      
+      toast.innerHTML = `
+        <span>✓</span>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(toast);
+      
+      // Remove toast after 3 seconds
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+      
+      // Add CSS animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+          to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(-50%) translateY(0); opacity: 1; }
+          to { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
     }
 
     // ============================================
-    // DATE FILTERING FUNCTIONS
+    // TAB SWITCHING FUNCTIONALITY
     // ============================================
 
-    // Get selected days from itinerary
-    function getSelectedDays() {
-        const itinerary = getItinerary();
-        if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
-            return null; // Return null if no dates are selected
-        }
-        
-        const month = itinerary.tripInfo.month;
-        const dateRange = parseDateRange(month, itinerary.tripInfo.startDate, itinerary.tripInfo.endDate);
-        
-        if (!dateRange) return null;
-        
-        // Get unique days of the week from the date range
-        const selectedDays = new Set();
-        const currentDate = new Date(dateRange.start);
-        
-        while (currentDate <= dateRange.end) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-            selectedDays.add(dayName);
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-        
-        return Array.from(selectedDays);
-    }
-
-    // Parse date range from stored format
-    function parseDateRange(month, startStr, endStr) {
-        try {
-            const currentYear = new Date().getFullYear();
-            
-            // Extract day numbers
-            const startDay = parseInt(startStr.match(/\d+/)[0]);
-            const endDay = parseInt(endStr.match(/\d+/)[0]);
-            
-            const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
-            const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
-            
-            return { start: startDate, end: endDate };
-        } catch (error) {
-            console.error('Error parsing dates:', error);
-            return null;
-        }
+    function switchTab(tabName) {
+      // Update tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelector(`.tab[onclick*="${tabName}"]`).classList.add('active');
+      
+      // Update content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`${tabName}-tab`).classList.add('active');
     }
 
     // ============================================
-    // LIVE BREAKFAST HOURS INTEGRATION
+    // LYRICS VOTING SYSTEM
     // ============================================
 
-    // API Configuration
-    const API_BASE_URL = 'http://localhost:8587/api/breakfast';
-    
-    // Restaurant mapping
-    const RESTAURANT_MAP = {
-      'sarabeths': { name: "Sarabeth's", endpoint: 'sarabeths' },
-      'jacks': { name: "Jack's Wife Freda", endpoint: 'jacks' },
-      'ess': { name: "Ess-a-Bagel", endpoint: 'bagel' },
-      'shuka': { name: "Shuka", endpoint: 'shuka' }
-    };
+    // Reaction keys
+    const LOVE = "love";
+    const DISLIKE = "dislike";
 
-    // Menu data
-    const MENU_DATA = {
-      sarabeths: {
-        name: "Sarabeth's",
-        location: "Upper West Side",
-        description: "A beloved NYC institution known for its legendary homemade jams and elegant brunch classics. Perfect for a refined, upscale breakfast experience.",
-        items: [
-          {name: 'Lemon Ricotta Pancakes', price: 18, desc: 'Fluffy pancakes with fresh lemon zest'},
-          {name: 'Eggs Benedict', price: 22, desc: 'Poached eggs on English muffin'},
-          {name: 'French Toast', price: 16, desc: 'Challah bread with maple syrup'},
-          {name: 'Fresh Squeezed OJ', price: 8, desc: 'Orange juice made to order'}
-        ]
+    // Initialize lyrics voting
+    function initLyricsVoting() {
+      const url = `http://127.0.0.1:8587/api/lyrics`;
+      const getURL = url + "";
+      
+      fetch(getURL)
+        .then(response => {
+          if (response.status !== 200) {
+            error("GET API response failure: " + response.status);
+            return;
+          }
+          response.json().then(data => {
+            const resultContainer = document.getElementById("lyricsResult");
+            resultContainer.innerHTML = '';
+            
+            for (const row of data) {
+              const tr = document.createElement("tr");
+
+              // Lyric text
+              const lyric = document.createElement("td");
+              lyric.innerHTML = `<div class="lyric-text">${row.id}. "${row.lyric}"</div>`;
+
+              // Love button
+              const love = document.createElement("td");
+              const loveBtn = document.createElement("button");
+              loveBtn.id = LOVE + row.id;
+              loveBtn.className = "vote-btn love-btn";
+              loveBtn.innerHTML = `❤️ <span class="vote-count">${row.love}</span>`;
+              loveBtn.onclick = () => {
+                handleVote(LOVE, row.id, loveBtn.id);
+              };
+              love.appendChild(loveBtn);
+
+              // Dislike button
+              const dislike = document.createElement("td");
+              const dislikeBtn = document.createElement("button");
+              dislikeBtn.id = DISLIKE + row.id;
+              dislikeBtn.className = "vote-btn dislike-btn";
+              dislikeBtn.innerHTML = `👎 <span class="vote-count">${row.dislike}</span>`;
+              dislikeBtn.onclick = () => {
+                handleVote(DISLIKE, row.id, dislikeBtn.id);
+              };
+              dislike.appendChild(dislikeBtn);
+
+              tr.appendChild(lyric);
+              tr.appendChild(love);
+              tr.appendChild(dislike);
+              resultContainer.appendChild(tr);
+            }
+          });
+        })
+        .catch(err => {
+          error("Lyrics loading error: " + err);
+        });
+    }
+
+    // Refresh reactions every 5 seconds
+    function refreshLyricsReactions() {
+      const url = `http://127.0.0.1:8587/api/lyrics`;
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          for (const row of data) {
+            const loveBtn = document.getElementById(LOVE + row.id);
+            if (loveBtn) {
+              const countSpan = loveBtn.querySelector('.vote-count');
+              if (countSpan) countSpan.textContent = row.love;
+            }
+
+            const dislikeBtn = document.getElementById(DISLIKE + row.id);
+            if (dislikeBtn) {
+              const countSpan = dislikeBtn.querySelector('.vote-count');
+              if (countSpan) countSpan.textContent = row.dislike;
+            }
+          }
+        })
+        .catch(err => console.error("Refresh error:", err));
+    }
+
+    // Handle vote
+    function handleVote(type, lyricId, elemID) {
+      const url = `http://127.0.0.1:8587/api/lyrics/${type}/${lyricId}`;
+      
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => {
+          if (response.status !== 200) {
+            error("PUT API response failure: " + response.status);
+            return;
+          }
+          response.json().then(data => {
+            const btn = document.getElementById(elemID);
+            if (btn) {
+              const countSpan = btn.querySelector('.vote-count');
+              if (countSpan) {
+                if (type === LOVE) {
+                  countSpan.textContent = data.love;
+                } else if (type === DISLIKE) {
+                  countSpan.textContent = data.dislike;
+                }
+              }
+              
+              // Visual feedback
+              btn.style.transform = 'scale(1.2)';
+              setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+              }, 300);
+            }
+          });
+        })
+        .catch(err => {
+          error(err + " " + url);
+        });
+    }
+
+    // ============================================
+    // BROADWAY SHOW DATA
+    // ============================================
+
+    const SHOW_DATA = {
+      hamilton: {
+        name: "Hamilton",
+        theater: "Richard Rodgers Theatre",
+        description: "The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.",
+        price: 299,
+        priceRange: "$299 - $499",
+        type: "Musical Drama"
       },
-      jacks: {
-        name: "Jack's Wife Frida",
-        location: "SoHo",
-        description: "Mediterranean-inspired breakfast with bold Mexican flavors. A trendy spot with colorful dishes and creative twists on morning favorites.",
-        items: [
-          {name: 'Shakshuka', price: 19, desc: 'Poached eggs in spicy tomato sauce'},
-          {name: 'Avocado Toast', price: 16, desc: 'Sourdough with smashed avocado'},
-          {name: 'Mexican Omelet', price: 18, desc: 'With chorizo and peppers'},
-          {name: 'Cold Brew Coffee', price: 6, desc: 'Smooth and refreshing'}
-        ]
+      lionking: {
+        name: "The Lion King",
+        theater: "Minskoff Theatre",
+        description: "The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.",
+        price: 179,
+        priceRange: "$179 - $399",
+        type: "Family Musical"
       },
-      ess: {
-        name: "Ess a Bagel",
-        location: "Midtown East",
-        description: "The ultimate NYC bagel experience. Hand-rolled, kettle-boiled bagels that are crispy outside and pillowy inside. A true New York classic.",
-        items: [
-          {name: 'Everything Bagel', price: 5, desc: 'With cream cheese'},
-          {name: 'Lox and Bagel', price: 18, desc: 'Nova lox with cream cheese'},
-          {name: 'Egg Sandwich', price: 12, desc: 'Fried egg and cheese'},
-          {name: 'Hot Coffee', price: 3, desc: 'Fresh brewed'}
-        ]
+      wicked: {
+        name: "Wicked",
+        theater: "Gershwin Theatre",
+        description: "The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.",
+        price: 189,
+        priceRange: "$189 - $359",
+        type: "Fantasy Musical"
       },
-      shuka: {
-        name: "Shuka",
-        location: "East Village",
-        description: "Modern Mediterranean cuisine with Israeli breakfast specialties. Fresh, vibrant dishes featuring tahini, hummus, and perfectly spiced shakshuka.",
-        items: [
-          {name: 'Israeli Breakfast', price: 22, desc: 'Eggs, hummus, tahini, salad'},
-          {name: 'Halloumi Scramble', price: 19, desc: 'With grilled halloumi cheese'},
-          {name: 'Quinoa Bowl', price: 17, desc: 'Roasted vegetables and egg'},
-          {name: 'Turkish Coffee', price: 5, desc: 'Strong and aromatic'}
-        ]
+      hadestown: {
+        name: "Hadestown",
+        theater: "Walter Kerr Theatre",
+        description: "An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.",
+        price: 159,
+        priceRange: "$159 - $329",
+        type: "Folk Opera"
       }
     };
 
-    let currentRestaurant = null;
-    let cart = [];
-
     // ============================================
-    // API FUNCTIONS
+    // BROADWAY SHOW SELECTION LOGIC
     // ============================================
 
-    // Test API connection
+    let currentShow = null;
+    let selectedDate = '2026-06-05';
+    let ticketQuantity = 2;
+
+    // API Configuration
+    const BROADWAY_API_URL = 'http://localhost:8587/api/broadway';
+
     async function testAPIConnection() {
       try {
-        const response = await fetch(`${API_BASE_URL}/test`);
+        const response = await fetch(`${BROADWAY_API_URL}/test`);
         const data = await response.json();
         
         const statusIndicator = document.getElementById('apiStatus');
         if (data.success) {
-          statusIndicator.textContent = '✅ API Connected';
+          statusIndicator.textContent = '✅ Broadway API Connected';
           statusIndicator.className = 'live-data-indicator';
           return true;
         } else {
@@ -1111,282 +1691,237 @@ footer:
       } catch (error) {
         console.error('API connection failed:', error);
         const statusIndicator = document.getElementById('apiStatus');
-        statusIndicator.textContent = '❌ API Offline';
+        statusIndicator.textContent = '❌ Broadway API Offline';
         statusIndicator.className = 'live-data-indicator offline';
         return false;
       }
     }
-
-    // MODIFIED: Format hours with date filtering
-    function formatHoursInChronologicalOrder(hoursData, selectedDays = null) {
-      const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      let html = '';
-      
-      if (hoursData.hours && typeof hoursData.hours === 'object') {
-        // Filter days based on selected itinerary dates
-        let daysToDisplay = dayOrder;
-        if (selectedDays && selectedDays.length > 0) {
-            daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
-        }
-        
-        // Display only filtered days
-        daysToDisplay.forEach(day => {
-            if (hoursData.hours[day]) {
-                html += `
-                    <div class="day-hour">
-                      <span class="day">${day}:</span>
-                      <span class="time">${hoursData.hours[day]}</span>
-                    </div>
-                `;
-            }
-        });
-        
-        // Show message if no hours for selected days
-        if (html === '' && Object.keys(hoursData.hours).length > 0) {
-            html = `
-                <div class="day-hour">
-                    <span class="day">Note:</span>
-                    <span class="time">No hours available for selected dates</span>
-                </div>
-            `;
-        }
-      } else if (typeof hoursData.hours === 'string') {
-        html += `<div class="day-hour"><span class="time">${hoursData.hours}</span></div>`;
-      }
-      
-      return html;
-    }
-
-    // Fetch hours for a specific restaurant
-    async function fetchRestaurantHours(restaurantKey) {
-      const restaurant = RESTAURANT_MAP[restaurantKey];
-      if (!restaurant) return null;
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/${restaurant.endpoint}`);
-        const data = await response.json();
-        
-        if (data.success) {
-          return data.data;
-        } else {
-          console.error(`Error fetching ${restaurant.name}:`, data.error);
-          return null;
-        }
-      } catch (error) {
-        console.error(`Network error for ${restaurant.name}:`, error);
-        return null;
-      }
-    }
-
-    // ============================================
-    // UI FUNCTIONS
-    // ============================================
 
     function goToStep(n) {
       document.querySelectorAll('.step').forEach(step => {
         step.classList.remove('active');
       });
       document.getElementById('step' + n).classList.add('active');
-      if (n === 4) showReview();
-      if (n === 2) updateAddButton();
+      if (n === 3) showConfirmation();
+      if (n === 2) {
+        updateAddButton();
+        if (currentShow) {
+          fetchAvailability();
+        }
+      }
     }
 
-    async function selectRestaurant(restaurantKey) {
-      currentRestaurant = restaurantKey;
+    function selectDate(date) {
+      selectedDate = date;
       
-      // Update restaurant details
-      const restaurantData = MENU_DATA[restaurantKey];
-      document.getElementById('restaurantName').textContent = restaurantData.name;
-      document.getElementById('restaurantLocation').textContent = `📍 ${restaurantData.location}`;
-      document.getElementById('restaurantDescription').textContent = restaurantData.description;
+      // Update UI
+      document.querySelectorAll('.date-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      event.target.closest('.date-card').classList.add('selected');
       
-      // Fetch live hours
-      await refreshCurrentRestaurant();
+      // Update date in itinerary if Broadway is already selected
+      const itinerary = getItinerary();
+      if (itinerary.broadway && currentShow) {
+        itinerary.broadway.date = selectedDate;
+        saveItinerary(itinerary);
+      }
+    }
+
+    function selectShow(showKey) {
+      currentShow = showKey;
       
-      // Show menu
-      showMenu();
+      // Update show details
+      const showData = SHOW_DATA[showKey];
+      document.getElementById('showName').textContent = showData.name;
+      document.getElementById('showTheater').textContent = `📍 ${showData.theater}`;
+      document.getElementById('showType').textContent = showData.type;
+      document.getElementById('showDescription').textContent = showData.description;
+      document.getElementById('priceRange').textContent = showData.priceRange;
+      
+      // Fetch live availability
+      fetchAvailability();
+      
+      // Calculate initial total
+      updateTotal();
+      
+      // Check if this show is already in itinerary
+      updateAddButton();
+      
       goToStep(2);
     }
 
-    // MODIFIED: Refresh restaurant with date filtering
-    async function refreshCurrentRestaurant() {
-      if (!currentRestaurant) return;
+    async function fetchAvailability() {
+      if (!currentShow) return;
       
-      const restaurantData = MENU_DATA[currentRestaurant];
-      const hoursContainer = document.getElementById('restaurantHours');
+      const availabilityContainer = document.getElementById('availabilityData');
       
       // Show loading
-      hoursContainer.innerHTML = `
-        <div class="hours-loading">
+      availabilityContainer.innerHTML = `
+        <div class="availability-loading">
           <div class="live-loading-spinner"></div>
-          <div>Fetching live hours for ${restaurantData.name}...</div>
+          <div>Fetching live availability for ${SHOW_DATA[currentShow].name}...</div>
         </div>
       `;
       
       try {
-        const hoursData = await fetchRestaurantHours(currentRestaurant);
+        const response = await fetch(`${BROADWAY_API_URL}?start_date=${selectedDate}&end_date=${selectedDate}&quantity=${ticketQuantity}`);
+        const data = await response.json();
         
-        if (hoursData) {
-          let hoursHtml = `<div class="hours-display">`;
+        if (data.success) {
+          let availabilityHtml = '<div class="performance-grid">';
           
-          // Get selected days from itinerary
-          const selectedDays = getSelectedDays();
+          // Generate sample performance times (in real app, this would come from API)
+          const performances = [
+            { time: '2:00 PM', price: SHOW_DATA[currentShow].price, status: 'available', seats: 'Limited' },
+            { time: '7:30 PM', price: SHOW_DATA[currentShow].price + 50, status: 'available', seats: 'Good' },
+            { time: '8:00 PM', price: SHOW_DATA[currentShow].price + 100, status: 'limited', seats: 'Few left' },
+            { time: '8:30 PM', price: SHOW_DATA[currentShow].price + 150, status: 'sold-out', seats: 'Sold out' }
+          ];
           
-          // Add subtle indicator if filtering is active
-          if (selectedDays && selectedDays.length > 0) {
-            hoursHtml += `
-              <div style="margin-bottom: 10px; padding: 8px; background: rgba(255, 215, 0, 0.05); border-radius: 6px; font-size: 0.9rem; color: #ffd700;">
-                📅 Showing hours for: ${selectedDays.join(', ')}
+          performances.forEach(performance => {
+            const statusClass = performance.status === 'sold-out' ? 'sold-out' : '';
+            const statusText = performance.status === 'available' ? 'Available' : 
+                              performance.status === 'limited' ? 'Limited' : 'Sold Out';
+            const statusClassText = performance.status === 'available' ? 'status-available' : 
+                                   performance.status === 'limited' ? 'status-limited' : 'status-sold-out';
+            
+            availabilityHtml += `
+              <div class="performance-card ${statusClass}">
+                <div class="performance-time">${performance.time}</div>
+                <div class="performance-price">$${performance.price}</div>
+                <div class="performance-status ${statusClassText}">${statusText}</div>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">${performance.seats} seats</p>
               </div>
             `;
-          }
+          });
           
-          // Use filtered chronological order formatting
-          hoursHtml += formatHoursInChronologicalOrder(hoursData, selectedDays);
+          availabilityHtml += `</div>`;
           
-          hoursHtml += `</div>`;
+          availabilityContainer.innerHTML = availabilityHtml;
           
-          if (hoursData.error) {
-            hoursHtml += `<p style="color: #ef4444;">⚠️ Note: ${hoursData.error}</p>`;
-          }
-          
-          hoursHtml += `
-            <div class="update-note">
-              <strong>Source:</strong> ${hoursData.source || 'Live API'} 
+          // Add update note
+          availabilityContainer.innerHTML += `
+            <div class="update-note" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 0.9rem; font-style: italic;">
+              <strong>Source:</strong> Broadway.com API 
               | <strong>Updated:</strong> ${new Date().toLocaleTimeString()}
-              ${selectedDays ? ` | <strong>Filtered by itinerary</strong>` : ''}
             </div>
           `;
-          
-          hoursContainer.innerHTML = hoursHtml;
         } else {
-          throw new Error('No hours data');
+          throw new Error('No availability data');
         }
       } catch (error) {
-        console.error('Error fetching hours:', error);
-        
-        // Get selected days for error message
-        const selectedDays = getSelectedDays();
-        let errorMessage = 'Unable to fetch live hours';
-        if (selectedDays) {
-          errorMessage += ` for selected dates`;
-        }
-        
-        hoursContainer.innerHTML = `
-          <div class="hours-display">
-            <div class="day-hour">
-              <span class="day">Status:</span>
-              <span class="time" style="color: #ef4444;">${errorMessage}</span>
+        console.error('Error fetching availability:', error);
+        availabilityContainer.innerHTML = `
+          <div class="availability-display">
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+              <div style="color: #ef4444; font-weight: bold;">Unable to fetch live availability</div>
+              <div style="color: #94a3b8; margin-top: 10px;">Showing sample performance times</div>
             </div>
           </div>
-          <div class="update-note">⚠️ Showing fallback information</div>
+          <div class="update-note">⚠️ Using sample data - API connection failed</div>
         `;
       }
     }
 
-    function showMenu() {
-      const menuGrid = document.getElementById('menuGrid');
-      const items = MENU_DATA[currentRestaurant].items;
+    function refreshAvailability() {
+      fetchAvailability();
+    }
+
+    function adjustQuantity(change) {
+      ticketQuantity += change;
+      if (ticketQuantity < 1) ticketQuantity = 1;
+      if (ticketQuantity > 10) ticketQuantity = 10;
       
-      menuGrid.innerHTML = items.map(item => `
-        <div class="menu-item">
-          <h4>${item.name}</h4>
-          <div class="price">${item.price}</div>
-          <p>${item.desc}</p>
-          <button class="btn" onclick="addToCart('${item.name}', ${item.price})" style="width: 100%; margin-top: 10px;">
-            <span>➕</span> Add to Order
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      updateOrderList();
-    }
-
-    function updateOrderList() {
-      const orderList = document.getElementById('orderList');
-      if (cart.length === 0) {
-        orderList.innerHTML = '<p style="color: #94a3b8;">Your order is empty. Add items from the menu!</p>';
-        return;
+      document.getElementById('ticketQuantity').textContent = ticketQuantity;
+      document.getElementById('decreaseBtn').disabled = ticketQuantity === 1;
+      document.getElementById('increaseBtn').disabled = ticketQuantity === 10;
+      
+      updateTotal();
+      
+      // Update itinerary if Broadway is already selected
+      const itinerary = getItinerary();
+      if (itinerary.broadway && currentShow) {
+        const showData = SHOW_DATA[currentShow];
+        itinerary.broadway.tickets = ticketQuantity;
+        itinerary.broadway.total = ticketQuantity * showData.price;
+        saveItinerary(itinerary);
       }
       
-      orderList.innerHTML = cart.map((item, index) => `
-        <div class="order-item">
-          <div>
-            <strong>${item.name}</strong>
-            <div style="color: #10b981;">${item.price}</div>
-          </div>
-          <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-        </div>
-      `).join('');
+      fetchAvailability(); // Refresh availability with new quantity
     }
 
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateOrderList();
+    function updateTotal() {
+      if (!currentShow) return;
+      
+      const showData = SHOW_DATA[currentShow];
+      const total = ticketQuantity * showData.price;
+      document.getElementById('estimatedTotal').textContent = `Estimated Total: $${total}`;
     }
 
-    function addCustom() {
-      const input = document.getElementById('customInput');
-      const customItem = input.value.trim();
+    function showConfirmation() {
+      if (!currentShow) return;
       
-      if (customItem) {
-        cart.push({ name: customItem, price: 0 });
-        input.value = '';
-        updateOrderList();
-      }
+      const showData = SHOW_DATA[currentShow];
+      const total = ticketQuantity * showData.price;
+      const dateObj = new Date(selectedDate);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = dateObj.toLocaleDateString('en-US', options);
+      
+      document.getElementById('confirmShow').textContent = showData.name;
+      document.getElementById('confirmTheater').textContent = showData.theater;
+      document.getElementById('confirmDate').textContent = formattedDate;
+      document.getElementById('confirmTickets').textContent = `${ticketQuantity} ticket${ticketQuantity > 1 ? 's' : ''}`;
+      document.getElementById('confirmPrice').textContent = `$${showData.price}`;
+      document.getElementById('confirmTotal').textContent = `$${total}`;
     }
 
-    function showReview() {
-      const reviewHeader = document.getElementById('reviewHeader');
-      const reviewList = document.getElementById('reviewList');
-      const totalPrice = document.getElementById('totalPrice');
+    function completeReservation() {
+      const showData = SHOW_DATA[currentShow];
+      const total = ticketQuantity * showData.price;
       
-      reviewHeader.innerHTML = `<h3 style="color: #f59e0b; margin-bottom: 20px;">${MENU_DATA[currentRestaurant].name}</h3>`;
+      showToast(`🎉 Broadway tickets confirmed! Confirmation email has been sent.`);
       
-      if (cart.length === 0) {
-        reviewList.innerHTML = '<p style="color: #94a3b8;">No items in order</p>';
-        totalPrice.textContent = 'Total: $0';
-        return;
-      }
-      
-      reviewList.innerHTML = cart.map(item => `
-        <div class="order-item">
-          <div>
-            <strong>${item.name}</strong>
-          </div>
-          <div style="color: #10b981; font-size: 20px; font-weight: bold;">${item.price}</div>
-        </div>
-      `).join('');
-      
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      totalPrice.textContent = `Total: ${total}`;
-    }
-
-    function confirmOrder() {
-      alert(`Order confirmed at ${MENU_DATA[currentRestaurant].name}! Total: ${cart.reduce((sum, item) => sum + item.price, 0)}`);
-      cart = [];
+      // Reset for next booking
+      ticketQuantity = 2;
+      updateTotal();
       goToStep(1);
     }
 
-    // Initialize on page load
+    // ============================================
+    // ERROR HANDLING
+    // ============================================
+
+    function error(err) {
+      console.error(err);
+      
+      // Create error message in lyrics section
+      const resultContainer = document.getElementById("lyricsResult");
+      if (resultContainer) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 3;
+        td.innerHTML = `<div style="color: #ef4444; text-align: center; padding: 20px;">Error loading lyrics: ${err}</div>`;
+        tr.appendChild(td);
+        resultContainer.appendChild(tr);
+      }
+    }
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+
     document.addEventListener('DOMContentLoaded', () => {
       initItinerary();
       testAPIConnection();
+      initLyricsVoting();
       
-      // Update API status if dates are set
-      const itinerary = getItinerary();
-      if (itinerary.tripInfo) {
-        const selectedDays = getSelectedDays();
-        if (selectedDays) {
-          const statusIndicator = document.getElementById('apiStatus');
-          if (statusIndicator && statusIndicator.textContent.includes('✅')) {
-            statusIndicator.textContent = '✅ API Connected | 📅 Date Filter Active';
-          }
-        }
-      }
+      // Set up interval for refreshing lyrics votes
+      setInterval(refreshLyricsReactions, 5000);
+      
+      // Initialize Broadway show data
+      updateTotal();
     });
   </script>
 </body>
