@@ -73,6 +73,9 @@ footer:
             transition: all 0.3s ease;
             border: 3px solid transparent;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .center-card:hover {
@@ -100,6 +103,8 @@ footer:
         .center-card p {
             color: #ccc;
             font-size: 0.95em;
+            flex-grow: 1;
+            margin-bottom: 20px;
         }
 
         /* Gender Selection Screen */
@@ -310,6 +315,242 @@ footer:
             color: #ffd700;
         }
 
+        /* Itinerary Tracker Sidebar - EXACT COPY */
+        .itinerary-tracker {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            background: rgba(26, 35, 50, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid #ffd700;
+            z-index: 9999;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .itinerary-tracker h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-align: center;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+        }
+
+        .itinerary-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .itinerary-item.incomplete {
+            border-left-color: #666;
+            opacity: 0.6;
+        }
+
+        .itinerary-label {
+            font-size: 0.85rem;
+            color: #ffd700;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .itinerary-value {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .itinerary-empty {
+            color: #999;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .clear-itinerary-btn {
+            width: 100%;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .clear-itinerary-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .toggle-tracker-btn {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background: #ffd700;
+            color: #1a2332;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 10000;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s;
+        }
+
+        .toggle-tracker-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .itinerary-tracker.hidden {
+            display: none;
+        }
+
+        /* Add to Itinerary Button for Shopping Centers */
+        .add-to-itinerary-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .add-to-itinerary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .add-to-itinerary-btn.added {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+
+        .add-to-itinerary-btn.added:hover {
+            transform: none;
+            cursor: default;
+        }
+
+        /* Add to Itinerary Button for Shopping Content */
+        .add-shopping-itinerary-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .add-shopping-itinerary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .add-shopping-itinerary-btn.added {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+
+        .center-card-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .center-select-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a2332;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .center-select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Broadway Navigation Section */
+        .nav-to-broadway {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+        }
+        
+        .nav-to-broadway h2 {
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .nav-to-broadway p {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .broadway-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .broadway-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -332,10 +573,30 @@ footer:
             .wardrobe-section {
                 padding: 20px;
             }
+
+            .itinerary-tracker {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+            }
+
+            .center-card-buttons {
+                flex-direction: column;
+            }
+
+            .broadway-btn {
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Itinerary Tracker Toggle Button -->
+    <button class="toggle-tracker-btn" onclick="toggleItineraryTracker()">
+        📋 My Itinerary
+    </button>
+
     <div class="container">
         <header>
             <h1>NYC Shopping Experience</h1>
@@ -345,28 +606,60 @@ footer:
         <!-- Shopping Center Selection -->
         <div id="center-selection-screen">
             <div class="center-selection">
-                <div class="center-card" onclick="selectCenter('east-river')">
+                <div class="center-card">
                     <div class="center-icon">🏬</div>
                     <h2>East River Plaza</h2>
                     <p>Affordable fashion & everyday essentials</p>
+                    <div class="center-card-buttons">
+                        <button class="center-select-btn" onclick="selectCenter('east-river')">
+                            <span>🛒</span> Shop Here
+                        </button>
+                        <button class="add-to-itinerary-btn" id="add-east-river" onclick="addShoppingCenterToItinerary('east-river', event)">
+                            <span>✅</span> Add to Itinerary
+                        </button>
+                    </div>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('macys')">
+                <div class="center-card">
                     <div class="center-icon">🏢</div>
                     <h2>Macy's Herald Square</h2>
                     <p>Classic department store elegance</p>
+                    <div class="center-card-buttons">
+                        <button class="center-select-btn" onclick="selectCenter('macys')">
+                            <span>🛒</span> Shop Here
+                        </button>
+                        <button class="add-to-itinerary-btn" id="add-macys" onclick="addShoppingCenterToItinerary('macys', event)">
+                            <span>✅</span> Add to Itinerary
+                        </button>
+                    </div>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('soho')">
+                <div class="center-card">
                     <div class="center-icon">✨</div>
                     <h2>SoHo Center</h2>
                     <p>Trendy & fashion-forward styles</p>
+                    <div class="center-card-buttons">
+                        <button class="center-select-btn" onclick="selectCenter('soho')">
+                            <span>🛒</span> Shop Here
+                        </button>
+                        <button class="add-to-itinerary-btn" id="add-soho" onclick="addShoppingCenterToItinerary('soho', event)">
+                            <span>✅</span> Add to Itinerary
+                        </button>
+                    </div>
                 </div>
 
-                <div class="center-card" onclick="selectCenter('columbus')">
+                <div class="center-card">
                     <div class="center-icon">💎</div>
                     <h2>Columbus Circle</h2>
                     <p>Luxury designer boutiques</p>
+                    <div class="center-card-buttons">
+                        <button class="center-select-btn" onclick="selectCenter('columbus')">
+                            <span>🛒</span> Shop Here
+                        </button>
+                        <button class="add-to-itinerary-btn" id="add-columbus" onclick="addShoppingCenterToItinerary('columbus', event)">
+                            <span>✅</span> Add to Itinerary
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -444,12 +737,254 @@ footer:
                     <button class="btn" onclick="saveOutfit()">💾 Save Outfit</button>
                 </div>
 
+                <!-- Add to Itinerary Button -->
+                <button class="add-shopping-itinerary-btn" id="addShoppingToItineraryBtn" onclick="addShoppingSelectionToItinerary()">
+                    ✅ Add Shopping to My Itinerary
+                </button>
+
                 <div class="status-message" id="status">Ready to shop!</div>
             </div>
         </div>
+
+        <!-- Broadway Navigation Section -->
+        <div class="nav-to-broadway">
+            <h2>Ready for Broadway?</h2>
+            <p>After shopping, enjoy a spectacular Broadway show in NYC!</p>
+            <a href="http://localhost:4600/student/new-york/broadway/" class="broadway-btn">
+                🎭 See Broadway Shows
+            </a>
+        </div>
+    </div>
+
+    <!-- Itinerary Tracker Sidebar -->
+    <div class="itinerary-tracker hidden" id="itineraryTracker">
+        <h3>🗽 Your NYC Trip</h3>
+        
+        <div class="itinerary-item" id="tripInfoItem">
+            <div class="itinerary-label">📅 Trip Dates</div>
+            <div class="itinerary-value" id="tripDatesValue">
+                <span class="itinerary-empty">Not set yet</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="breakfastItem">
+            <div class="itinerary-label">🍳 Breakfast</div>
+            <div class="itinerary-value" id="breakfastValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="landmarksItem">
+            <div class="itinerary-label">🗽 Landmarks</div>
+            <div class="itinerary-value" id="landmarksValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="shoppingItem">
+            <div class="itinerary-label">🛍️ Shopping</div>
+            <div class="itinerary-value" id="shoppingValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <div class="itinerary-item incomplete" id="broadwayItem">
+            <div class="itinerary-label">🎭 Broadway</div>
+            <div class="itinerary-value" id="broadwayValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
+        
+        <button class="clear-itinerary-btn" onclick="clearItinerary()">
+            Clear All Selections
+        </button>
     </div>
 
     <script>
+        // ============================================
+        // ITINERARY TRACKER JAVASCRIPT
+        // ============================================
+
+        function initItinerary() {
+            const itinerary = getItinerary();
+            updateItineraryDisplay(itinerary);
+            updateAddToItineraryButtons();
+            updateShoppingContentItineraryButton();
+        }
+
+        function getItinerary() {
+            const stored = localStorage.getItem('nycItinerary');
+            return stored ? JSON.parse(stored) : {
+                tripInfo: null,
+                breakfast: null,
+                landmarks: null,
+                shopping: null,
+                broadway: null
+            };
+        }
+
+        function saveItinerary(itinerary) {
+            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+            updateItineraryDisplay(itinerary);
+            updateAddToItineraryButtons();
+            updateShoppingContentItineraryButton();
+        }
+
+        function updateItineraryDisplay(itinerary) {
+            if (itinerary.tripInfo) {
+                document.getElementById('tripDatesValue').innerHTML = 
+                    `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+                document.getElementById('tripInfoItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.breakfast) {
+                document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+                document.getElementById('breakfastItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.landmarks) {
+                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.shopping) {
+                document.getElementById('shoppingValue').innerHTML = 
+                    `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender ? itinerary.shopping.gender + "'s Fashion" : "Shopping Center"}</small>`;
+                document.getElementById('shoppingItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.broadway) {
+                document.getElementById('broadwayValue').innerHTML = 
+                    `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
+                document.getElementById('broadwayItem').classList.remove('incomplete');
+            }
+        }
+
+        function clearItinerary() {
+            if (confirm('Are you sure you want to clear your entire itinerary?')) {
+                localStorage.removeItem('nycItinerary');
+                location.reload();
+            }
+        }
+
+        function toggleItineraryTracker() {
+            const tracker = document.getElementById('itineraryTracker');
+            tracker.classList.toggle('hidden');
+        }
+
+        function addShoppingCenterToItinerary(centerId, event) {
+            if (event) event.stopPropagation();
+            
+            const center = shoppingCenters[centerId];
+            const itinerary = getItinerary();
+            
+            itinerary.shopping = {
+                center: center.name,
+                gender: null  // Gender not selected yet
+            };
+            
+            saveItinerary(itinerary);
+            
+            // Update button state
+            const btn = document.getElementById(`add-${centerId}`);
+            btn.classList.add('added');
+            btn.innerHTML = '<span>✓</span> Added to Itinerary';
+            btn.disabled = true;
+            
+            alert(`${center.name} has been added to your itinerary!`);
+        }
+
+        function addShoppingSelectionToItinerary() {
+            if (!selectedCenter || !selectedGender) {
+                alert('Please select a shopping center and gender first!');
+                return;
+            }
+            
+            const center = shoppingCenters[selectedCenter];
+            const itinerary = getItinerary();
+            
+            itinerary.shopping = {
+                center: center.name,
+                gender: selectedGender === 'women' ? "Women's" : "Men's"
+            };
+            
+            saveItinerary(itinerary);
+            
+            // Update button state
+            const btn = document.getElementById('addShoppingToItineraryBtn');
+            btn.classList.add('added');
+            btn.innerHTML = '✅ Added to Itinerary';
+            btn.disabled = true;
+            
+            alert(`${center.name} (${selectedGender === 'women' ? "Women's" : "Men's"} Fashion) has been added to your itinerary!`);
+        }
+
+        function updateAddToItineraryButtons() {
+            const itinerary = getItinerary();
+            const currentShopping = itinerary.shopping;
+            
+            // Reset all center buttons first
+            const centerIds = ['east-river', 'macys', 'soho', 'columbus'];
+            centerIds.forEach(centerId => {
+                const btn = document.getElementById(`add-${centerId}`);
+                if (btn) {
+                    btn.classList.remove('added');
+                    btn.innerHTML = '<span>✅</span> Add to Itinerary';
+                    btn.disabled = false;
+                }
+            });
+            
+            // If there's shopping in the itinerary, mark that specific center button
+            if (currentShopping && currentShopping.center) {
+                let centerId = '';
+                if (currentShopping.center.includes('East River')) centerId = 'east-river';
+                else if (currentShopping.center.includes("Macy's")) centerId = 'macys';
+                else if (currentShopping.center.includes('SoHo')) centerId = 'soho';
+                else if (currentShopping.center.includes('Columbus')) centerId = 'columbus';
+                
+                if (centerId) {
+                    const btn = document.getElementById(`add-${centerId}`);
+                    if (btn) {
+                        btn.classList.add('added');
+                        btn.innerHTML = '<span>✓</span> Added to Itinerary';
+                        btn.disabled = true;
+                    }
+                }
+            }
+        }
+
+        function updateShoppingContentItineraryButton() {
+            const itinerary = getItinerary();
+            const btn = document.getElementById('addShoppingToItineraryBtn');
+            
+            if (!selectedCenter || !selectedGender) {
+                if (btn) btn.style.display = 'none';
+                return;
+            }
+            
+            const center = shoppingCenters[selectedCenter];
+            const currentSelection = center.name + (selectedGender === 'women' ? " (Women's)" : " (Men's)");
+            
+            // Check if this specific shopping selection is already in the itinerary
+            if (itinerary.shopping && 
+                itinerary.shopping.center === center.name && 
+                itinerary.shopping.gender === (selectedGender === 'women' ? "Women's" : "Men's")) {
+                btn.classList.add('added');
+                btn.innerHTML = '✅ Added to Itinerary';
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('added');
+                btn.innerHTML = '✅ Add Shopping to My Itinerary';
+                btn.disabled = false;
+            }
+            
+            btn.style.display = 'block';
+        }
+
+        // ============================================
+        // SHOPPING JAVASCRIPT (Original code - unchanged)
+        // ============================================
+
         const shoppingCenters = {
             'east-river': {
                 name: 'East River Plaza',
@@ -654,6 +1189,7 @@ footer:
             document.getElementById('section-title').textContent = gender === 'women' ? "Her Look" : "His Look";
             
             updateDisplay();
+            updateShoppingContentItineraryButton();
         }
 
         function backToCenter() {
@@ -663,6 +1199,7 @@ footer:
             document.getElementById('center-selection-screen').classList.remove('hidden');
             document.getElementById('gender-selection-screen').classList.add('hidden');
             document.getElementById('shopping-content').classList.add('hidden');
+            updateShoppingContentItineraryButton();
         }
 
         function backToGender() {
@@ -670,6 +1207,7 @@ footer:
             currentSelection = { top: 0, bottom: 0, shoes: 0 };
             document.getElementById('gender-selection-screen').classList.remove('hidden');
             document.getElementById('shopping-content').classList.add('hidden');
+            updateShoppingContentItineraryButton();
         }
 
         function updateDisplay() {
@@ -729,7 +1267,6 @@ footer:
                 top: wardrobe.top[currentSelection.top].name,
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
                 shoes: wardrobe.shoes[currentSelection.shoes].name,
-                // include image URLs so the post page can render a stacked outfit
                 topImage: wardrobe.top[currentSelection.top].image,
                 bottomImage: wardrobe.bottom[currentSelection.bottom].image,
                 shoesImage: wardrobe.shoes[currentSelection.shoes].image
@@ -744,6 +1281,11 @@ footer:
                 document.getElementById('status').textContent = "❌ Failed to save outfit locally.";
             }
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initItinerary();
+        });
     </script>
 </body>
 </html>
