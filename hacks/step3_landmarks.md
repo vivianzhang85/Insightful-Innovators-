@@ -255,16 +255,18 @@ footer:
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255,215,0,0.5);
         }
-.btn-success {
-    background: #10b981;
-    color: white;
-}
 
-.btn-success:hover {
-    background: #059669;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(16,185,129,0.5);
-}
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.5);
+        }
+
         /* Interactive Games Section */
         .interactive-section {
             margin-top: 2rem;
@@ -992,7 +994,8 @@ footer:
             align-items: center;
             padding: 20px;
         }
-/* Itinerary Tracker Sidebar */
+
+        /* Itinerary Tracker Sidebar */
         .itinerary-tracker {
             position: fixed;
             right: 20px;
@@ -1101,6 +1104,7 @@ footer:
                 left: 5%;
             }
         }
+
         /* Responsive */
         @media (max-width: 768px) {
             .content-grid {
@@ -1190,44 +1194,45 @@ footer:
         <h3>🗽 Your NYC Trip</h3>
         
         <div class="itinerary-item" id="tripInfoItem">
-    <div class="itinerary-label">📅 Trip Dates</div>
-    <div class="itinerary-value" id="tripDatesValue">
-        <span class="itinerary-empty">Not set yet</span>
-    </div>
-</div>
+            <div class="itinerary-label">📅 Trip Dates</div>
+            <div class="itinerary-value" id="tripDatesValue">
+                <span class="itinerary-empty">Not set yet</span>
+            </div>
+        </div>
 
-<div class="itinerary-item incomplete" id="breakfastItem">
-    <div class="itinerary-label">🍳 Breakfast</div>
-    <div class="itinerary-value" id="breakfastValue">
-        <span class="itinerary-empty">Not selected</span>
-    </div>
-</div>
+        <div class="itinerary-item incomplete" id="breakfastItem">
+            <div class="itinerary-label">🍳 Breakfast</div>
+            <div class="itinerary-value" id="breakfastValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
 
-<div class="itinerary-item incomplete" id="landmarksItem">
-    <div class="itinerary-label">🗽 Landmarks</div>
-    <div class="itinerary-value" id="landmarksValue">
-        <span class="itinerary-empty">Not selected</span>
-    </div>
-</div>
+        <div class="itinerary-item incomplete" id="landmarksItem">
+            <div class="itinerary-label">🗽 Landmarks</div>
+            <div class="itinerary-value" id="landmarksValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
 
-<div class="itinerary-item incomplete" id="shoppingItem">
-    <div class="itinerary-label">🛍️ Shopping</div>
-    <div class="itinerary-value" id="shoppingValue">
-        <span class="itinerary-empty">Not selected</span>
-    </div>
-</div>
+        <div class="itinerary-item incomplete" id="shoppingItem">
+            <div class="itinerary-label">🛍️ Shopping</div>
+            <div class="itinerary-value" id="shoppingValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
 
-<div class="itinerary-item incomplete" id="broadwayItem">
-    <div class="itinerary-label">🎭 Broadway</div>
-    <div class="itinerary-value" id="broadwayValue">
-        <span class="itinerary-empty">Not selected</span>
-    </div>
-</div>
+        <div class="itinerary-item incomplete" id="broadwayItem">
+            <div class="itinerary-label">🎭 Broadway</div>
+            <div class="itinerary-value" id="broadwayValue">
+                <span class="itinerary-empty">Not selected</span>
+            </div>
+        </div>
 
-<button class="clear-itinerary-btn" onclick="clearItinerary()">
-    Clear All Selections
-</button>
+        <button class="clear-itinerary-btn" onclick="clearItinerary()">
+            Clear All Selections
+        </button>
     </div>
+
     <!-- Progress Indicator -->
     <div class="progress-container">
         <div class="progress-dot active" data-section="met-section"></div>
@@ -1320,13 +1325,13 @@ footer:
             </div>
             
             <div class="interactive-buttons">
-    <button class="btn btn-success" onclick="saveLandmarkVisit('The Metropolitan Museum of Art')">
-        <span>✅</span> Add to Itinerary
-    </button>
-    <button class="btn btn-primary" onclick="window.open('https://www.metmuseum.org', '_blank')">
-        <span>🌐</span> Visit Website
-    </button>
-</div>
+                <button class="btn btn-success" onclick="saveLandmarkVisit('The Metropolitan Museum of Art')">
+                    <span>✅</span> Add to Itinerary
+                </button>
+                <button class="btn btn-primary" onclick="window.open('https://www.metmuseum.org', '_blank')">
+                    <span>🌐</span> Visit Website
+                </button>
+            </div>
         </div>
     </section>
 
@@ -1426,13 +1431,13 @@ footer:
             </div>
             
             <div class="interactive-buttons">
-    <button class="btn btn-success" onclick="saveLandmarkVisit('Museum of Ice Cream')">
-        <span>✅</span> Add to Itinerary
-    </button>
-    <button class="btn btn-primary" onclick="window.open('https://www.museumoficecream.com', '_blank')">
-        <span>🌐</span> Visit Website
-    </button>
-</div>
+                <button class="btn btn-success" onclick="saveLandmarkVisit('Museum of Ice Cream')">
+                    <span>✅</span> Add to Itinerary
+                </button>
+                <button class="btn btn-primary" onclick="window.open('https://www.museumoficecream.com', '_blank')">
+                    <span>🌐</span> Visit Website
+                </button>
+            </div>
         </div>
     </section>
 
@@ -1506,13 +1511,13 @@ footer:
             </div>
             
             <div class="interactive-buttons">
-    <button class="btn btn-success" onclick="saveLandmarkVisit('Empire State Building')">
-        <span>✅</span> Add to Itinerary
-    </button>
-    <button class="btn btn-primary" onclick="window.open('https://www.esbnyc.com', '_blank')">
-        <span>🌐</span> Visit Website
-    </button>
-</div>
+                <button class="btn btn-success" onclick="saveLandmarkVisit('Empire State Building')">
+                    <span>✅</span> Add to Itinerary
+                </button>
+                <button class="btn btn-primary" onclick="window.open('https://www.esbnyc.com', '_blank')">
+                    <span>🌐</span> Visit Website
+                </button>
+            </div>
         </div>
     </section>
 
@@ -1598,31 +1603,107 @@ footer:
             </div>
             
             <div class="interactive-buttons">
-    <button class="btn btn-success" onclick="saveLandmarkVisit('Ukrainian Museum')">
-        <span>✅</span> Add to Itinerary
-    </button>
-    <button class="btn btn-primary" onclick="window.open('https://www.ukrainianmuseum.org', '_blank')">
-        <span>🌐</span> Visit Website
-    </button>
-</div>
+                <button class="btn btn-success" onclick="saveLandmarkVisit('Ukrainian Museum')">
+                    <span>✅</span> Add to Itinerary
+                </button>
+                <button class="btn btn-primary" onclick="window.open('https://www.ukrainianmuseum.org', '_blank')">
+                    <span>🌐</span> Visit Website
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-    <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid #FFD700; border-radius: 15px; padding: 40px; margin-bottom: 30px; text-align: center;">
-    <h2 style="color: #FFD700; margin-bottom: 20px; font-size: 2rem;">Ready to Shop?</h2>
-    <p style="color: #fff; font-size: 1.2rem; margin-bottom: 30px;">Time to refresh your wardrobe with some NYC fashion!</p>
-    <a href="{{ site.baseurl }}/new-york/shopping/" style="display: inline-block; padding: 20px 50px; font-size: 1.3rem; font-weight: bold; color: #1a2332; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: none; border-radius: 50px; cursor: pointer; text-decoration: none; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
-        🛍️ Go Shopping in NYC
-    </a>
-</div>
+        <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid #FFD700; border-radius: 15px; padding: 40px; margin-bottom: 30px; text-align: center;">
+            <h2 style="color: #FFD700; margin-bottom: 20px; font-size: 2rem;">Ready to Shop?</h2>
+            <p style="color: #fff; font-size: 1.2rem; margin-bottom: 30px;">Time to refresh your wardrobe with some NYC fashion!</p>
+            <a href="{{ site.baseurl }}/new-york/shopping/" style="display: inline-block; padding: 20px 50px; font-size: 1.3rem; font-weight: bold; color: #1a2332; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: none; border-radius: 50px; cursor: pointer; text-decoration: none; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.05em;">
+                🛍️ Go Shopping in NYC
+            </a>
+        </div>
         <div class="copyright">
             <p>&copy; 2023 NYC Landmarks Experience. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // ============================================
+        // ITINERARY TRACKER JAVASCRIPT
+        // ============================================
+
+        // Initialize itinerary when page loads
+        function initItinerary() {
+            console.log('Initializing itinerary display...');
+            const itinerary = getItinerary();
+            console.log('Loaded itinerary:', itinerary);
+            updateItineraryDisplay(itinerary);
+        }
+
+        function getItinerary() {
+            const stored = localStorage.getItem('nycItinerary');
+            return stored ? JSON.parse(stored) : {
+                tripInfo: null,
+                breakfast: null,
+                landmarks: null,
+                shopping: null,
+                broadway: null
+            };
+        }
+
+        function saveItinerary(itinerary) {
+            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+            updateItineraryDisplay(itinerary);
+        }
+
+        function updateItineraryDisplay(itinerary) {
+            if (itinerary.tripInfo) {
+                document.getElementById('tripDatesValue').innerHTML = 
+                    `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+                document.getElementById('tripInfoItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.breakfast) {
+                document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+                document.getElementById('breakfastItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.landmarks) {
+                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.shopping) {
+                document.getElementById('shoppingValue').innerHTML = 
+                    `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
+                document.getElementById('shoppingItem').classList.remove('incomplete');
+            }
+            
+            if (itinerary.broadway) {
+                document.getElementById('broadwayValue').innerHTML = 
+                    `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
+                document.getElementById('broadwayItem').classList.remove('incomplete');
+            }
+        }
+
+        function clearItinerary() {
+            if (confirm('Are you sure you want to clear your entire itinerary?')) {
+                localStorage.removeItem('nycItinerary');
+                location.reload();
+            }
+        }
+
+        function toggleItineraryTracker() {
+            const tracker = document.getElementById('itineraryTracker');
+            tracker.classList.toggle('hidden');
+        }
+
+        function saveLandmarkVisit(landmarkName) {
+            const itinerary = getItinerary();
+            itinerary.landmarks = landmarkName;
+            saveItinerary(itinerary);
+        }
+
         // ============================================
         // LIVE MUSEUM HOURS INTEGRATION
         // ============================================
@@ -1984,92 +2065,23 @@ footer:
         // ============================================
         // INITIALIZE EVERYTHING
         // ============================================
-// ============================================
-        // ITINERARY TRACKER JAVASCRIPT
-        // ============================================
-
-        function initItinerary() {
-            const itinerary = getItinerary();
-            updateItineraryDisplay(itinerary);
-        }
-
-        function getItinerary() {
-    const stored = localStorage.getItem('nycItinerary');
-    return stored ? JSON.parse(stored) : {
-        tripInfo: null,
-        breakfast: null,
-        landmarks: null,
-        shopping: null,
-        broadway: null
-    };
-}
-
-        function saveItinerary(itinerary) {
-            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-            updateItineraryDisplay(itinerary);
-        }
-
-        function updateItineraryDisplay(itinerary) {
-    if (itinerary.tripInfo) {
-        document.getElementById('tripDatesValue').innerHTML = 
-            `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
-        document.getElementById('tripInfoItem').classList.remove('incomplete');
-    }
-    
-    if (itinerary.breakfast) {
-        document.getElementById('breakfastValue').textContent = itinerary.breakfast;
-        document.getElementById('breakfastItem').classList.remove('incomplete');
-    }
-    
-    if (itinerary.landmarks) {
-        document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-        document.getElementById('landmarksItem').classList.remove('incomplete');
-    }
-    
-    if (itinerary.shopping) {
-        document.getElementById('shoppingValue').innerHTML = 
-            `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
-        document.getElementById('shoppingItem').classList.remove('incomplete');
-    }
-    
-    if (itinerary.broadway) {
-        document.getElementById('broadwayValue').innerHTML = 
-            `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
-        document.getElementById('broadwayItem').classList.remove('incomplete');
-    }
-}
-
-        function clearItinerary() {
-            if (confirm('Are you sure you want to clear your entire itinerary?')) {
-                localStorage.removeItem('nycItinerary');
-                location.reload();
-            }
-        }
-
-        function toggleItineraryTracker() {
-            const tracker = document.getElementById('itineraryTracker');
-            tracker.classList.toggle('hidden');
-        }
-
-        function saveLandmarkVisit(landmarkName) {
-            const itinerary = getItinerary();
-            itinerary.landmarks = landmarkName;
-            saveItinerary(itinerary);
-        }
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing...');
             
-            // 1. Setup animations
+            // 1. Initialize itinerary (FIXED - this was missing!)
+            initItinerary();
+            
+            // 2. Setup animations
             createStars();
             createBuildingSections();
             createSprinkles();
             createBuildingLights();
             
-            // 2. Setup scroll tracking
+            // 3. Setup scroll tracking
             window.addEventListener('scroll', updateProgressIndicator);
             updateProgressIndicator();
             
-            // 3. Setup navbar scroll effect
+            // 4. Setup navbar scroll effect
             window.addEventListener('scroll', function() {
                 const nav = document.querySelector('nav');
                 if (window.scrollY > 100) {
@@ -2081,7 +2093,7 @@ footer:
                 }
             });
             
-            // 4. Setup live museum hours (ADDED!)
+            // 5. Setup live museum hours
             setTimeout(initializeLiveData, 1000);
         });
     </script>
