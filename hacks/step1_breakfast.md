@@ -2,7 +2,7 @@
 layout: post
 title: "Step 1 Breakfast"
 description: "Breakfast time hits, and in NYC that means one thing: pick your spot and dive in."
-permalink: /new-york/breakfast/
+permalink: /new-york/breakfastt/
 parent: "Analytics/Admin"
 team: "Insightful Innovators"
 submodule: 1
