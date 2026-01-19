@@ -1627,7 +1627,7 @@ footer:
         </div>
     </footer>
 
-    <script>
+    <script type="module">
         // ============================================
         // ITINERARY TRACKER JAVASCRIPT
         // ============================================
@@ -1704,25 +1704,79 @@ footer:
             saveItinerary(itinerary);
         }
 
+        // Get selected days from itinerary
+        function getSelectedDays() {
+            const itinerary = getItinerary();
+            if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
+                return null; // Return null if no dates are selected
+            }
+            
+            const month = itinerary.tripInfo.month;
+            const dateRange = parseDateRange(month, itinerary.tripInfo.startDate, itinerary.tripInfo.endDate);
+            
+            if (!dateRange) return null;
+            
+            // Get unique days of the week from the date range
+            const selectedDays = new Set();
+            const currentDate = new Date(dateRange.start);
+            
+            while (currentDate <= dateRange.end) {
+                const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+                selectedDays.add(dayName);
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            
+            return Array.from(selectedDays);
+        }
+
+        // Parse date range from stored format
+        function parseDateRange(month, startStr, endStr) {
+            try {
+                const currentYear = new Date().getFullYear();
+                
+                // Extract day numbers
+                const startDay = parseInt(startStr.match(/\d+/)[0]);
+                const endDay = parseInt(endStr.match(/\d+/)[0]);
+                
+                const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
+                const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
+                
+                return { start: startDate, end: endDate };
+            } catch (error) {
+                console.error('Error parsing dates:', error);
+                return null;
+            }
+        }
+
         // ============================================
         // LIVE MUSEUM HOURS INTEGRATION
         // ============================================
 
-        // Function to fetch live hours from Flask API
+        // Import configuration from config.js (MODIFIED)
+        import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+        
+        console.log('Config loaded - Python URI:', pythonURI);
+
+        // Function to fetch live hours from Flask API (MODIFIED)
         async function fetchMuseumHours(museumName) {
             try {
                 // Map museum names to API endpoints
                 const apiMap = {
-                    'met': 'http://localhost:8587/api/met',
-                    'icecream': 'http://localhost:8587/api/icecream',
-                    'ukrainian': 'http://localhost:8587/api/ukrainian',
-                    'empire': 'http://localhost:8587/api/empire'
+                    'met': `${pythonURI}/api/met`,
+                    'icecream': `${pythonURI}/api/icecream`,
+                    'ukrainian': `${pythonURI}/api/ukrainian`,
+                    'empire': `${pythonURI}/api/empire`
                 };
 
                 console.log(`Fetching ${museumName} hours from ${apiMap[museumName]}`);
-                const response = await fetch(apiMap[museumName]);
-                const data = await response.json();
                 
+                // Use fetchOptions from config
+                const response = await fetch(apiMap[museumName], {
+                    ...fetchOptions,
+                    method: 'GET'
+                });
+                
+                const data = await response.json();
                 console.log(`Received ${museumName} data:`, data.data);
                 return data.data;
             } catch (error) {
@@ -1731,7 +1785,53 @@ footer:
             }
         }
 
-        // Update hours for a specific museum section
+        // NEW: Test API connection (MODIFIED)
+        async function testAPIConnection() {
+            try {
+                // Add API status indicator to the first section
+                const firstSection = document.querySelector('#met-section .section-title');
+                if (firstSection) {
+                    const statusIndicator = document.createElement('div');
+                    statusIndicator.className = 'live-data-indicator';
+                    statusIndicator.id = 'apiStatus';
+                    statusIndicator.textContent = '🔌 Connecting to API...';
+                    firstSection.parentNode.insertBefore(statusIndicator, firstSection.nextSibling);
+                }
+
+                // Use pythonURI and fetchOptions
+                const response = await fetch(`${pythonURI}/api/test`, {
+                    ...fetchOptions,
+                    method: 'GET'
+                });
+                
+                const data = await response.json();
+                
+                const statusIndicator = document.getElementById('apiStatus');
+                if (data.success) {
+                    if (statusIndicator) {
+                        statusIndicator.textContent = '✅ API Connected';
+                        statusIndicator.className = 'live-data-indicator';
+                    }
+                    return true;
+                } else {
+                    if (statusIndicator) {
+                        statusIndicator.textContent = '⚠️ API Error';
+                        statusIndicator.className = 'live-data-indicator offline';
+                    }
+                    return false;
+                }
+            } catch (error) {
+                console.error('API connection failed:', error);
+                const statusIndicator = document.getElementById('apiStatus');
+                if (statusIndicator) {
+                    statusIndicator.textContent = '❌ API Offline';
+                    statusIndicator.className = 'live-data-indicator offline';
+                }
+                return false;
+            }
+        }
+
+        // Update hours for a specific museum section (MODIFIED with date filtering)
         async function updateMuseumHours(museumId) {
             console.log(`Updating hours for: ${museumId}`);
             const museumName = museumId.replace('-section', '');
@@ -1759,21 +1859,78 @@ footer:
                 
                 if (museumData) {
                     console.log(`Updating UI with ${museumName} data`);
-                    // Update with scraped data
-                    hoursList.innerHTML = `
-                        <li><span>Live Hours</span><span class="live-hours">${museumData.hours}</span></li>
-                        <li><span>Status</span><span class="status-badge status-open">${museumData.status.toUpperCase()}</span></li>
-                        <li><span>Address</span><span>${museumData.address}</span></li>
-                        <li><span>Phone</span><span>${museumData.phone}</span></li>
-                        <li class="update-note"><span>Last Updated</span><span>${museumData.last_updated}</span></li>
+                    
+                    // Get selected days from itinerary for filtering
+                    const selectedDays = getSelectedDays();
+                    
+                    let hoursHtml = '';
+                    
+                    // Add subtle indicator if filtering is active
+                    if (selectedDays && selectedDays.length > 0) {
+                        hoursHtml += `
+                            <li style="background: rgba(255, 215, 0, 0.1); border-radius: 4px; padding: 8px; margin-bottom: 10px;">
+                                <span style="color: #FFD700; font-size: 0.9em;">📅 Showing hours for: ${selectedDays.join(', ')}</span>
+                            </li>
+                        `;
+                    }
+                    
+                    // Format hours based on museum data structure
+                    if (museumData.hours && typeof museumData.hours === 'object') {
+                        // If hours is an object with day:time pairs
+                        const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                        
+                        // Filter days based on selected itinerary dates
+                        let daysToDisplay = dayOrder;
+                        if (selectedDays && selectedDays.length > 0) {
+                            daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
+                        }
+                        
+                        // Display filtered days
+                        daysToDisplay.forEach(day => {
+                            if (museumData.hours[day]) {
+                                hoursHtml += `
+                                    <li><span>${day}</span><span class="live-hours">${museumData.hours[day]}</span></li>
+                                `;
+                            }
+                        });
+                    } else if (typeof museumData.hours === 'string') {
+                        // If hours is a simple string
+                        hoursHtml += `<li><span>Live Hours</span><span class="live-hours">${museumData.hours}</span></li>`;
+                    }
+                    
+                    // Add status, address, phone
+                    if (museumData.status) {
+                        const statusClass = museumData.status.toLowerCase().includes('open') ? 'status-open' : 'status-closed';
+                        hoursHtml += `<li><span>Status</span><span class="status-badge ${statusClass}">${museumData.status.toUpperCase()}</span></li>`;
+                    }
+                    
+                    if (museumData.address) {
+                        hoursHtml += `<li><span>Address</span><span>${museumData.address}</span></li>`;
+                    }
+                    
+                    if (museumData.phone) {
+                        hoursHtml += `<li><span>Phone</span><span>${museumData.phone}</span></li>`;
+                    }
+                    
+                    // Add update note with date filtering info
+                    hoursHtml += `
+                        <li class="update-note">
+                            <span>Last Updated</span>
+                            <span>${museumData.last_updated || new Date().toLocaleTimeString()}</span>
+                        </li>
                     `;
                     
                     // Add error message if exists
                     if (museumData.error) {
-                        hoursList.innerHTML += `
-                            <li style="color: #e74c3c;"><span>Note</span><span>${museumData.error}</span></li>
+                        hoursHtml += `
+                            <li style="color: #e74c3c;">
+                                <span>Note</span>
+                                <span>${museumData.error}</span>
+                            </li>
                         `;
                     }
+                    
+                    hoursList.innerHTML = hoursHtml;
                     
                     // Add highlight animation
                     hoursList.style.animation = "highlight 2s ease";
@@ -1824,7 +1981,7 @@ footer:
                 };
                 
                 // Add to container (before the website button)
-                const websiteBtn = buttonsContainer.querySelector('button');
+                const websiteBtn = buttonsContainer.querySelector('button[onclick*="window.open"]');
                 if (websiteBtn) {
                     console.log(`Adding button before website button for ${museumId}`);
                     buttonsContainer.insertBefore(refreshButton, websiteBtn);
@@ -1837,26 +1994,7 @@ footer:
             });
         }
 
-        // Test if API is reachable
-        async function testAPIConnection() {
-            try {
-                console.log('Testing API connection...');
-                const response = await fetch('http://localhost:8587/api/test');
-                const data = await response.json();
-                console.log('API test result:', data);
-                
-                if (data.success) {
-                    console.log('✅ API connection successful!');
-                } else {
-                    console.warn('⚠️ API returned but with errors');
-                }
-            } catch (error) {
-                console.error('❌ API connection failed:', error);
-                // Don't alert - just log to console
-            }
-        }
-
-        // Initialize live data
+        // Initialize live data (MODIFIED)
         function initializeLiveData() {
             console.log('Initializing live museum hours...');
             
