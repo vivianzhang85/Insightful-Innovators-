@@ -1220,7 +1220,12 @@ footer:
     </button>
   </div>
 
-  <script>
+  <script type="module">
+    // Import configuration from config.js
+    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+    
+    console.log('Broadway Config loaded - Python URI:', pythonURI);
+
     // ============================================
     // ITINERARY TRACKER JAVASCRIPT
     // ============================================
@@ -1390,10 +1395,16 @@ footer:
 
     // Initialize lyrics voting
     function initLyricsVoting() {
-      const url = `http://127.0.0.1:8587/api/lyrics`;
+      const url = `${pythonURI}/api/lyrics`;
       const getURL = url + "";
       
-      fetch(getURL)
+      // Combine fetchOptions with any additional options if needed
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'GET'
+      };
+      
+      fetch(getURL, requestOptions)
         .then(response => {
           if (response.status !== 200) {
             error("GET API response failure: " + response.status);
@@ -1446,9 +1457,15 @@ footer:
 
     // Refresh reactions every 5 seconds
     function refreshLyricsReactions() {
-      const url = `http://127.0.0.1:8587/api/lyrics`;
+      const url = `${pythonURI}/api/lyrics`;
       
-      fetch(url)
+      // Combine fetchOptions with any additional options if needed
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'GET'
+      };
+      
+      fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
           for (const row of data) {
@@ -1470,14 +1487,15 @@ footer:
 
     // Handle vote
     function handleVote(type, lyricId, elemID) {
-      const url = `http://127.0.0.1:8587/api/lyrics/${type}/${lyricId}`;
+      const url = `${pythonURI}/api/lyrics/${type}/${lyricId}`;
       
-      fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
+      // Combine fetchOptions with any additional options if needed
+      const requestOptions = {
+        ...fetchOptions,
+        method: "PUT"
+      };
+      
+      fetch(url, requestOptions)
         .then(response => {
           if (response.status !== 200) {
             error("PUT API response failure: " + response.status);
@@ -1555,12 +1573,15 @@ footer:
     let selectedDate = '2026-06-05';
     let ticketQuantity = 2;
 
-    // API Configuration
-    const BROADWAY_API_URL = 'http://localhost:8587/api/broadway';
-
     async function testAPIConnection() {
       try {
-        const response = await fetch(`${BROADWAY_API_URL}/test`);
+        // Combine fetchOptions with any additional options if needed
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'GET'
+        };
+        
+        const response = await fetch(`${pythonURI}/api/broadway/test`, requestOptions);
         const data = await response.json();
         
         const statusIndicator = document.getElementById('apiStatus');
@@ -1635,7 +1656,13 @@ footer:
       `;
       
       try {
-        const response = await fetch(`${BROADWAY_API_URL}?start_date=${selectedDate}&end_date=${selectedDate}&quantity=${ticketQuantity}`);
+        // Combine fetchOptions with any additional options if needed
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'GET'
+        };
+        
+        const response = await fetch(`${pythonURI}/api/broadway?start_date=${selectedDate}&end_date=${selectedDate}&quantity=${ticketQuantity}`, requestOptions);
         const data = await response.json();
         
         if (data.success) {
@@ -1764,6 +1791,36 @@ footer:
         resultContainer.appendChild(tr);
       }
     }
+
+    // ============================================
+    // EXPOSE FUNCTIONS TO WINDOW SCOPE
+    // ============================================
+
+    // Expose all functions to global window scope for inline onclick handlers
+    window.initItinerary = initItinerary;
+    window.getItinerary = getItinerary;
+    window.saveItinerary = saveItinerary;
+    window.clearItinerary = clearItinerary;
+    window.toggleItineraryTracker = toggleItineraryTracker;
+    window.addBroadwayToItinerary = addBroadwayToItinerary;
+    window.updateAddButton = updateAddButton;
+    window.updateQuickAddButtons = updateQuickAddButtons;
+    window.quickAddToItinerary = quickAddToItinerary;
+    window.switchTab = switchTab;
+    window.initLyricsVoting = initLyricsVoting;
+    window.refreshLyricsReactions = refreshLyricsReactions;
+    window.handleVote = handleVote;
+    window.testAPIConnection = testAPIConnection;
+    window.goToStep = goToStep;
+    window.selectDate = selectDate;
+    window.selectShow = selectShow;
+    window.fetchAvailability = fetchAvailability;
+    window.refreshAvailability = refreshAvailability;
+    window.adjustQuantity = adjustQuantity;
+    window.updateTotal = updateTotal;
+    window.showConfirmation = showConfirmation;
+    window.completeReservation = completeReservation;
+    window.error = error;
 
     // ============================================
     // INITIALIZATION
