@@ -750,7 +750,7 @@ footer:
         <div class="nav-to-broadway">
             <h2>Ready for Broadway?</h2>
             <p>After shopping, enjoy a spectacular Broadway show in NYC!</p>
-            <a href="http://localhost:4600/student/new-york/broadway/" class="broadway-btn">
+            <a href="https://vivianzhang85.github.io/Insightful-Innovators-/new-york/broadway/" class="broadway-btn">
                 🎭 See Broadway Shows
             </a>
         </div>
