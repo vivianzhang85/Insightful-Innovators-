@@ -308,7 +308,7 @@ next: /newyork/itinerary/
             </div>
             <button class="reset-btn" onclick="resetForm()">Plan Another Trip</button>
             <div class="breakfast-nav">
-                <a href="/student/new-york/breakfast/" class="breakfast-btn">
+                <a href="/Insightful-Innovators-/new-york/breakfastt/" class="breakfast-btn">
                     🍳 Hungry? It's time to pick your breakfast spot!
                 </a>
             </div>
