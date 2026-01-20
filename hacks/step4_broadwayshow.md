@@ -12,7 +12,7 @@ microblog: true
 footer: 
     previous: /new-york/shopping/
     home: /nyc/home/
-    next: /new-york/breakfast/
+    next: /new-york/final
 ---
 <html lang="en">
 <head>
