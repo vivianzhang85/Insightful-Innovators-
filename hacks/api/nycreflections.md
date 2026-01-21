@@ -6,7 +6,7 @@ permalink: /new-york/reflection/
 parent: "Analytics/Admin"
 team: "Insightful Innovators"
 submodule: 1
-author: "Insightful Innocators"
+author: "Insightful Innovators"
 date: 2025-11-20
 microblog: true
 ---
