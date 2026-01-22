@@ -14,7 +14,6 @@ footer:
     home: /nyc/home/
     next: /new-york/breakfast/
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
