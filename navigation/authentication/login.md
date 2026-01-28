@@ -114,7 +114,7 @@ show_reading_time: false
     import { login, pythonURI, javaURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
     // Function to handle both Python and Java login simultaneously
     window.loginBoth = function () {
-    javaLogin();  // Call Java login
+    //javaLogin();  // Call Java login
     pythonLogin();
 };
     // Function to handle Python login
