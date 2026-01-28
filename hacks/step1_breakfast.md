@@ -852,65 +852,263 @@ footer:
   console.log('Config loaded - Python URI:', pythonURI);
 
   // ============================================
-  // ITINERARY TRACKER JAVASCRIPT
+  // BACKEND ITINERARY API FUNCTIONS
   // ============================================
 
-  function initItinerary() {
-    const itinerary = getItinerary();
-    updateItineraryDisplay(itinerary);
-    updateQuickAddButtons();
+  // Use pythonURI for itinerary API calls (same as web scraping)
+  
+  // ============================================
+  // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)
+  // ============================================
+
+  async function initItinerary() {
+    try {
+      const itinerary = await getItinerary();
+      updateItineraryDisplay(itinerary);
+      updateQuickAddButtons();
+    } catch (error) {
+      console.error('Failed to initialize itinerary:', error);
+      // Fallback to empty itinerary
+      updateItineraryDisplay({
+        tripInfo: null,
+        breakfast: null,
+        landmarks: null,
+        shopping: null,
+        broadway: null
+      });
+    }
   }
 
-  function getItinerary() {
-    const stored = localStorage.getItem('nycItinerary');
-    return stored ? JSON.parse(stored) : {
-      tripInfo: null,
-      breakfast: null,
-      landmarks: null,
-      shopping: null,
-      broadway: null
-    };
+  async function getItinerary() {
+    try {
+      // Use pythonURI for itinerary API
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'GET',
+        credentials: 'include' // Important for cookies
+      };
+      
+      const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Map backend data to frontend format
+        const backendData = data.data || {};
+        return {
+          tripInfo: backendData.trip_info || null,
+          breakfast: backendData.breakfast || null,
+          landmarks: backendData.landmarks || null,
+          shopping: backendData.shopping || null,
+          broadway: backendData.broadway || null
+        };
+      } else {
+        throw new Error(data.error || 'Failed to get itinerary');
+      }
+    } catch (error) {
+      console.error('Error fetching itinerary from backend:', error);
+      // Fallback to localStorage during transition
+      const stored = localStorage.getItem('nycItinerary');
+      return stored ? JSON.parse(stored) : {
+        tripInfo: null,
+        breakfast: null,
+        landmarks: null,
+        shopping: null,
+        broadway: null
+      };
+    }
   }
 
-  function saveItinerary(itinerary) {
-    localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-    updateItineraryDisplay(itinerary);
+  async function saveItinerary(itinerary) {
+    try {
+      // Convert frontend format to backend format
+      const backendItinerary = {
+        trip_info: itinerary.tripInfo || null,
+        breakfast: itinerary.breakfast || null,
+        landmarks: itinerary.landmarks || null,
+        shopping: itinerary.shopping || null,
+        broadway: itinerary.broadway || null
+      };
+      
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(backendItinerary)
+      };
+      
+      const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        updateItineraryDisplay(itinerary);
+        return itinerary;
+      } else {
+        throw new Error(data.error || 'Failed to save itinerary');
+      }
+    } catch (error) {
+      console.error('Error saving itinerary to backend:', error);
+      // Fallback to localStorage
+      localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+      updateItineraryDisplay(itinerary);
+      return itinerary;
+    }
+  }
+
+  async function updateBreakfastInItinerary(restaurantData) {
+    try {
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(restaurantData)
+      };
+      
+      const response = await fetch(`${pythonURI}/api/itinerary/section/breakfast`, requestOptions);
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Update local display
+        const itinerary = await getItinerary();
+        updateItineraryDisplay(itinerary);
+        return data.data;
+      } else {
+        throw new Error(data.error || 'Failed to update breakfast');
+      }
+    } catch (error) {
+      console.error('Error updating breakfast in backend:', error);
+      // Fallback: update local itinerary and save to localStorage
+      const itinerary = await getItinerary();
+      itinerary.breakfast = restaurantData.name || restaurantData;
+      await saveItinerary(itinerary);
+      return itinerary;
+    }
+  }
+
+  async function clearItinerary() {
+    if (confirm('Are you sure you want to clear your entire itinerary?')) {
+      try {
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'DELETE',
+          credentials: 'include'
+        };
+        
+        const response = await fetch(`${pythonURI}/api/itinerary/clear`, requestOptions);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Clear localStorage fallback
+          localStorage.removeItem('nycItinerary');
+          location.reload();
+        } else {
+          throw new Error(data.error || 'Failed to clear itinerary');
+        }
+      } catch (error) {
+        console.error('Error clearing itinerary in backend:', error);
+        // Fallback to localStorage
+        localStorage.removeItem('nycItinerary');
+        location.reload();
+      }
+    }
   }
 
   function updateItineraryDisplay(itinerary) {
+    // Update trip info
     if (itinerary.tripInfo) {
-      document.getElementById('tripDatesValue').innerHTML =
-        `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+      if (typeof itinerary.tripInfo === 'object') {
+        // Handle object format from backend
+        document.getElementById('tripDatesValue').innerHTML =
+          `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
+      } else {
+        // Handle string format from localStorage fallback
+        document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
+      }
       document.getElementById('tripInfoItem').classList.remove('incomplete');
+    } else {
+      document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
+      document.getElementById('tripInfoItem').classList.add('incomplete');
     }
 
+    // Update breakfast
     if (itinerary.breakfast) {
-      document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+      if (typeof itinerary.breakfast === 'object') {
+        // Handle object format from backend
+        document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
+      } else {
+        // Handle string format from localStorage fallback
+        document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+      }
       document.getElementById('breakfastItem').classList.remove('incomplete');
+    } else {
+      document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+      document.getElementById('breakfastItem').classList.add('incomplete');
     }
 
+    // Update landmarks
     if (itinerary.landmarks) {
-      document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+      if (typeof itinerary.landmarks === 'object') {
+        document.getElementById('landmarksValue').textContent = itinerary.landmarks.name || 'Landmark selected';
+      } else {
+        document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+      }
       document.getElementById('landmarksItem').classList.remove('incomplete');
+    } else {
+      document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+      document.getElementById('landmarksItem').classList.add('incomplete');
     }
 
+    // Update shopping
     if (itinerary.shopping) {
-      document.getElementById('shoppingValue').innerHTML =
-        `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
+      if (typeof itinerary.shopping === 'object') {
+        document.getElementById('shoppingValue').innerHTML =
+          `${itinerary.shopping.center || 'Shopping'}<br><small>${itinerary.shopping.gender || ''}'s Fashion</small>`;
+      } else {
+        document.getElementById('shoppingValue').textContent = itinerary.shopping;
+      }
       document.getElementById('shoppingItem').classList.remove('incomplete');
+    } else {
+      document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+      document.getElementById('shoppingItem').classList.add('incomplete');
     }
 
+    // Update broadway
     if (itinerary.broadway) {
-      document.getElementById('broadwayValue').innerHTML =
-        `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
+      if (typeof itinerary.broadway === 'object') {
+        document.getElementById('broadwayValue').innerHTML =
+          `${itinerary.broadway.theater || 'Broadway'}<br><small>${itinerary.broadway.show || ''}</small>`;
+      } else {
+        document.getElementById('broadwayValue').textContent = itinerary.broadway;
+      }
       document.getElementById('broadwayItem').classList.remove('incomplete');
-    }
-  }
-
-  function clearItinerary() {
-    if (confirm('Are you sure you want to clear your entire itinerary?')) {
-      localStorage.removeItem('nycItinerary');
-      location.reload();
+    } else {
+      document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+      document.getElementById('broadwayItem').classList.add('incomplete');
     }
   }
 
@@ -919,65 +1117,133 @@ footer:
     tracker.classList.toggle('hidden');
   }
 
-  function addBreakfastToItinerary() {
+  async function addBreakfastToItinerary() {
     if (!currentRestaurant) return;
 
     const restaurantData = MENU_DATA[currentRestaurant];
-    const itinerary = getItinerary();
-    itinerary.breakfast = restaurantData.name;
-    saveItinerary(itinerary);
+    
+    // Save to backend
+    const breakfastData = {
+      name: restaurantData.name,
+      location: restaurantData.location,
+      selected_at: new Date().toISOString(),
+      restaurant_id: currentRestaurant
+    };
+    
+    try {
+      await updateBreakfastInItinerary(breakfastData);
+      
+      // Update button state
+      const btn = document.getElementById('addToItineraryBtn');
+      btn.classList.add('added');
+      btn.innerHTML = '<span>✓</span> Added to Itinerary';
 
-    const btn = document.getElementById('addToItineraryBtn');
-    btn.classList.add('added');
-    btn.innerHTML = '<span>✓</span> Added to Itinerary';
-
-    setTimeout(() => {
-      updateAddButton();
-    }, 2000);
-  }
-
-  function updateAddButton() {
-    const itinerary = getItinerary();
-    const btn = document.getElementById('addToItineraryBtn');
-    if (btn && itinerary.breakfast && currentRestaurant) {
-      const restaurantData = MENU_DATA[currentRestaurant];
-      if (itinerary.breakfast === restaurantData.name) {
-        btn.classList.add('added');
-        btn.innerHTML = '<span>✓</span> Added to Itinerary';
-      } else {
-        btn.classList.remove('added');
-        btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
-      }
+      // Update quick add buttons
+      await updateQuickAddButtons();
+      
+      // Revert button after 2 seconds
+      setTimeout(() => {
+        updateAddButton();
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Failed to add breakfast to itinerary:', error);
+      alert('Failed to save to itinerary. Please try again.');
     }
   }
 
-  function updateQuickAddButtons() {
-    const itinerary = getItinerary();
-    const buttons = document.querySelectorAll('.quick-add-btn');
-
-    buttons.forEach((btn) => {
-      const restaurantKey = btn.getAttribute('data-restaurant');
-      const restaurantData = MENU_DATA[restaurantKey];
-    
-      if (itinerary.breakfast === restaurantData.name) {
-        btn.classList.add('added');
-        btn.innerHTML = '<span>✓</span> Added';
-      } else {
-        btn.classList.remove('added');
-        btn.innerHTML = '<span>⭐</span> Add';
+  async function updateAddButton() {
+    try {
+      const itinerary = await getItinerary();
+      const btn = document.getElementById('addToItineraryBtn');
+      
+      if (btn && itinerary.breakfast && currentRestaurant) {
+        const restaurantData = MENU_DATA[currentRestaurant];
+        
+        // Check if this restaurant is the one saved
+        let isCurrentRestaurant = false;
+        if (typeof itinerary.breakfast === 'object') {
+          isCurrentRestaurant = itinerary.breakfast.name === restaurantData.name;
+        } else {
+          isCurrentRestaurant = itinerary.breakfast === restaurantData.name;
+        }
+        
+        if (isCurrentRestaurant) {
+          btn.classList.add('added');
+          btn.innerHTML = '<span>✓</span> Added to Itinerary';
+        } else {
+          btn.classList.remove('added');
+          btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
+        }
       }
-    });
+    } catch (error) {
+      console.error('Error updating add button:', error);
+    }
   }
 
-  function quickAddToItinerary(restaurantKey, event) {
+  async function updateQuickAddButtons() {
+    try {
+      const itinerary = await getItinerary();
+      const buttons = document.querySelectorAll('.quick-add-btn');
+
+      buttons.forEach((btn) => {
+        const restaurantKey = btn.getAttribute('data-restaurant');
+        const restaurantData = MENU_DATA[restaurantKey];
+        
+        // Check if this restaurant is saved
+        let isSaved = false;
+        if (itinerary.breakfast) {
+          if (typeof itinerary.breakfast === 'object') {
+            isSaved = itinerary.breakfast.name === restaurantData.name;
+          } else {
+            isSaved = itinerary.breakfast === restaurantData.name;
+          }
+        }
+      
+        if (isSaved) {
+          btn.classList.add('added');
+          btn.innerHTML = '<span>✓</span> Added';
+        } else {
+          btn.classList.remove('added');
+          btn.innerHTML = '<span>⭐</span> Add';
+        }
+      });
+    } catch (error) {
+      console.error('Error updating quick add buttons:', error);
+    }
+  }
+
+  async function quickAddToItinerary(restaurantKey, event) {
     event.stopPropagation();
 
     const restaurantData = MENU_DATA[restaurantKey];
-    const itinerary = getItinerary();
-    itinerary.breakfast = restaurantData.name;
-    saveItinerary(itinerary);
-
-    updateQuickAddButtons();
+    
+    // Save to backend
+    const breakfastData = {
+      name: restaurantData.name,
+      location: restaurantData.location,
+      selected_at: new Date().toISOString(),
+      restaurant_id: restaurantKey
+    };
+    
+    try {
+      await updateBreakfastInItinerary(breakfastData);
+      await updateQuickAddButtons();
+      
+      // Show confirmation
+      const btn = event.target.closest('.quick-add-btn');
+      if (btn) {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<span>✓</span> Saved!';
+        setTimeout(() => {
+          btn.innerHTML = '<span>✓</span> Added';
+        }, 1000);
+      }
+      
+    } catch (error) {
+      console.error('Failed to quick add to itinerary:', error);
+      alert('Failed to save selection. Please try again.');
+    }
   }
 
   // ============================================
@@ -985,10 +1251,12 @@ footer:
   // ============================================
 
   // Get selected days from itinerary
-  function getSelectedDays() {
-      const itinerary = getItinerary();
+  async function getSelectedDays() {
+    try {
+      const itinerary = await getItinerary();
+      
       if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
-          return null; // Return null if no dates are selected
+        return null; // Return null if no dates are selected
       }
     
       const month = itinerary.tripInfo.month;
@@ -1001,31 +1269,35 @@ footer:
       const currentDate = new Date(dateRange.start);
     
       while (currentDate <= dateRange.end) {
-          const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-          selectedDays.add(dayName);
-          currentDate.setDate(currentDate.getDate() + 1);
+        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+        selectedDays.add(dayName);
+        currentDate.setDate(currentDate.getDate() + 1);
       }
     
       return Array.from(selectedDays);
+    } catch (error) {
+      console.error('Error getting selected days:', error);
+      return null;
+    }
   }
 
   // Parse date range from stored format
   function parseDateRange(month, startStr, endStr) {
-      try {
-          const currentYear = new Date().getFullYear();
-        
-          // Extract day numbers
-          const startDay = parseInt(startStr.match(/\d+/)[0]);
-          const endDay = parseInt(endStr.match(/\d+/)[0]);
-        
-          const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
-          const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
-        
-          return { start: startDate, end: endDate };
-      } catch (error) {
-          console.error('Error parsing dates:', error);
-          return null;
-      }
+    try {
+      const currentYear = new Date().getFullYear();
+    
+      // Extract day numbers
+      const startDay = parseInt(startStr.match(/\d+/)[0]);
+      const endDay = parseInt(endStr.match(/\d+/)[0]);
+    
+      const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
+      const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
+    
+      return { start: startDate, end: endDate };
+    } catch (error) {
+      console.error('Error parsing dates:', error);
+      return null;
+    }
   }
 
   // ============================================
@@ -1098,7 +1370,7 @@ footer:
   // Test API connection
   async function testAPIConnection() {
     try {
-      // Combine fetchOptions with any additional options if needed
+      // Test breakfast API
       const requestOptions = {
         ...fetchOptions,
         method: 'GET'
@@ -1135,29 +1407,29 @@ footer:
       // Filter days based on selected itinerary dates
       let daysToDisplay = dayOrder;
       if (selectedDays && selectedDays.length > 0) {
-          daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
+        daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
       }
     
       // Display only filtered days
       daysToDisplay.forEach(day => {
-          if (hoursData.hours[day]) {
-              html += `
-                  <div class="day-hour">
-                    <span class="day">${day}:</span>
-                    <span class="time">${hoursData.hours[day]}</span>
-                  </div>
-              `;
-          }
+        if (hoursData.hours[day]) {
+          html += `
+            <div class="day-hour">
+              <span class="day">${day}:</span>
+              <span class="time">${hoursData.hours[day]}</span>
+            </div>
+          `;
+        }
       });
     
       // Show message if no hours for selected days
       if (html === '' && Object.keys(hoursData.hours).length > 0) {
-          html = `
-              <div class="day-hour">
-                  <span class="day">Note:</span>
-                  <span class="time">No hours available for selected dates</span>
-              </div>
-          `;
+        html = `
+          <div class="day-hour">
+            <span class="day">Note:</span>
+            <span class="time">No hours available for selected dates</span>
+          </div>
+        `;
       }
     } else if (typeof hoursData.hours === 'string') {
       html += `<div class="day-hour"><span class="time">${hoursData.hours}</span></div>`;
@@ -1172,7 +1444,6 @@ footer:
     if (!restaurant) return null;
 
     try {
-      // Combine fetchOptions with any additional options if needed
       const requestOptions = {
         ...fetchOptions,
         method: 'GET'
@@ -1240,12 +1511,10 @@ footer:
   
     try {
       const hoursData = await fetchRestaurantHours(currentRestaurant);
+      const selectedDays = await getSelectedDays();
     
       if (hoursData) {
         let hoursHtml = `<div class="hours-display">`;
-      
-        // Get selected days from itinerary
-        const selectedDays = getSelectedDays();
       
         // Add subtle indicator if filtering is active
         if (selectedDays && selectedDays.length > 0) {
@@ -1281,7 +1550,7 @@ footer:
       console.error('Error fetching hours:', error);
     
       // Get selected days for error message
-      const selectedDays = getSelectedDays();
+      const selectedDays = await getSelectedDays();
       let errorMessage = 'Unable to fetch live hours';
       if (selectedDays) {
         errorMessage += ` for selected dates`;
@@ -1386,6 +1655,10 @@ footer:
     goToStep(1);
   }
 
+  // ============================================
+  // INITIALIZE EVERYTHING
+  // ============================================
+
   // Expose all functions to global window scope for inline onclick handlers
   window.initItinerary = initItinerary;
   window.getItinerary = getItinerary;
@@ -1413,9 +1686,13 @@ footer:
   window.confirmOrder = confirmOrder;
 
   // Initialize on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    initItinerary();
-    testAPIConnection();
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      await initItinerary();
+      await testAPIConnection();
+    } catch (error) {
+      console.error('Initialization error:', error);
+    }
   });
 </script>
 </body>
