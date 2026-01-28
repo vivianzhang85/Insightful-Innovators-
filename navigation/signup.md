@@ -79,13 +79,13 @@ search_exclude: true
 
   // Sign up function to handle form submission
   window.signup = function() {
-    const signupOptionsJava = {
-      URL: `${javaURI}/api/person/create`,
-      method: "POST",
-      cache: "no-cache",
-      headers: new Headers({
-        "Content-Type": "application/json"
-      }),
+  //  const signupOptionsJava = {
+  //    URL: `${javaURI}/api/person/create`,
+   //   method: "POST",
+    //  cache: "no-cache",
+     // headers: new Headers({
+      //  "Content-Type": "application/json"
+     // }),
       body: JSON.stringify({
         uid: document.getElementById("signupUid").value,
         sid: document.getElementById("sid").value,
@@ -119,6 +119,7 @@ search_exclude: true
     console.log('Sending request:', signupOptionsJava, signupOptionsPython);
 
     // Send the request to the server
+    /*
     fetch(signupOptionsJava.URL, signupOptionsJava)
       .then(response => response.json())
       .then(data => {
@@ -132,6 +133,7 @@ search_exclude: true
         document.getElementById("signupMessage").innerText = "Error: " + error.message;
         console.error('Error during signup:', error);
       });
+    */
 
     fetch(signupOptionsPython.URL, signupOptionsPython)
       .then(response => response.json())
