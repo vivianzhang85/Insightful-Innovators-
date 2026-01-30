@@ -376,8 +376,14 @@ footer:
 
     <script>
         // Configuration
-        const API_URL = 'http://127.0.0.1:8303'; // Change to your backend URL
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://127.0.0.1:8303'
+            : 'https://your-deployed-backend.herokuapp.com'; 
         const USER_ID = 'user_' + Math.random().toString(36).substr(2, 9); // Replace with actual login
+
+        console.log('Page loaded!');
+        console.log('User ID:', USER_ID);
+        console.log('API URL:', API_URL);
 
         // Switch between tabs
         function switchTab(tab, element) {
@@ -408,6 +414,8 @@ footer:
                 const description = document.getElementById('description').value;
                 const location = document.getElementById('location').value;
                 
+                console.log('Updating category for:', eventName);
+                
                 if (!eventName) {
                     document.getElementById('category-preview').innerHTML = 
                         '<p style="color: #ccc;">Start typing to see category suggestion...</p>';
@@ -420,6 +428,7 @@ footer:
                 
                 // Call backend to get suggestion
                 try {
+                    console.log('Calling suggest-category API...');
                     const response = await fetch(`${API_URL}/api/events/suggest-category`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -430,19 +439,24 @@ footer:
                         })
                     });
                     
+                    console.log('Response status:', response.status);
                     const data = await response.json();
+                    console.log('Response data:', data);
                     
                     if (data.success) {
                         document.getElementById('category-preview').innerHTML = `
                             <div style="text-align: center;">
                                 <p style="color: #ffd700; font-size: 1.3em; font-weight: bold; margin-bottom: 5px;">
-                                    ${emoji} ${data.category}
+                                    ${data.category}
                                 </p>
                                 <p style="color: #aaa; font-size: 0.85em;">
                                     This event will appear under "${data.category}" on your itinerary
                                 </p>
                             </div>
                         `;
+                    } else {
+                        document.getElementById('category-preview').innerHTML = 
+                            '<p style="color: #f44336;">Error getting category</p>';
                     }
                 } catch (error) {
                     console.error('Error getting category suggestion:', error);
@@ -461,6 +475,8 @@ footer:
         document.getElementById('create-event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            console.log('Form submitted!');
+            
             const eventData = {
                 user_id: USER_ID,
                 event_name: document.getElementById('event-name').value,
@@ -471,14 +487,19 @@ footer:
                 image_url: document.getElementById('image-url').value
             };
             
+            console.log('Event data to submit:', eventData);
+            
             try {
+                console.log('Sending POST request to:', `${API_URL}/api/events/custom`);
                 const response = await fetch(`${API_URL}/api/events/custom`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(eventData)
                 });
                 
+                console.log('Response status:', response.status);
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 if (data.success) {
                     showMessage('create-message', 
@@ -491,8 +512,8 @@ footer:
                     showMessage('create-message', '❌ Error: ' + data.message, 'error');
                 }
             } catch (error) {
-                showMessage('create-message', '❌ Failed to create event. Please try again.', 'error');
-                console.error('Error:', error);
+                console.error('Full error details:', error);
+                showMessage('create-message', '❌ Failed to create event. Check console for details.', 'error');
             }
         });
 
@@ -503,11 +524,14 @@ footer:
                 ? `${API_URL}/api/events/custom?type=${encodeURIComponent(filterType)}` 
                 : `${API_URL}/api/events/custom`;
             
+            console.log('Loading events from:', url);
             document.getElementById('events-grid').innerHTML = '<div class="loading">Loading events...</div>';
             
             try {
                 const response = await fetch(url);
                 const data = await response.json();
+                
+                console.log('Events loaded:', data);
                 
                 if (data.success) {
                     displayEvents(data.events, 'events-grid');
@@ -516,19 +540,22 @@ footer:
                     document.getElementById('events-grid').innerHTML = '';
                 }
             } catch (error) {
+                console.error('Error loading events:', error);
                 showMessage('browse-message', '❌ Failed to load events', 'error');
                 document.getElementById('events-grid').innerHTML = '';
-                console.error('Error:', error);
             }
         }
 
         // Load user's custom events
         async function loadMyEvents() {
+            console.log('Loading my events for user:', USER_ID);
             document.getElementById('myevents-grid').innerHTML = '<div class="loading">Loading your events...</div>';
             
             try {
                 const response = await fetch(`${API_URL}/api/events/custom/my-itinerary?user_id=${USER_ID}`);
                 const data = await response.json();
+                
+                console.log('My events loaded:', data);
                 
                 if (data.success) {
                     displayEvents(data.events, 'myevents-grid', true);
@@ -537,9 +564,9 @@ footer:
                     document.getElementById('myevents-grid').innerHTML = '';
                 }
             } catch (error) {
+                console.error('Error loading my events:', error);
                 showMessage('myevents-message', '❌ Failed to load your events', 'error');
                 document.getElementById('myevents-grid').innerHTML = '';
-                console.error('Error:', error);
             }
         }
 
@@ -562,7 +589,7 @@ footer:
                 return `
                     <div class="event-card">
                         <h3>${event.event_name}</h3>
-                        <span class="event-type">${emoji} ${event.event_type}</span>
+                        <span class="event-type">${event.event_type}</span>
                         ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
                         ${event.location ? `<p><strong>📍 Location:</strong> ${event.location}</p>` : ''}
                         ${event.time ? `<p><strong>🕐 Time:</strong> ${event.time}</p>` : ''}
@@ -582,6 +609,7 @@ footer:
 
         // Add event to itinerary
         async function addToItinerary(eventId, eventName) {
+            console.log('Adding to itinerary:', eventId, eventName);
             try {
                 const response = await fetch(`${API_URL}/api/events/custom/add-to-itinerary`, {
                     method: 'POST',
@@ -593,6 +621,7 @@ footer:
                 });
                 
                 const data = await response.json();
+                console.log('Add to itinerary response:', data);
                 
                 if (data.success) {
                     alert(`✅ "${eventName}" added to your itinerary!`);
@@ -601,8 +630,8 @@ footer:
                     alert('❌ Error: ' + data.message);
                 }
             } catch (error) {
+                console.error('Error adding to itinerary:', error);
                 alert('❌ Failed to add event to itinerary');
-                console.error('Error:', error);
             }
         }
 
@@ -613,9 +642,8 @@ footer:
             setTimeout(() => element.innerHTML = '', 5000);
         }
 
-        // Initialize - load events on page load
-        console.log('User ID:', USER_ID);
-        console.log('API URL:', API_URL);
+        // Initialize
+        console.log('Custom Events page initialized!');
     </script>
 </body>
 </html>
