@@ -378,7 +378,7 @@ footer:
         // Configuration
         const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://127.0.0.1:8303'
-            : 'https://your-deployed-backend.herokuapp.com'; 
+            : 'https://innovators.opencodingsociety.herokuapp.com'; 
         const USER_ID = 'user_' + Math.random().toString(36).substr(2, 9); // Replace with actual login
 
         console.log('Page loaded!');
