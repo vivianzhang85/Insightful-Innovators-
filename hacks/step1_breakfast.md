@@ -63,6 +63,40 @@ footer:
     color: #cbd5e1;
   }
   
+  .login-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid #4CAF50;
+  }
+  
+  .login-info a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-info a:hover {
+    text-decoration: underline;
+  }
+  
+  .login-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1rem;
+  }
+  
+  .login-status.authenticated {
+    color: #4CAF50;
+  }
+  
+  .login-status.not-authenticated {
+    color: #FF9800;
+  }
+  
   .live-hours-container {
     margin: 30px 0;
     padding: 25px;
@@ -644,6 +678,17 @@ footer:
   <div class="header">
     <h1>🍳 NYC Breakfast Explorer</h1>
     <p>Choose your perfect morning meal with live restaurant hours</p>
+    
+    <!-- Login Status Display -->
+    <div class="login-info" id="loginInfo">
+      <div id="loginStatus" class="login-status not-authenticated">
+        🔒 Guest Mode - <a href="/login?next={{ page.url }}" id="loginLink">Login</a> to save your itinerary
+      </div>
+      <div id="userInfo" style="display: none; margin-top: 10px; font-size: 0.9rem;">
+        Welcome, <span id="userName"></span>! Your itinerary will be saved to your account.
+      </div>
+    </div>
+    
     <div class="live-data-indicator" id="apiStatus">🔌 Connecting to API...</div>
   </div>
 
@@ -852,17 +897,78 @@ footer:
   console.log('Config loaded - Python URI:', pythonURI);
 
   // ============================================
-  // BACKEND ITINERARY API FUNCTIONS
+  // USER AUTHENTICATION FUNCTIONS
   // ============================================
 
-  // Use pythonURI for itinerary API calls (same as web scraping)
-  
+  let currentUser = null;
+
+  async function checkLoginStatus() {
+    try {
+      const response = await fetch(`${pythonURI}/api/id`, {
+        ...fetchOptions,
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Login check failed');
+      }
+      
+      const userData = await response.json();
+      
+      if (userData.is_authenticated) {
+        currentUser = userData;
+        updateLoginDisplay(true, userData);
+        return true;
+      } else {
+        currentUser = null;
+        updateLoginDisplay(false);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error checking login status:', error);
+      currentUser = null;
+      updateLoginDisplay(false);
+      return false;
+    }
+  }
+
+  function updateLoginDisplay(isLoggedIn, userData = null) {
+    const loginStatus = document.getElementById('loginStatus');
+    const userInfo = document.getElementById('userInfo');
+    const loginLink = document.getElementById('loginLink');
+    
+    if (isLoggedIn && userData) {
+      loginStatus.className = 'login-status authenticated';
+      loginStatus.innerHTML = `✅ Logged in as <strong>${userData.name || userData.uid}</strong>`;
+      
+      userInfo.style.display = 'block';
+      document.getElementById('userName').textContent = userData.name || userData.uid;
+      
+      // Update login link to logout
+      loginLink.textContent = 'Logout';
+      loginLink.href = '/logout';
+    } else {
+      loginStatus.className = 'login-status not-authenticated';
+      loginStatus.innerHTML = '🔒 Guest Mode - <a href="/login?next={{ page.url }}" id="loginLink">Login</a> to save your itinerary';
+      
+      userInfo.style.display = 'none';
+      
+      // Update login link to login
+      loginLink.textContent = 'Login';
+      loginLink.href = '/login?next={{ page.url }}';
+    }
+  }
+
   // ============================================
-  // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)
+  // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR USER AUTH)
   // ============================================
 
   async function initItinerary() {
     try {
+      // First check login status
+      await checkLoginStatus();
+      
+      // Then load itinerary
       const itinerary = await getItinerary();
       updateItineraryDisplay(itinerary);
       updateQuickAddButtons();
@@ -881,7 +987,6 @@ footer:
 
   async function getItinerary() {
     try {
-      // Use pythonURI for itinerary API
       const requestOptions = {
         ...fetchOptions,
         method: 'GET',
@@ -899,6 +1004,8 @@ footer:
       if (data.success) {
         // Map backend data to frontend format
         const backendData = data.data || {};
+        console.log('Loaded itinerary:', data);
+        
         return {
           tripInfo: backendData.trip_info || null,
           breakfast: backendData.breakfast || null,
@@ -911,9 +1018,7 @@ footer:
       }
     } catch (error) {
       console.error('Error fetching itinerary from backend:', error);
-      // Fallback to localStorage during transition
-      const stored = localStorage.getItem('nycItinerary');
-      return stored ? JSON.parse(stored) : {
+      return {
         tripInfo: null,
         breakfast: null,
         landmarks: null,
@@ -953,6 +1058,7 @@ footer:
       const data = await response.json();
       
       if (data.success) {
+        console.log('Saved itinerary:', data);
         updateItineraryDisplay(itinerary);
         return itinerary;
       } else {
@@ -960,10 +1066,7 @@ footer:
       }
     } catch (error) {
       console.error('Error saving itinerary to backend:', error);
-      // Fallback to localStorage
-      localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-      updateItineraryDisplay(itinerary);
-      return itinerary;
+      throw error; // Re-throw to handle in calling function
     }
   }
 
@@ -988,6 +1091,7 @@ footer:
       const data = await response.json();
       
       if (data.success) {
+        console.log('Updated breakfast in itinerary:', data);
         // Update local display
         const itinerary = await getItinerary();
         updateItineraryDisplay(itinerary);
@@ -997,11 +1101,7 @@ footer:
       }
     } catch (error) {
       console.error('Error updating breakfast in backend:', error);
-      // Fallback: update local itinerary and save to localStorage
-      const itinerary = await getItinerary();
-      itinerary.breakfast = restaurantData.name || restaurantData;
-      await saveItinerary(itinerary);
-      return itinerary;
+      throw error;
     }
   }
 
@@ -1023,18 +1123,48 @@ footer:
         const data = await response.json();
         
         if (data.success) {
-          // Clear localStorage fallback
-          localStorage.removeItem('nycItinerary');
           location.reload();
         } else {
           throw new Error(data.error || 'Failed to clear itinerary');
         }
       } catch (error) {
         console.error('Error clearing itinerary in backend:', error);
-        // Fallback to localStorage
-        localStorage.removeItem('nycItinerary');
-        location.reload();
+        alert('Error clearing itinerary. Please try again.');
       }
+    }
+  }
+
+  async function syncItineraryToAccount() {
+    if (!currentUser) {
+      alert('Please login first to sync your itinerary to your account.');
+      return;
+    }
+    
+    try {
+      const requestOptions = {
+        ...fetchOptions,
+        method: 'POST',
+        credentials: 'include'
+      };
+      
+      const response = await fetch(`${pythonURI}/api/itinerary/sync`, requestOptions);
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        alert('✅ Itinerary synced to your account! Your selections are now saved.');
+        // Reload itinerary to show updated data
+        await initItinerary();
+      } else {
+        throw new Error(data.error || 'Failed to sync itinerary');
+      }
+    } catch (error) {
+      console.error('Error syncing itinerary:', error);
+      alert('Failed to sync itinerary. Please try again.');
     }
   }
 
@@ -1046,7 +1176,7 @@ footer:
         document.getElementById('tripDatesValue').innerHTML =
           `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
       } else {
-        // Handle string format from localStorage fallback
+        // Handle string format
         document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
       }
       document.getElementById('tripInfoItem').classList.remove('incomplete');
@@ -1061,7 +1191,7 @@ footer:
         // Handle object format from backend
         document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
       } else {
-        // Handle string format from localStorage fallback
+        // Handle string format
         document.getElementById('breakfastValue').textContent = itinerary.breakfast;
       }
       document.getElementById('breakfastItem').classList.remove('incomplete');
@@ -1145,6 +1275,13 @@ footer:
       setTimeout(() => {
         updateAddButton();
       }, 2000);
+      
+      // Show login reminder if not logged in
+      if (!currentUser) {
+        setTimeout(() => {
+          alert('✅ Added to itinerary! 💡 Tip: Login to save your selections to your account.');
+        }, 100);
+      }
       
     } catch (error) {
       console.error('Failed to add breakfast to itinerary:', error);
@@ -1238,6 +1375,13 @@ footer:
         setTimeout(() => {
           btn.innerHTML = '<span>✓</span> Added';
         }, 1000);
+      }
+      
+      // Show login reminder if not logged in
+      if (!currentUser) {
+        setTimeout(() => {
+          alert('✅ Added to itinerary! 💡 Tip: Login to save your selections to your account.');
+        }, 100);
       }
       
     } catch (error) {
@@ -1684,6 +1828,8 @@ footer:
   window.addCustom = addCustom;
   window.showReview = showReview;
   window.confirmOrder = confirmOrder;
+  window.checkLoginStatus = checkLoginStatus;
+  window.syncItineraryToAccount = syncItineraryToAccount;
 
   // Initialize on page load
   document.addEventListener('DOMContentLoaded', async () => {
@@ -1697,3 +1843,5 @@ footer:
 </script>
 </body>
 </html>
+
+
