@@ -16,8 +16,6 @@ footer:
 ---
 
 
-
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1694,4 +1692,3 @@ footer:
 </script>
 </body>
 </html>
-

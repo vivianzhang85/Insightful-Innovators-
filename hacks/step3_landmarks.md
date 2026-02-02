@@ -1328,6 +1328,9 @@ footer:
                 <button class="btn btn-success" onclick="saveLandmarkVisit('The Metropolitan Museum of Art')">
                     <span>✅</span> Add to Itinerary
                 </button>
+                <button class="btn btn-primary refresh-hours-btn" onclick="updateMuseumHours('met-section')">
+                    <span>🔄</span> Update Live Hours
+                </button>
                 <button class="btn btn-primary" onclick="window.open('https://www.metmuseum.org', '_blank')">
                     <span>🌐</span> Visit Website
                 </button>
@@ -1434,6 +1437,9 @@ footer:
                 <button class="btn btn-success" onclick="saveLandmarkVisit('Museum of Ice Cream')">
                     <span>✅</span> Add to Itinerary
                 </button>
+                <button class="btn btn-primary refresh-hours-btn" onclick="updateMuseumHours('icecream-section')">
+                    <span>🔄</span> Update Live Hours
+                </button>
                 <button class="btn btn-primary" onclick="window.open('https://www.museumoficecream.com', '_blank')">
                     <span>🌐</span> Visit Website
                 </button>
@@ -1513,6 +1519,9 @@ footer:
             <div class="interactive-buttons">
                 <button class="btn btn-success" onclick="saveLandmarkVisit('Empire State Building')">
                     <span>✅</span> Add to Itinerary
+                </button>
+                <button class="btn btn-primary refresh-hours-btn" onclick="updateMuseumHours('empire-section')">
+                    <span>🔄</span> Update Live Hours
                 </button>
                 <button class="btn btn-primary" onclick="window.open('https://www.esbnyc.com', '_blank')">
                     <span>🌐</span> Visit Website
@@ -1606,6 +1615,9 @@ footer:
                 <button class="btn btn-success" onclick="saveLandmarkVisit('Ukrainian Museum')">
                     <span>✅</span> Add to Itinerary
                 </button>
+                <button class="btn btn-primary refresh-hours-btn" onclick="updateMuseumHours('ukrainian-section')">
+                    <span>🔄</span> Update Live Hours
+                </button>
                 <button class="btn btn-primary" onclick="window.open('https://www.ukrainianmuseum.org', '_blank')">
                     <span>🌐</span> Visit Website
                 </button>
@@ -1629,67 +1641,250 @@ footer:
 
     <script type="module">
         // ============================================
-        // ITINERARY TRACKER JAVASCRIPT
+        // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)
         // ============================================
 
+        // Import configuration from config.js
+        import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+        
+        console.log('Config loaded - Python URI:', pythonURI);
+
         // Initialize itinerary when page loads
-        function initItinerary() {
-            console.log('Initializing itinerary display...');
-            const itinerary = getItinerary();
-            console.log('Loaded itinerary:', itinerary);
-            updateItineraryDisplay(itinerary);
+        async function initItinerary() {
+            try {
+                const itinerary = await getItinerary();
+                updateItineraryDisplay(itinerary);
+            } catch (error) {
+                console.error('Failed to initialize itinerary:', error);
+                // Fallback to localStorage during transition
+                updateItineraryDisplay({
+                    tripInfo: null,
+                    breakfast: null,
+                    landmarks: null,
+                    shopping: null,
+                    broadway: null
+                });
+            }
         }
 
-        function getItinerary() {
-            const stored = localStorage.getItem('nycItinerary');
-            return stored ? JSON.parse(stored) : {
-                tripInfo: null,
-                breakfast: null,
-                landmarks: null,
-                shopping: null,
-                broadway: null
-            };
+        async function getItinerary() {
+            try {
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'GET',
+                    credentials: 'include'
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const backendData = data.data || {};
+                    return {
+                        tripInfo: backendData.trip_info || null,
+                        breakfast: backendData.breakfast || null,
+                        landmarks: backendData.landmarks || null,
+                        shopping: backendData.shopping || null,
+                        broadway: backendData.broadway || null
+                    };
+                } else {
+                    throw new Error(data.error || 'Failed to get itinerary');
+                }
+            } catch (error) {
+                console.error('Error fetching itinerary from backend:', error);
+                // Fallback to localStorage
+                const stored = localStorage.getItem('nycItinerary');
+                return stored ? JSON.parse(stored) : {
+                    tripInfo: null,
+                    breakfast: null,
+                    landmarks: null,
+                    shopping: null,
+                    broadway: null
+                };
+            }
         }
 
-        function saveItinerary(itinerary) {
-            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-            updateItineraryDisplay(itinerary);
+        async function saveItinerary(itinerary) {
+            try {
+                const backendItinerary = {
+                    trip_info: itinerary.tripInfo || null,
+                    breakfast: itinerary.breakfast || null,
+                    landmarks: itinerary.landmarks || null,
+                    shopping: itinerary.shopping || null,
+                    broadway: itinerary.broadway || null
+                };
+                
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(backendItinerary)
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateItineraryDisplay(itinerary);
+                    return itinerary;
+                } else {
+                    throw new Error(data.error || 'Failed to save itinerary');
+                }
+            } catch (error) {
+                console.error('Error saving itinerary to backend:', error);
+                localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+                updateItineraryDisplay(itinerary);
+                return itinerary;
+            }
+        }
+
+        async function updateLandmarksInItinerary(landmarkData) {
+            try {
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(landmarkData)
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary/section/landmarks`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const itinerary = await getItinerary();
+                    updateItineraryDisplay(itinerary);
+                    return data.data;
+                } else {
+                    throw new Error(data.error || 'Failed to update landmarks');
+                }
+            } catch (error) {
+                console.error('Error updating landmarks in backend:', error);
+                const itinerary = await getItinerary();
+                itinerary.landmarks = landmarkData.name || landmarkData;
+                await saveItinerary(itinerary);
+                return itinerary;
+            }
+        }
+
+        async function clearItinerary() {
+            if (confirm('Are you sure you want to clear your entire itinerary?')) {
+                try {
+                    const requestOptions = {
+                        ...fetchOptions,
+                        method: 'DELETE',
+                        credentials: 'include'
+                    };
+                    
+                    const response = await fetch(`${pythonURI}/api/itinerary/clear`, requestOptions);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        localStorage.removeItem('nycItinerary');
+                        location.reload();
+                    } else {
+                        throw new Error(data.error || 'Failed to clear itinerary');
+                    }
+                } catch (error) {
+                    console.error('Error clearing itinerary in backend:', error);
+                    localStorage.removeItem('nycItinerary');
+                    location.reload();
+                }
+            }
         }
 
         function updateItineraryDisplay(itinerary) {
+            // Update trip info
             if (itinerary.tripInfo) {
-                document.getElementById('tripDatesValue').innerHTML = 
-                    `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+                if (typeof itinerary.tripInfo === 'object') {
+                    document.getElementById('tripDatesValue').innerHTML =
+                        `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
+                } else {
+                    document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
+                }
                 document.getElementById('tripInfoItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
+                document.getElementById('tripInfoItem').classList.add('incomplete');
             }
-            
-            if (itinerary.breakfast) {
-                document.getElementById('breakfastValue').textContent = itinerary.breakfast;
-                document.getElementById('breakfastItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.landmarks) {
-                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-                document.getElementById('landmarksItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.shopping) {
-                document.getElementById('shoppingValue').innerHTML = 
-                    `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
-                document.getElementById('shoppingItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.broadway) {
-                document.getElementById('broadwayValue').innerHTML = 
-                    `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
-                document.getElementById('broadwayItem').classList.remove('incomplete');
-            }
-        }
 
-        function clearItinerary() {
-            if (confirm('Are you sure you want to clear your entire itinerary?')) {
-                localStorage.removeItem('nycItinerary');
-                location.reload();
+            // Update breakfast
+            if (itinerary.breakfast) {
+                if (typeof itinerary.breakfast === 'object') {
+                    document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
+                } else {
+                    document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+                }
+                document.getElementById('breakfastItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('breakfastItem').classList.add('incomplete');
+            }
+
+            // Update landmarks
+            if (itinerary.landmarks) {
+                if (typeof itinerary.landmarks === 'object') {
+                    document.getElementById('landmarksValue').textContent = itinerary.landmarks.name || 'Landmark selected';
+                } else {
+                    document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                }
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('landmarksItem').classList.add('incomplete');
+            }
+
+            // Update shopping
+            if (itinerary.shopping) {
+                if (typeof itinerary.shopping === 'object') {
+                    document.getElementById('shoppingValue').innerHTML =
+                        `${itinerary.shopping.center || 'Shopping'}<br><small>${itinerary.shopping.gender || ''}'s Fashion</small>`;
+                } else {
+                    document.getElementById('shoppingValue').textContent = itinerary.shopping;
+                }
+                document.getElementById('shoppingItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('shoppingItem').classList.add('incomplete');
+            }
+
+            // Update broadway
+            if (itinerary.broadway) {
+                if (typeof itinerary.broadway === 'object') {
+                    document.getElementById('broadwayValue').innerHTML =
+                        `${itinerary.broadway.theater || 'Broadway'}<br><small>${itinerary.broadway.show || ''}</small>`;
+                } else {
+                    document.getElementById('broadwayValue').textContent = itinerary.broadway;
+                }
+                document.getElementById('broadwayItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('broadwayItem').classList.add('incomplete');
             }
         }
 
@@ -1698,49 +1893,107 @@ footer:
             tracker.classList.toggle('hidden');
         }
 
-        function saveLandmarkVisit(landmarkName) {
-            const itinerary = getItinerary();
-            itinerary.landmarks = landmarkName;
-            saveItinerary(itinerary);
-        }
-
-        // Get selected days from itinerary
-        function getSelectedDays() {
-            const itinerary = getItinerary();
-            if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
-                return null; // Return null if no dates are selected
+        // UPDATED: Function to save landmark to itinerary
+        async function saveLandmarkVisit(landmarkName) {
+            const landmarkData = {
+                name: landmarkName,
+                selected_at: new Date().toISOString(),
+                type: 'museum'
+            };
+            
+            // Map landmark names to additional details
+            const landmarkDetails = {
+                'The Metropolitan Museum of Art': {
+                    location: 'Upper East Side',
+                    hours: '10:00 AM - 5:30 PM',
+                    price: '$30 (Adults)'
+                },
+                'Museum of Ice Cream': {
+                    location: 'Soho',
+                    hours: '10:00 AM - 8:00 PM',
+                    price: '$39 (All Ages)'
+                },
+                'Empire State Building': {
+                    location: 'Midtown',
+                    hours: '8:00 AM - 2:00 AM',
+                    price: '$44 (Adults)'
+                },
+                'Ukrainian Museum': {
+                    location: 'East Village',
+                    hours: '11:30 AM - 5:00 PM',
+                    price: '$12 (Adults)'
+                }
+            };
+            
+            // Add details if available
+            if (landmarkDetails[landmarkName]) {
+                Object.assign(landmarkData, landmarkDetails[landmarkName]);
             }
             
-            const month = itinerary.tripInfo.month;
-            const dateRange = parseDateRange(month, itinerary.tripInfo.startDate, itinerary.tripInfo.endDate);
-            
-            if (!dateRange) return null;
-            
-            // Get unique days of the week from the date range
-            const selectedDays = new Set();
-            const currentDate = new Date(dateRange.start);
-            
-            while (currentDate <= dateRange.end) {
-                const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-                selectedDays.add(dayName);
-                currentDate.setDate(currentDate.getDate() + 1);
+            try {
+                await updateLandmarksInItinerary(landmarkData);
+                
+                // Show success message
+                const buttons = document.querySelectorAll('.btn-success');
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(landmarkName)) {
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = '<span>✓</span> Added to Itinerary';
+                        btn.disabled = true;
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.disabled = false;
+                        }, 2000);
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Failed to save landmark to itinerary:', error);
+                alert('Failed to save selection. Please try again.');
             }
-            
-            return Array.from(selectedDays);
         }
 
-        // Parse date range from stored format
+        // Get selected days from itinerary (for hours filtering)
+        async function getSelectedDays() {
+            try {
+                const itinerary = await getItinerary();
+                
+                if (!itinerary.tripInfo || !itinerary.tripInfo.startDate || !itinerary.tripInfo.endDate) {
+                    return null;
+                }
+            
+                const month = itinerary.tripInfo.month;
+                const dateRange = parseDateRange(month, itinerary.tripInfo.startDate, itinerary.tripInfo.endDate);
+            
+                if (!dateRange) return null;
+            
+                const selectedDays = new Set();
+                const currentDate = new Date(dateRange.start);
+            
+                while (currentDate <= dateRange.end) {
+                    const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+                    selectedDays.add(dayName);
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            
+                return Array.from(selectedDays);
+            } catch (error) {
+                console.error('Error getting selected days:', error);
+                return null;
+            }
+        }
+
         function parseDateRange(month, startStr, endStr) {
             try {
                 const currentYear = new Date().getFullYear();
-                
-                // Extract day numbers
+            
                 const startDay = parseInt(startStr.match(/\d+/)[0]);
                 const endDay = parseInt(endStr.match(/\d+/)[0]);
-                
+            
                 const startDate = new Date(`${month} ${startDay}, ${currentYear}`);
                 const endDate = new Date(`${month} ${endDay}, ${currentYear}`);
-                
+            
                 return { start: startDate, end: endDate };
             } catch (error) {
                 console.error('Error parsing dates:', error);
@@ -1752,15 +2005,9 @@ footer:
         // LIVE MUSEUM HOURS INTEGRATION
         // ============================================
 
-        // Import configuration from config.js (MODIFIED)
-        import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
-        
-        console.log('Config loaded - Python URI:', pythonURI);
-
-        // Function to fetch live hours from Flask API (MODIFIED)
+        // Function to fetch live hours from Flask API
         async function fetchMuseumHours(museumName) {
             try {
-                // Map museum names to API endpoints
                 const apiMap = {
                     'met': `${pythonURI}/api/met`,
                     'icecream': `${pythonURI}/api/icecream`,
@@ -1770,7 +2017,6 @@ footer:
 
                 console.log(`Fetching ${museumName} hours from ${apiMap[museumName]}`);
                 
-                // Use fetchOptions from config
                 const response = await fetch(apiMap[museumName], {
                     ...fetchOptions,
                     method: 'GET'
@@ -1785,10 +2031,9 @@ footer:
             }
         }
 
-        // NEW: Test API connection (MODIFIED)
+        // Test API connection
         async function testAPIConnection() {
             try {
-                // Add API status indicator to the first section
                 const firstSection = document.querySelector('#met-section .section-title');
                 if (firstSection) {
                     const statusIndicator = document.createElement('div');
@@ -1798,7 +2043,6 @@ footer:
                     firstSection.parentNode.insertBefore(statusIndicator, firstSection.nextSibling);
                 }
 
-                // Use pythonURI and fetchOptions
                 const response = await fetch(`${pythonURI}/api/test`, {
                     ...fetchOptions,
                     method: 'GET'
@@ -1831,7 +2075,7 @@ footer:
             }
         }
 
-        // Update hours for a specific museum section (MODIFIED with date filtering)
+        // Update hours for a specific museum section with date filtering
         async function updateMuseumHours(museumId) {
             console.log(`Updating hours for: ${museumId}`);
             const museumName = museumId.replace('-section', '');
@@ -1842,10 +2086,8 @@ footer:
                 return;
             }
             
-            // Store original content
             const originalContent = hoursList.innerHTML;
             
-            // Add loading indicator
             hoursList.innerHTML = `
                 <li class="hours-loading">
                     <div class="live-loading-spinner"></div>
@@ -1854,18 +2096,13 @@ footer:
             `;
             
             try {
-                // Fetch from API
                 const museumData = await fetchMuseumHours(museumName);
                 
                 if (museumData) {
-                    console.log(`Updating UI with ${museumName} data`);
-                    
-                    // Get selected days from itinerary for filtering
-                    const selectedDays = getSelectedDays();
+                    const selectedDays = await getSelectedDays();
                     
                     let hoursHtml = '';
                     
-                    // Add subtle indicator if filtering is active
                     if (selectedDays && selectedDays.length > 0) {
                         hoursHtml += `
                             <li style="background: rgba(255, 215, 0, 0.1); border-radius: 4px; padding: 8px; margin-bottom: 10px;">
@@ -1874,18 +2111,14 @@ footer:
                         `;
                     }
                     
-                    // Format hours based on museum data structure
                     if (museumData.hours && typeof museumData.hours === 'object') {
-                        // If hours is an object with day:time pairs
                         const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                         
-                        // Filter days based on selected itinerary dates
                         let daysToDisplay = dayOrder;
                         if (selectedDays && selectedDays.length > 0) {
                             daysToDisplay = dayOrder.filter(day => selectedDays.includes(day));
                         }
                         
-                        // Display filtered days
                         daysToDisplay.forEach(day => {
                             if (museumData.hours[day]) {
                                 hoursHtml += `
@@ -1894,11 +2127,9 @@ footer:
                             }
                         });
                     } else if (typeof museumData.hours === 'string') {
-                        // If hours is a simple string
                         hoursHtml += `<li><span>Live Hours</span><span class="live-hours">${museumData.hours}</span></li>`;
                     }
                     
-                    // Add status, address, phone
                     if (museumData.status) {
                         const statusClass = museumData.status.toLowerCase().includes('open') ? 'status-open' : 'status-closed';
                         hoursHtml += `<li><span>Status</span><span class="status-badge ${statusClass}">${museumData.status.toUpperCase()}</span></li>`;
@@ -1912,7 +2143,6 @@ footer:
                         hoursHtml += `<li><span>Phone</span><span>${museumData.phone}</span></li>`;
                     }
                     
-                    // Add update note with date filtering info
                     hoursHtml += `
                         <li class="update-note">
                             <span>Last Updated</span>
@@ -1920,7 +2150,6 @@ footer:
                         </li>
                     `;
                     
-                    // Add error message if exists
                     if (museumData.error) {
                         hoursHtml += `
                             <li style="color: #e74c3c;">
@@ -1937,72 +2166,12 @@ footer:
                     setTimeout(() => hoursList.style.animation = "", 2000);
                 } else {
                     console.log('No data received, showing original content');
-                    // Fall back to original content
                     hoursList.innerHTML = originalContent;
                 }
             } catch (error) {
                 console.error('Error updating hours:', error);
                 hoursList.innerHTML = originalContent;
             }
-        }
-
-        // Add refresh buttons to each museum section
-        function addRefreshButtons() {
-            console.log('Adding refresh buttons...');
-            const sections = ['met', 'icecream', 'ukrainian', 'empire'];
-            
-            sections.forEach(museumId => {
-                const section = document.getElementById(`${museumId}-section`);
-                if (!section) {
-                    console.warn(`Section ${museumId}-section not found`);
-                    return;
-                }
-                
-                // Find the interactive buttons container
-                const buttonsContainer = section.querySelector('.interactive-buttons');
-                if (!buttonsContainer) {
-                    console.warn(`Buttons container not found in ${museumId}-section`);
-                    return;
-                }
-                
-                // Check if button already exists
-                if (buttonsContainer.querySelector('.refresh-hours-btn')) {
-                    console.log(`Refresh button already exists for ${museumId}`);
-                    return;
-                }
-                
-                // Create refresh button
-                const refreshButton = document.createElement('button');
-                refreshButton.className = 'btn btn-primary refresh-hours-btn';
-                refreshButton.innerHTML = '<span>🔄</span> Update Live Hours';
-                refreshButton.onclick = () => {
-                    console.log(`Refresh button clicked for ${museumId}`);
-                    updateMuseumHours(`${museumId}-section`);
-                };
-                
-                // Add to container (before the website button)
-                const websiteBtn = buttonsContainer.querySelector('button[onclick*="window.open"]');
-                if (websiteBtn) {
-                    console.log(`Adding button before website button for ${museumId}`);
-                    buttonsContainer.insertBefore(refreshButton, websiteBtn);
-                } else {
-                    console.log(`Adding button to container for ${museumId}`);
-                    buttonsContainer.appendChild(refreshButton);
-                }
-                
-                console.log(`Added refresh button to ${museumId}`);
-            });
-        }
-
-        // Initialize live data (MODIFIED)
-        function initializeLiveData() {
-            console.log('Initializing live museum hours...');
-            
-            // Test the API connection
-            testAPIConnection();
-            
-            // Add buttons to each museum
-            addRefreshButtons();
         }
 
         // ============================================
@@ -2203,11 +2372,11 @@ footer:
         // ============================================
         // INITIALIZE EVERYTHING
         // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             console.log('DOM loaded, initializing...');
             
-            // 1. Initialize itinerary (FIXED - this was missing!)
-            initItinerary();
+            // 1. Initialize itinerary
+            await initItinerary();
             
             // 2. Setup animations
             createStars();
@@ -2231,9 +2400,16 @@ footer:
                 }
             });
             
-            // 5. Setup live museum hours
-            setTimeout(initializeLiveData, 1000);
+            // 5. Test API connection
+            await testAPIConnection();
         });
+
+        // Make functions available globally
+        window.toggleItineraryTracker = toggleItineraryTracker;
+        window.clearItinerary = clearItinerary;
+        window.saveLandmarkVisit = saveLandmarkVisit;
+        window.updateMuseumHours = updateMuseumHours;
+        window.changeArtColor = changeArtColor;
     </script>
 </body>
 </html>
