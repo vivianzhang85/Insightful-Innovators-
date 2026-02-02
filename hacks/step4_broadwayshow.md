@@ -1221,71 +1221,252 @@ footer:
   </div>
 
   <script type="module">
+    // ============================================
+    // ITINERARY TRACKER JAVASCRIPT (BACKEND-ENABLED)
+    // ============================================
+
     // Import configuration from config.js
     import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
     
     console.log('Broadway Config loaded - Python URI:', pythonURI);
 
-    // ============================================
-    // ITINERARY TRACKER JAVASCRIPT
-    // ============================================
-
-    function initItinerary() {
-      const itinerary = getItinerary();
-      updateItineraryDisplay(itinerary);
-      updateQuickAddButtons();
+    // Initialize itinerary when page loads
+    async function initItinerary() {
+      try {
+        const itinerary = await getItinerary();
+        updateItineraryDisplay(itinerary);
+        updateQuickAddButtons();
+      } catch (error) {
+        console.error('Failed to initialize itinerary:', error);
+        // Fallback to localStorage during transition
+        updateItineraryDisplay({
+          tripInfo: null,
+          breakfast: null,
+          landmarks: null,
+          shopping: null,
+          broadway: null
+        });
+      }
     }
 
-    function getItinerary() {
-      const stored = localStorage.getItem('nycItinerary');
-      return stored ? JSON.parse(stored) : {
-        tripInfo: null,
-        breakfast: null,
-        landmarks: null,
-        shopping: null,
-        broadway: null
-      };
+    async function getItinerary() {
+      try {
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'GET',
+          credentials: 'include'
+        };
+        
+        const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          const backendData = data.data || {};
+          return {
+            tripInfo: backendData.trip_info || null,
+            breakfast: backendData.breakfast || null,
+            landmarks: backendData.landmarks || null,
+            shopping: backendData.shopping || null,
+            broadway: backendData.broadway || null
+          };
+        } else {
+          throw new Error(data.error || 'Failed to get itinerary');
+        }
+      } catch (error) {
+        console.error('Error fetching itinerary from backend:', error);
+        // Fallback to localStorage
+        const stored = localStorage.getItem('nycItinerary');
+        return stored ? JSON.parse(stored) : {
+          tripInfo: null,
+          breakfast: null,
+          landmarks: null,
+          shopping: null,
+          broadway: null
+        };
+      }
     }
 
-    function saveItinerary(itinerary) {
-      localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-      updateItineraryDisplay(itinerary);
+    async function saveItinerary(itinerary) {
+      try {
+        const backendItinerary = {
+          trip_info: itinerary.tripInfo || null,
+          breakfast: itinerary.breakfast || null,
+          landmarks: itinerary.landmarks || null,
+          shopping: itinerary.shopping || null,
+          broadway: itinerary.broadway || null
+        };
+        
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(backendItinerary)
+        };
+        
+        const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          updateItineraryDisplay(itinerary);
+          return itinerary;
+        } else {
+          throw new Error(data.error || 'Failed to save itinerary');
+        }
+      } catch (error) {
+        console.error('Error saving itinerary to backend:', error);
+        localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+        updateItineraryDisplay(itinerary);
+        return itinerary;
+      }
+    }
+
+    async function updateBroadwayInItinerary(broadwayData) {
+      try {
+        const requestOptions = {
+          ...fetchOptions,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(broadwayData)
+        };
+        
+        const response = await fetch(`${pythonURI}/api/itinerary/section/broadway`, requestOptions);
+        
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          const itinerary = await getItinerary();
+          updateItineraryDisplay(itinerary);
+          return data.data;
+        } else {
+          throw new Error(data.error || 'Failed to update broadway');
+        }
+      } catch (error) {
+        console.error('Error updating broadway in backend:', error);
+        const itinerary = await getItinerary();
+        itinerary.broadway = broadwayData;
+        await saveItinerary(itinerary);
+        return itinerary;
+      }
+    }
+
+    async function clearItinerary() {
+      if (confirm('Are you sure you want to clear your entire itinerary?')) {
+        try {
+          const requestOptions = {
+            ...fetchOptions,
+            method: 'DELETE',
+            credentials: 'include'
+          };
+          
+          const response = await fetch(`${pythonURI}/api/itinerary/clear`, requestOptions);
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            localStorage.removeItem('nycItinerary');
+            location.reload();
+          } else {
+            throw new Error(data.error || 'Failed to clear itinerary');
+          }
+        } catch (error) {
+          console.error('Error clearing itinerary in backend:', error);
+          localStorage.removeItem('nycItinerary');
+          location.reload();
+        }
+      }
     }
 
     function updateItineraryDisplay(itinerary) {
+      // Update trip info
       if (itinerary.tripInfo) {
-        document.getElementById('tripDatesValue').innerHTML = 
-          `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+        if (typeof itinerary.tripInfo === 'object') {
+          document.getElementById('tripDatesValue').innerHTML =
+            `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
+        } else {
+          document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
+        }
         document.getElementById('tripInfoItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
+        document.getElementById('tripInfoItem').classList.add('incomplete');
       }
-      
-      if (itinerary.breakfast) {
-        document.getElementById('breakfastValue').textContent = itinerary.breakfast;
-        document.getElementById('breakfastItem').classList.remove('incomplete');
-      }
-      
-      if (itinerary.landmarks) {
-        document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-        document.getElementById('landmarksItem').classList.remove('incomplete');
-      }
-      
-      if (itinerary.shopping) {
-        document.getElementById('shoppingValue').innerHTML = 
-          `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender}'s Fashion</small>`;
-        document.getElementById('shoppingItem').classList.remove('incomplete');
-      }
-      
-      if (itinerary.broadway) {
-        document.getElementById('broadwayValue').innerHTML = 
-          `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
-        document.getElementById('broadwayItem').classList.remove('incomplete');
-      }
-    }
 
-    function clearItinerary() {
-      if (confirm('Are you sure you want to clear your entire itinerary?')) {
-        localStorage.removeItem('nycItinerary');
-        location.reload();
+      // Update breakfast
+      if (itinerary.breakfast) {
+        if (typeof itinerary.breakfast === 'object') {
+          document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
+        } else {
+          document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+        }
+        document.getElementById('breakfastItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('breakfastItem').classList.add('incomplete');
+      }
+
+      // Update landmarks
+      if (itinerary.landmarks) {
+        if (typeof itinerary.landmarks === 'object') {
+          document.getElementById('landmarksValue').textContent = itinerary.landmarks.name || 'Landmark selected';
+        } else {
+          document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+        }
+        document.getElementById('landmarksItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('landmarksItem').classList.add('incomplete');
+      }
+
+      // Update shopping
+      if (itinerary.shopping) {
+        if (typeof itinerary.shopping === 'object') {
+          document.getElementById('shoppingValue').innerHTML =
+            `${itinerary.shopping.center || 'Shopping'}<br><small>${itinerary.shopping.gender || ''}'s Fashion</small>`;
+        } else {
+          document.getElementById('shoppingValue').textContent = itinerary.shopping;
+        }
+        document.getElementById('shoppingItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('shoppingItem').classList.add('incomplete');
+      }
+
+      // Update broadway
+      if (itinerary.broadway) {
+        if (typeof itinerary.broadway === 'object') {
+          document.getElementById('broadwayValue').innerHTML =
+            `${itinerary.broadway.show || 'Broadway'}<br><small>${itinerary.broadway.theater || ''}</small>`;
+        } else {
+          document.getElementById('broadwayValue').textContent = itinerary.broadway;
+        }
+        document.getElementById('broadwayItem').classList.remove('incomplete');
+      } else {
+        document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+        document.getElementById('broadwayItem').classList.add('incomplete');
       }
     }
 
@@ -1294,77 +1475,160 @@ footer:
       tracker.classList.toggle('hidden');
     }
 
-    function addBroadwayToItinerary() {
+    // ============================================
+    // BROADWAY SHOW DATA
+    // ============================================
+
+    const SHOW_DATA = {
+      hamilton: {
+        name: "Hamilton",
+        theater: "Richard Rodgers Theatre",
+        description: "The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.",
+        price: 299,
+        priceRange: "$299 - $499",
+        type: "Musical Drama"
+      },
+      lionking: {
+        name: "The Lion King",
+        theater: "Minskoff Theatre",
+        description: "The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.",
+        price: 179,
+        priceRange: "$179 - $399",
+        type: "Family Musical"
+      },
+      wicked: {
+        name: "Wicked",
+        theater: "Gershwin Theatre",
+        description: "The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.",
+        price: 189,
+        priceRange: "$189 - $359",
+        type: "Fantasy Musical"
+      },
+      hadestown: {
+        name: "Hadestown",
+        theater: "Walter Kerr Theatre",
+        description: "An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.",
+        price: 159,
+        priceRange: "$159 - $329",
+        type: "Folk Opera"
+      }
+    };
+
+    // ============================================
+    // BROADWAY SHOW SELECTION LOGIC
+    // ============================================
+
+    let currentShow = null;
+    let selectedDate = '2026-06-05';
+    let ticketQuantity = 2;
+
+    async function addBroadwayToItinerary() {
       if (!currentShow) return;
       
       const showData = SHOW_DATA[currentShow];
-      const itinerary = getItinerary();
-      itinerary.broadway = {
+      const broadwayData = {
         show: showData.name,
         theater: showData.theater,
         date: selectedDate,
         tickets: ticketQuantity,
-        total: ticketQuantity * showData.price
+        total: ticketQuantity * showData.price,
+        selected_at: new Date().toISOString(),
+        type: 'broadway'
       };
-      saveItinerary(itinerary);
       
-      const btn = document.getElementById('addToItineraryBtn');
-      btn.classList.add('added');
-      btn.innerHTML = '<span>✓</span> Added to Itinerary';
-      
-      setTimeout(() => {
-        updateAddButton();
-      }, 2000);
+      try {
+        await updateBroadwayInItinerary(broadwayData);
+        
+        // Show success message
+        const btn = document.getElementById('addToItineraryBtn');
+        btn.classList.add('added');
+        btn.innerHTML = '<span>✓</span> Added to Itinerary';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+          btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
+          btn.disabled = false;
+        }, 2000);
+        
+        updateQuickAddButtons();
+        
+      } catch (error) {
+        console.error('Failed to save Broadway to itinerary:', error);
+        alert('Failed to save selection. Please try again.');
+      }
     }
 
-    function updateAddButton() {
-      const itinerary = getItinerary();
-      const btn = document.getElementById('addToItineraryBtn');
-      if (btn && itinerary.broadway && currentShow) {
-        const showData = SHOW_DATA[currentShow];
-        if (itinerary.broadway.show === showData.name) {
-          btn.classList.add('added');
-          btn.innerHTML = '<span>✓</span> Added to Itinerary';
-        } else {
-          btn.classList.remove('added');
-          btn.innerHTML = '<span>⭐</span> Add to My Itinerary';
-        }
+    async function quickAddToItinerary(showKey, event) {
+      event.stopPropagation();
+      
+      if (!showKey) return;
+      
+      const showData = SHOW_DATA[showKey];
+      if (!showData) return;
+      
+      const broadwayData = {
+        show: showData.name,
+        theater: showData.theater,
+        date: selectedDate,
+        tickets: 2, // Default quantity
+        total: 2 * showData.price,
+        selected_at: new Date().toISOString(),
+        type: 'broadway'
+      };
+      
+      try {
+        await updateBroadwayInItinerary(broadwayData);
+        
+        // Show success feedback on button
+        const btn = event.target;
+        btn.classList.add('added');
+        btn.innerHTML = '<span>✓</span> Added';
+        btn.disabled = true;
+        
+        setTimeout(() => {
+          updateQuickAddButtons();
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Failed to save Broadway to itinerary:', error);
+        alert('Failed to save selection. Please try again.');
       }
     }
 
     function updateQuickAddButtons() {
-      const itinerary = getItinerary();
       const buttons = document.querySelectorAll('.quick-add-btn');
+      const broadwayBtn = document.getElementById('addToItineraryBtn');
       
-      buttons.forEach((btn) => {
-        const showKey = btn.getAttribute('data-show');
-        const showData = SHOW_DATA[showKey];
+      getItinerary().then(itinerary => {
+        buttons.forEach((btn) => {
+          const showKey = btn.getAttribute('data-show');
+          const showData = SHOW_DATA[showKey];
+          
+          if (itinerary.broadway && itinerary.broadway.show === showData.name) {
+            btn.classList.add('added');
+            btn.innerHTML = '<span>✓</span> Added';
+            btn.disabled = true;
+          } else {
+            btn.classList.remove('added');
+            btn.innerHTML = '<span>⭐</span> Add to Itinerary';
+            btn.disabled = false;
+          }
+        });
         
-        if (itinerary.broadway && itinerary.broadway.show === showData.name) {
-          btn.classList.add('added');
-          btn.innerHTML = '<span>✓</span> Added';
-        } else {
-          btn.classList.remove('added');
-          btn.innerHTML = '<span>⭐</span> Add';
+        // Update main add button
+        if (broadwayBtn && currentShow) {
+          const showData = SHOW_DATA[currentShow];
+          if (itinerary.broadway && itinerary.broadway.show === showData.name) {
+            broadwayBtn.classList.add('added');
+            broadwayBtn.innerHTML = '<span>✓</span> Added to Itinerary';
+            broadwayBtn.disabled = true;
+          } else {
+            broadwayBtn.classList.remove('added');
+            broadwayBtn.innerHTML = '<span>⭐</span> Add to My Itinerary';
+            broadwayBtn.disabled = false;
+          }
         }
       });
-    }
-
-    function quickAddToItinerary(showKey, event) {
-      event.stopPropagation();
-      
-      const showData = SHOW_DATA[showKey];
-      const itinerary = getItinerary();
-      itinerary.broadway = {
-        show: showData.name,
-        theater: showData.theater,
-        date: selectedDate,
-        tickets: ticketQuantity,
-        total: ticketQuantity * showData.price
-      };
-      saveItinerary(itinerary);
-      
-      updateQuickAddButtons();
     }
 
     // ============================================
@@ -1386,7 +1650,7 @@ footer:
     }
 
     // ============================================
-    // LYRICS VOTING SYSTEM
+    // LYRICS VOTING SYSTEM (BACKEND-ENABLED)
     // ============================================
 
     // Reaction keys
@@ -1395,16 +1659,12 @@ footer:
 
     // Initialize lyrics voting
     function initLyricsVoting() {
-      const url = `${pythonURI}/api/lyrics`;
-      const getURL = url + "";
-      
-      // Combine fetchOptions with any additional options if needed
       const requestOptions = {
         ...fetchOptions,
         method: 'GET'
       };
       
-      fetch(getURL, requestOptions)
+      fetch(`${pythonURI}/api/lyrics`, requestOptions)
         .then(response => {
           if (response.status !== 200) {
             error("GET API response failure: " + response.status);
@@ -1457,15 +1717,12 @@ footer:
 
     // Refresh reactions every 5 seconds
     function refreshLyricsReactions() {
-      const url = `${pythonURI}/api/lyrics`;
-      
-      // Combine fetchOptions with any additional options if needed
       const requestOptions = {
         ...fetchOptions,
         method: 'GET'
       };
       
-      fetch(url, requestOptions)
+      fetch(`${pythonURI}/api/lyrics`, requestOptions)
         .then(response => response.json())
         .then(data => {
           for (const row of data) {
@@ -1487,15 +1744,12 @@ footer:
 
     // Handle vote
     function handleVote(type, lyricId, elemID) {
-      const url = `${pythonURI}/api/lyrics/${type}/${lyricId}`;
-      
-      // Combine fetchOptions with any additional options if needed
       const requestOptions = {
         ...fetchOptions,
         method: "PUT"
       };
       
-      fetch(url, requestOptions)
+      fetch(`${pythonURI}/api/lyrics/${type}/${lyricId}`, requestOptions)
         .then(response => {
           if (response.status !== 200) {
             error("PUT API response failure: " + response.status);
@@ -1527,55 +1781,11 @@ footer:
     }
 
     // ============================================
-    // BROADWAY SHOW DATA
+    // BROADWAY SHOW SELECTION FUNCTIONS
     // ============================================
-
-    const SHOW_DATA = {
-      hamilton: {
-        name: "Hamilton",
-        theater: "Richard Rodgers Theatre",
-        description: "The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.",
-        price: 299,
-        priceRange: "$299 - $499",
-        type: "Musical Drama"
-      },
-      lionking: {
-        name: "The Lion King",
-        theater: "Minskoff Theatre",
-        description: "The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.",
-        price: 179,
-        priceRange: "$179 - $399",
-        type: "Family Musical"
-      },
-      wicked: {
-        name: "Wicked",
-        theater: "Gershwin Theatre",
-        description: "The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.",
-        price: 189,
-        priceRange: "$189 - $359",
-        type: "Fantasy Musical"
-      },
-      hadestown: {
-        name: "Hadestown",
-        theater: "Walter Kerr Theatre",
-        description: "An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.",
-        price: 159,
-        priceRange: "$159 - $329",
-        type: "Folk Opera"
-      }
-    };
-
-    // ============================================
-    // BROADWAY SHOW SELECTION LOGIC
-    // ============================================
-
-    let currentShow = null;
-    let selectedDate = '2026-06-05';
-    let ticketQuantity = 2;
 
     async function testAPIConnection() {
       try {
-        // Combine fetchOptions with any additional options if needed
         const requestOptions = {
           ...fetchOptions,
           method: 'GET'
@@ -1609,7 +1819,7 @@ footer:
       });
       document.getElementById('step' + n).classList.add('active');
       if (n === 3) showConfirmation();
-      if (n === 2) updateAddButton();
+      if (n === 2) updateQuickAddButtons();
     }
 
     function selectDate(date) {
@@ -1656,42 +1866,60 @@ footer:
       `;
       
       try {
-        // Combine fetchOptions with any additional options if needed
         const requestOptions = {
           ...fetchOptions,
           method: 'GET'
         };
         
-        const response = await fetch(`${pythonURI}/api/broadway?start_date=${selectedDate}&end_date=${selectedDate}&quantity=${ticketQuantity}`, requestOptions);
+        const response = await fetch(`${pythonURI}/api/broadway/availability?show=${currentShow}&date=${selectedDate}&quantity=${ticketQuantity}`, requestOptions);
         const data = await response.json();
         
         if (data.success) {
           let availabilityHtml = '<div class="performance-grid">';
           
-          // Generate sample performance times (in real app, this would come from API)
-          const performances = [
-            { time: '2:00 PM', price: SHOW_DATA[currentShow].price, status: 'available', seats: 'Limited' },
-            { time: '7:30 PM', price: SHOW_DATA[currentShow].price + 50, status: 'available', seats: 'Good' },
-            { time: '8:00 PM', price: SHOW_DATA[currentShow].price + 100, status: 'limited', seats: 'Few left' },
-            { time: '8:30 PM', price: SHOW_DATA[currentShow].price + 150, status: 'sold-out', seats: 'Sold out' }
-          ];
-          
-          performances.forEach(performance => {
-            const statusClass = performance.status === 'sold-out' ? 'sold-out' : '';
-            const statusText = performance.status === 'available' ? 'Available' : 
-                              performance.status === 'limited' ? 'Limited' : 'Sold Out';
-            const statusClassText = performance.status === 'available' ? 'status-available' : 
-                                   performance.status === 'limited' ? 'status-limited' : 'status-sold-out';
+          if (data.availability && data.availability.length > 0) {
+            data.availability.forEach(performance => {
+              const statusClass = performance.status === 'sold-out' ? 'sold-out' : '';
+              const statusText = performance.status === 'available' ? 'Available' : 
+                                performance.status === 'limited' ? 'Limited' : 'Sold Out';
+              const statusClassText = performance.status === 'available' ? 'status-available' : 
+                                     performance.status === 'limited' ? 'status-limited' : 'status-sold-out';
+              
+              availabilityHtml += `
+                <div class="performance-card ${statusClass}" onclick="selectPerformance('${performance.time}', ${performance.price})">
+                  <div class="performance-time">${performance.time}</div>
+                  <div class="performance-price">$${performance.price}</div>
+                  <div class="performance-status ${statusClassText}">${statusText}</div>
+                  <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">${performance.seats} seats</p>
+                </div>
+              `;
+            });
+          } else {
+            // Fallback to sample data if no API data
+            const performances = [
+              { time: '2:00 PM', price: SHOW_DATA[currentShow].price, status: 'available', seats: 'Limited' },
+              { time: '7:30 PM', price: SHOW_DATA[currentShow].price + 50, status: 'available', seats: 'Good' },
+              { time: '8:00 PM', price: SHOW_DATA[currentShow].price + 100, status: 'limited', seats: 'Few left' },
+              { time: '8:30 PM', price: SHOW_DATA[currentShow].price + 150, status: 'sold-out', seats: 'Sold out' }
+            ];
             
-            availabilityHtml += `
-              <div class="performance-card ${statusClass}">
-                <div class="performance-time">${performance.time}</div>
-                <div class="performance-price">$${performance.price}</div>
-                <div class="performance-status ${statusClassText}">${statusText}</div>
-                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">${performance.seats} seats</p>
-              </div>
-            `;
-          });
+            performances.forEach(performance => {
+              const statusClass = performance.status === 'sold-out' ? 'sold-out' : '';
+              const statusText = performance.status === 'available' ? 'Available' : 
+                                performance.status === 'limited' ? 'Limited' : 'Sold Out';
+              const statusClassText = performance.status === 'available' ? 'status-available' : 
+                                     performance.status === 'limited' ? 'status-limited' : 'status-sold-out';
+              
+              availabilityHtml += `
+                <div class="performance-card ${statusClass}">
+                  <div class="performance-time">${performance.time}</div>
+                  <div class="performance-price">$${performance.price}</div>
+                  <div class="performance-status ${statusClassText}">${statusText}</div>
+                  <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">${performance.seats} seats</p>
+                </div>
+              `;
+            });
+          }
           
           availabilityHtml += `</div>`;
           
@@ -1803,8 +2031,6 @@ footer:
     window.clearItinerary = clearItinerary;
     window.toggleItineraryTracker = toggleItineraryTracker;
     window.addBroadwayToItinerary = addBroadwayToItinerary;
-    window.updateAddButton = updateAddButton;
-    window.updateQuickAddButtons = updateQuickAddButtons;
     window.quickAddToItinerary = quickAddToItinerary;
     window.switchTab = switchTab;
     window.initLyricsVoting = initLyricsVoting;
@@ -1826,9 +2052,9 @@ footer:
     // INITIALIZATION
     // ============================================
 
-    document.addEventListener('DOMContentLoaded', () => {
-      initItinerary();
-      testAPIConnection();
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initItinerary();
+      await testAPIConnection();
       initLyricsVoting();
       
       // Set up interval for refreshing lyrics votes
