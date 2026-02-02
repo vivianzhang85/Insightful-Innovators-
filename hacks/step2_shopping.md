@@ -800,70 +800,262 @@ footer:
         </button>
     </div>
 
-    <script>
+    <script type="module">
         // ============================================
-        // ITINERARY TRACKER JAVASCRIPT
+        // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)
         // ============================================
 
-        function initItinerary() {
-            const itinerary = getItinerary();
-            updateItineraryDisplay(itinerary);
-            updateAddToItineraryButtons();
-            updateShoppingContentItineraryButton();
+        // Import configuration from config.js (MODIFIED)
+        import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+        
+        console.log('Config loaded - Python URI:', pythonURI);
+
+        // Initialize itinerary when page loads
+        async function initItinerary() {
+            try {
+                const itinerary = await getItinerary();
+                updateItineraryDisplay(itinerary);
+                updateAddToItineraryButtons();
+                updateShoppingContentItineraryButton();
+            } catch (error) {
+                console.error('Failed to initialize itinerary:', error);
+                // Fallback to localStorage during transition
+                const stored = localStorage.getItem('nycItinerary');
+                const itinerary = stored ? JSON.parse(stored) : {
+                    tripInfo: null,
+                    breakfast: null,
+                    landmarks: null,
+                    shopping: null,
+                    broadway: null
+                };
+                updateItineraryDisplay(itinerary);
+            }
         }
 
-        function getItinerary() {
-            const stored = localStorage.getItem('nycItinerary');
-            return stored ? JSON.parse(stored) : {
-                tripInfo: null,
-                breakfast: null,
-                landmarks: null,
-                shopping: null,
-                broadway: null
-            };
+        async function getItinerary() {
+            try {
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'GET',
+                    credentials: 'include'
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const backendData = data.data || {};
+                    return {
+                        tripInfo: backendData.trip_info || null,
+                        breakfast: backendData.breakfast || null,
+                        landmarks: backendData.landmarks || null,
+                        shopping: backendData.shopping || null,
+                        broadway: backendData.broadway || null
+                    };
+                } else {
+                    throw new Error(data.error || 'Failed to get itinerary');
+                }
+            } catch (error) {
+                console.error('Error fetching itinerary from backend:', error);
+                // Fallback to localStorage
+                const stored = localStorage.getItem('nycItinerary');
+                return stored ? JSON.parse(stored) : {
+                    tripInfo: null,
+                    breakfast: null,
+                    landmarks: null,
+                    shopping: null,
+                    broadway: null
+                };
+            }
         }
 
-        function saveItinerary(itinerary) {
-            localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-            updateItineraryDisplay(itinerary);
-            updateAddToItineraryButtons();
-            updateShoppingContentItineraryButton();
+        async function saveItinerary(itinerary) {
+            try {
+                const backendItinerary = {
+                    trip_info: itinerary.tripInfo || null,
+                    breakfast: itinerary.breakfast || null,
+                    landmarks: itinerary.landmarks || null,
+                    shopping: itinerary.shopping || null,
+                    broadway: itinerary.broadway || null
+                };
+                
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(backendItinerary)
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateItineraryDisplay(itinerary);
+                    updateAddToItineraryButtons();
+                    updateShoppingContentItineraryButton();
+                    return itinerary;
+                } else {
+                    throw new Error(data.error || 'Failed to save itinerary');
+                }
+            } catch (error) {
+                console.error('Error saving itinerary to backend:', error);
+                localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
+                updateItineraryDisplay(itinerary);
+                updateAddToItineraryButtons();
+                updateShoppingContentItineraryButton();
+                return itinerary;
+            }
+        }
+
+        async function updateShoppingInItinerary(shoppingData) {
+            try {
+                const requestOptions = {
+                    ...fetchOptions,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(shoppingData)
+                };
+                
+                const response = await fetch(`${pythonURI}/api/itinerary/section/shopping`, requestOptions);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const itinerary = await getItinerary();
+                    updateItineraryDisplay(itinerary);
+                    updateAddToItineraryButtons();
+                    updateShoppingContentItineraryButton();
+                    return data.data;
+                } else {
+                    throw new Error(data.error || 'Failed to update shopping');
+                }
+            } catch (error) {
+                console.error('Error updating shopping in backend:', error);
+                const itinerary = await getItinerary();
+                itinerary.shopping = shoppingData;
+                await saveItinerary(itinerary);
+                return itinerary;
+            }
+        }
+
+        async function clearItinerary() {
+            if (confirm('Are you sure you want to clear your entire itinerary?')) {
+                try {
+                    const requestOptions = {
+                        ...fetchOptions,
+                        method: 'DELETE',
+                        credentials: 'include'
+                    };
+                    
+                    const response = await fetch(`${pythonURI}/api/itinerary/clear`, requestOptions);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        localStorage.removeItem('nycItinerary');
+                        location.reload();
+                    } else {
+                        throw new Error(data.error || 'Failed to clear itinerary');
+                    }
+                } catch (error) {
+                    console.error('Error clearing itinerary in backend:', error);
+                    localStorage.removeItem('nycItinerary');
+                    location.reload();
+                }
+            }
         }
 
         function updateItineraryDisplay(itinerary) {
+            // Update trip info
             if (itinerary.tripInfo) {
-                document.getElementById('tripDatesValue').innerHTML = 
-                    `${itinerary.tripInfo.month} ${itinerary.tripInfo.startDate} - ${itinerary.tripInfo.endDate}`;
+                if (typeof itinerary.tripInfo === 'object') {
+                    document.getElementById('tripDatesValue').innerHTML =
+                        `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
+                } else {
+                    document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
+                }
                 document.getElementById('tripInfoItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
+                document.getElementById('tripInfoItem').classList.add('incomplete');
             }
-            
-            if (itinerary.breakfast) {
-                document.getElementById('breakfastValue').textContent = itinerary.breakfast;
-                document.getElementById('breakfastItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.landmarks) {
-                document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-                document.getElementById('landmarksItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.shopping) {
-                document.getElementById('shoppingValue').innerHTML = 
-                    `${itinerary.shopping.center}<br><small>${itinerary.shopping.gender ? itinerary.shopping.gender + "'s Fashion" : "Shopping Center"}</small>`;
-                document.getElementById('shoppingItem').classList.remove('incomplete');
-            }
-            
-            if (itinerary.broadway) {
-                document.getElementById('broadwayValue').innerHTML = 
-                    `${itinerary.broadway.theater}<br><small>${itinerary.broadway.show}</small>`;
-                document.getElementById('broadwayItem').classList.remove('incomplete');
-            }
-        }
 
-        function clearItinerary() {
-            if (confirm('Are you sure you want to clear your entire itinerary?')) {
-                localStorage.removeItem('nycItinerary');
-                location.reload();
+            // Update breakfast
+            if (itinerary.breakfast) {
+                if (typeof itinerary.breakfast === 'object') {
+                    document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
+                } else {
+                    document.getElementById('breakfastValue').textContent = itinerary.breakfast;
+                }
+                document.getElementById('breakfastItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('breakfastItem').classList.add('incomplete');
+            }
+
+            // Update landmarks
+            if (itinerary.landmarks) {
+                if (typeof itinerary.landmarks === 'object') {
+                    document.getElementById('landmarksValue').textContent = itinerary.landmarks.name || 'Landmark selected';
+                } else {
+                    document.getElementById('landmarksValue').textContent = itinerary.landmarks;
+                }
+                document.getElementById('landmarksItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('landmarksItem').classList.add('incomplete');
+            }
+
+            // Update shopping
+            if (itinerary.shopping) {
+                if (typeof itinerary.shopping === 'object') {
+                    document.getElementById('shoppingValue').innerHTML =
+                        `${itinerary.shopping.center || 'Shopping'}<br><small>${itinerary.shopping.gender || ''}'s Fashion</small>`;
+                } else {
+                    document.getElementById('shoppingValue').textContent = itinerary.shopping;
+                }
+                document.getElementById('shoppingItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('shoppingItem').classList.add('incomplete');
+            }
+
+            // Update broadway
+            if (itinerary.broadway) {
+                if (typeof itinerary.broadway === 'object') {
+                    document.getElementById('broadwayValue').innerHTML =
+                        `${itinerary.broadway.theater || 'Broadway'}<br><small>${itinerary.broadway.show || ''}</small>`;
+                } else {
+                    document.getElementById('broadwayValue').textContent = itinerary.broadway;
+                }
+                document.getElementById('broadwayItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
+                document.getElementById('broadwayItem').classList.add('incomplete');
             }
         }
 
@@ -872,89 +1064,128 @@ footer:
             tracker.classList.toggle('hidden');
         }
 
-        function addShoppingCenterToItinerary(centerId, event) {
+        // UPDATED: Add shopping center to itinerary (center only, no gender)
+        async function addShoppingCenterToItinerary(centerId, event) {
             if (event) event.stopPropagation();
             
             const center = shoppingCenters[centerId];
-            const itinerary = getItinerary();
-            
-            itinerary.shopping = {
+            const shoppingData = {
                 center: center.name,
-                gender: null  // Gender not selected yet
+                gender: null,
+                selected_at: new Date().toISOString(),
+                center_id: centerId
             };
             
-            saveItinerary(itinerary);
-            
-            // Update button state
-            const btn = document.getElementById(`add-${centerId}`);
-            btn.classList.add('added');
-            btn.innerHTML = '<span>✓</span> Added to Itinerary';
-            btn.disabled = true;
-            
-            alert(`${center.name} has been added to your itinerary!`);
+            try {
+                await updateShoppingInItinerary(shoppingData);
+                
+                // Update button state
+                const btn = document.getElementById(`add-${centerId}`);
+                const originalHTML = btn.innerHTML;
+                btn.classList.add('added');
+                btn.innerHTML = '<span>✓</span> Added to Itinerary';
+                btn.disabled = true;
+                
+                // Revert button after 2 seconds
+                setTimeout(() => {
+                    btn.classList.add('added');
+                    btn.innerHTML = '<span>✓</span> Added to Itinerary';
+                    btn.disabled = true;
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Failed to save shopping center to itinerary:', error);
+                alert('Failed to save selection. Please try again.');
+            }
         }
 
-        function addShoppingSelectionToItinerary() {
+        // UPDATED: Add full shopping selection to itinerary (with gender)
+        async function addShoppingSelectionToItinerary() {
             if (!selectedCenter || !selectedGender) {
                 alert('Please select a shopping center and gender first!');
                 return;
             }
             
             const center = shoppingCenters[selectedCenter];
-            const itinerary = getItinerary();
-            
-            itinerary.shopping = {
+            const shoppingData = {
                 center: center.name,
-                gender: selectedGender === 'women' ? "Women's" : "Men's"
+                gender: selectedGender === 'women' ? "Women's" : "Men's",
+                selected_at: new Date().toISOString(),
+                center_id: selectedCenter
             };
             
-            saveItinerary(itinerary);
+            // Add outfit items if available
+            if (currentSelection && shoppingCenters[selectedCenter][selectedGender]) {
+                const wardrobe = shoppingCenters[selectedCenter][selectedGender];
+                shoppingData.outfit = {
+                    top: wardrobe.top[currentSelection.top].name,
+                    bottom: wardrobe.bottom[currentSelection.bottom].name,
+                    shoes: wardrobe.shoes[currentSelection.shoes].name
+                };
+            }
             
-            // Update button state
-            const btn = document.getElementById('addShoppingToItineraryBtn');
-            btn.classList.add('added');
-            btn.innerHTML = '✅ Added to Itinerary';
-            btn.disabled = true;
-            
-            alert(`${center.name} (${selectedGender === 'women' ? "Women's" : "Men's"} Fashion) has been added to your itinerary!`);
-        }
-
-        function updateAddToItineraryButtons() {
-            const itinerary = getItinerary();
-            const currentShopping = itinerary.shopping;
-            
-            // Reset all center buttons first
-            const centerIds = ['east-river', 'macys', 'soho', 'columbus'];
-            centerIds.forEach(centerId => {
-                const btn = document.getElementById(`add-${centerId}`);
-                if (btn) {
-                    btn.classList.remove('added');
-                    btn.innerHTML = '<span>✅</span> Add to Itinerary';
-                    btn.disabled = false;
-                }
-            });
-            
-            // If there's shopping in the itinerary, mark that specific center button
-            if (currentShopping && currentShopping.center) {
-                let centerId = '';
-                if (currentShopping.center.includes('East River')) centerId = 'east-river';
-                else if (currentShopping.center.includes("Macy's")) centerId = 'macys';
-                else if (currentShopping.center.includes('SoHo')) centerId = 'soho';
-                else if (currentShopping.center.includes('Columbus')) centerId = 'columbus';
+            try {
+                await updateShoppingInItinerary(shoppingData);
                 
-                if (centerId) {
-                    const btn = document.getElementById(`add-${centerId}`);
-                    if (btn) {
-                        btn.classList.add('added');
-                        btn.innerHTML = '<span>✓</span> Added to Itinerary';
-                        btn.disabled = true;
-                    }
-                }
+                // Update button state
+                const btn = document.getElementById('addShoppingToItineraryBtn');
+                const originalHTML = btn.innerHTML;
+                btn.classList.add('added');
+                btn.innerHTML = '✅ Added to Itinerary';
+                btn.disabled = true;
+                
+                // Revert button after 2 seconds
+                setTimeout(() => {
+                    btn.classList.add('added');
+                    btn.innerHTML = '✅ Added to Itinerary';
+                    btn.disabled = true;
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Failed to save shopping selection to itinerary:', error);
+                alert('Failed to save selection. Please try again.');
             }
         }
 
-        function updateShoppingContentItineraryButton() {
-            const itinerary = getItinerary();
+        async function updateAddToItineraryButtons() {
+            try {
+                const itinerary = await getItinerary();
+                const currentShopping = itinerary.shopping;
+                
+                // Reset all center buttons first
+                const centerIds = ['east-river', 'macys', 'soho', 'columbus'];
+                centerIds.forEach(centerId => {
+                    const btn = document.getElementById(`add-${centerId}`);
+                    if (btn) {
+                        btn.classList.remove('added');
+                        btn.innerHTML = '<span>✅</span> Add to Itinerary';
+                        btn.disabled = false;
+                    }
+                });
+                
+                // If there's shopping in the itinerary, mark that specific center button
+                if (currentShopping && currentShopping.center) {
+                    let centerId = '';
+                    if (currentShopping.center.includes('East River')) centerId = 'east-river';
+                    else if (currentShopping.center.includes("Macy's")) centerId = 'macys';
+                    else if (currentShopping.center.includes('SoHo')) centerId = 'soho';
+                    else if (currentShopping.center.includes('Columbus')) centerId = 'columbus';
+                    
+                    if (centerId) {
+                        const btn = document.getElementById(`add-${centerId}`);
+                        if (btn) {
+                            btn.classList.add('added');
+                            btn.innerHTML = '<span>✓</span> Added to Itinerary';
+                            btn.disabled = true;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating add buttons:', error);
+            }
+        }
+
+        async function updateShoppingContentItineraryButton() {
             const btn = document.getElementById('addShoppingToItineraryBtn');
             
             if (!selectedCenter || !selectedGender) {
@@ -962,23 +1193,34 @@ footer:
                 return;
             }
             
-            const center = shoppingCenters[selectedCenter];
-            const currentSelection = center.name + (selectedGender === 'women' ? " (Women's)" : " (Men's)");
-            
-            // Check if this specific shopping selection is already in the itinerary
-            if (itinerary.shopping && 
-                itinerary.shopping.center === center.name && 
-                itinerary.shopping.gender === (selectedGender === 'women' ? "Women's" : "Men's")) {
-                btn.classList.add('added');
-                btn.innerHTML = '✅ Added to Itinerary';
-                btn.disabled = true;
-            } else {
-                btn.classList.remove('added');
-                btn.innerHTML = '✅ Add Shopping to My Itinerary';
-                btn.disabled = false;
+            try {
+                const itinerary = await getItinerary();
+                const center = shoppingCenters[selectedCenter];
+                const currentGender = selectedGender === 'women' ? "Women's" : "Men's";
+                
+                // Check if this specific shopping selection is already in the itinerary
+                if (itinerary.shopping && 
+                    itinerary.shopping.center === center.name && 
+                    itinerary.shopping.gender === currentGender) {
+                    btn.classList.add('added');
+                    btn.innerHTML = '✅ Added to Itinerary';
+                    btn.disabled = true;
+                } else {
+                    btn.classList.remove('added');
+                    btn.innerHTML = '✅ Add Shopping to My Itinerary';
+                    btn.disabled = false;
+                }
+                
+                btn.style.display = 'block';
+            } catch (error) {
+                console.error('Error updating shopping content button:', error);
+                if (btn) {
+                    btn.style.display = 'block';
+                    btn.classList.remove('added');
+                    btn.innerHTML = '✅ Add Shopping to My Itinerary';
+                    btn.disabled = false;
+                }
             }
-            
-            btn.style.display = 'block';
         }
 
         // ============================================
@@ -1283,9 +1525,23 @@ footer:
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            initItinerary();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initItinerary();
         });
+
+        // Make functions available globally
+        window.toggleItineraryTracker = toggleItineraryTracker;
+        window.clearItinerary = clearItinerary;
+        window.addShoppingCenterToItinerary = addShoppingCenterToItinerary;
+        window.addShoppingSelectionToItinerary = addShoppingSelectionToItinerary;
+        window.selectCenter = selectCenter;
+        window.selectGender = selectGender;
+        window.backToCenter = backToCenter;
+        window.backToGender = backToGender;
+        window.nextItem = nextItem;
+        window.prevItem = prevItem;
+        window.randomOutfit = randomOutfit;
+        window.saveOutfit = saveOutfit;
     </script>
 </body>
 </html>
