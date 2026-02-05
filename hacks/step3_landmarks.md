@@ -1639,6 +1639,13 @@ footer:
         </div>
     </footer>
 
+    <div style="text-align:center; margin:28px 0;">
+    <a href="/Insightful-Innovators-/new-york/events/" style="display:inline-block;padding:12px 20px;border-radius:10px;
+       background:linear-gradient(90deg,#ffd700,#ffed4e);color:#1a1a2e;font-weight:700;text-decoration:none;">
+      Click here to add your own event!
+    </a>
+  </div>
+
     <script type="module">
         // ============================================
         // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)

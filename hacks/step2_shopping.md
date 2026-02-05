@@ -73,9 +73,6 @@ footer:
             transition: all 0.3s ease;
             border: 3px solid transparent;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
         }
 
         .center-card:hover {
@@ -103,8 +100,6 @@ footer:
         .center-card p {
             color: #ccc;
             font-size: 0.95em;
-            flex-grow: 1;
-            margin-bottom: 20px;
         }
 
         /* Gender Selection Screen */
@@ -315,242 +310,6 @@ footer:
             color: #ffd700;
         }
 
-        /* Itinerary Tracker Sidebar - EXACT COPY */
-        .itinerary-tracker {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            background: rgba(26, 35, 50, 0.95);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border: 2px solid #ffd700;
-            z-index: 9999;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .itinerary-tracker h3 {
-            color: #ffd700;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            text-align: center;
-            border-bottom: 2px solid #ffd700;
-            padding-bottom: 10px;
-        }
-
-        .itinerary-item {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-left: 4px solid #ffd700;
-        }
-
-        .itinerary-item.incomplete {
-            border-left-color: #666;
-            opacity: 0.6;
-        }
-
-        .itinerary-label {
-            font-size: 0.85rem;
-            color: #ffd700;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .itinerary-value {
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .itinerary-empty {
-            color: #999;
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-
-        .clear-itinerary-btn {
-            width: 100%;
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-
-        .clear-itinerary-btn:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-
-        .toggle-tracker-btn {
-            position: fixed;
-            right: 20px;
-            top: 20px;
-            background: #ffd700;
-            color: #1a2332;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            z-index: 10000;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-            transition: all 0.3s;
-        }
-
-        .toggle-tracker-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
-        }
-
-        .itinerary-tracker.hidden {
-            display: none;
-        }
-
-        /* Add to Itinerary Button for Shopping Centers */
-        .add-to-itinerary-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            width: 100%;
-        }
-
-        .add-to-itinerary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
-        }
-
-        .add-to-itinerary-btn.added {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-        }
-
-        .add-to-itinerary-btn.added:hover {
-            transform: none;
-            cursor: default;
-        }
-
-        /* Add to Itinerary Button for Shopping Content */
-        .add-shopping-itinerary-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.95em;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .add-shopping-itinerary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
-        }
-
-        .add-shopping-itinerary-btn.added {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-        }
-
-        .center-card-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .center-select-btn {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #1a2332;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .center-select-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Broadway Navigation Section */
-        .nav-to-broadway {
-            margin-top: 50px;
-            margin-bottom: 50px;
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 15px;
-            border: 2px solid #ffd700;
-        }
-        
-        .nav-to-broadway h2 {
-            color: #fbbf24;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-        
-        .nav-to-broadway p {
-            color: #cbd5e1;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
-        .broadway-btn {
-            display: inline-block;
-            padding: 20px 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1a1a2e;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .broadway-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
-        }
-
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8em;
@@ -573,30 +332,10 @@ footer:
             .wardrobe-section {
                 padding: 20px;
             }
-
-            .itinerary-tracker {
-                width: 90%;
-                right: 5%;
-                left: 5%;
-            }
-
-            .center-card-buttons {
-                flex-direction: column;
-            }
-
-            .broadway-btn {
-                padding: 15px 35px;
-                font-size: 1.1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Itinerary Tracker Toggle Button -->
-    <button class="toggle-tracker-btn" onclick="toggleItineraryTracker()">
-        📋 My Itinerary
-    </button>
-
     <div class="container">
         <header>
             <h1>NYC Shopping Experience</h1>
@@ -606,60 +345,28 @@ footer:
         <!-- Shopping Center Selection -->
         <div id="center-selection-screen">
             <div class="center-selection">
-                <div class="center-card">
+                <div class="center-card" onclick="selectCenter('east-river')">
                     <div class="center-icon">🏬</div>
                     <h2>East River Plaza</h2>
                     <p>Affordable fashion & everyday essentials</p>
-                    <div class="center-card-buttons">
-                        <button class="center-select-btn" onclick="selectCenter('east-river')">
-                            <span>🛒</span> Shop Here
-                        </button>
-                        <button class="add-to-itinerary-btn" id="add-east-river" onclick="addShoppingCenterToItinerary('east-river', event)">
-                            <span>✅</span> Add to Itinerary
-                        </button>
-                    </div>
                 </div>
 
-                <div class="center-card">
+                <div class="center-card" onclick="selectCenter('macys')">
                     <div class="center-icon">🏢</div>
                     <h2>Macy's Herald Square</h2>
                     <p>Classic department store elegance</p>
-                    <div class="center-card-buttons">
-                        <button class="center-select-btn" onclick="selectCenter('macys')">
-                            <span>🛒</span> Shop Here
-                        </button>
-                        <button class="add-to-itinerary-btn" id="add-macys" onclick="addShoppingCenterToItinerary('macys', event)">
-                            <span>✅</span> Add to Itinerary
-                        </button>
-                    </div>
                 </div>
 
-                <div class="center-card">
+                <div class="center-card" onclick="selectCenter('soho')">
                     <div class="center-icon">✨</div>
                     <h2>SoHo Center</h2>
                     <p>Trendy & fashion-forward styles</p>
-                    <div class="center-card-buttons">
-                        <button class="center-select-btn" onclick="selectCenter('soho')">
-                            <span>🛒</span> Shop Here
-                        </button>
-                        <button class="add-to-itinerary-btn" id="add-soho" onclick="addShoppingCenterToItinerary('soho', event)">
-                            <span>✅</span> Add to Itinerary
-                        </button>
-                    </div>
                 </div>
 
-                <div class="center-card">
+                <div class="center-card" onclick="selectCenter('columbus')">
                     <div class="center-icon">💎</div>
                     <h2>Columbus Circle</h2>
                     <p>Luxury designer boutiques</p>
-                    <div class="center-card-buttons">
-                        <button class="center-select-btn" onclick="selectCenter('columbus')">
-                            <span>🛒</span> Shop Here
-                        </button>
-                        <button class="add-to-itinerary-btn" id="add-columbus" onclick="addShoppingCenterToItinerary('columbus', event)">
-                            <span>✅</span> Add to Itinerary
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -737,496 +444,19 @@ footer:
                     <button class="btn" onclick="saveOutfit()">💾 Save Outfit</button>
                 </div>
 
-                <!-- Add to Itinerary Button -->
-                <button class="add-shopping-itinerary-btn" id="addShoppingToItineraryBtn" onclick="addShoppingSelectionToItinerary()">
-                    ✅ Add Shopping to My Itinerary
-                </button>
-
                 <div class="status-message" id="status">Ready to shop!</div>
             </div>
         </div>
 
-        <!-- Broadway Navigation Section -->
-        <div class="nav-to-broadway">
-            <h2>Ready for Broadway?</h2>
-            <p>After shopping, enjoy a spectacular Broadway show in NYC!</p>
-            <a href="https://vivianzhang85.github.io/Insightful-Innovators-/new-york/broadway/" class="broadway-btn">
-                🎭 See Broadway Shows
-            </a>
+        <div style="text-align:center; margin:28px 0;">
+          <a href="/Insightful-Innovators-/new-york/events/" style="display:inline-block;padding:12px 20px;border-radius:10px;
+             background:linear-gradient(90deg,#ffd700,#ffed4e);color:#1a1a2e;font-weight:700;text-decoration:none;">
+            Click here to add your own event!
+          </a>
         </div>
     </div>
 
-    <!-- Itinerary Tracker Sidebar -->
-    <div class="itinerary-tracker hidden" id="itineraryTracker">
-        <h3>🗽 Your NYC Trip</h3>
-        
-        <div class="itinerary-item" id="tripInfoItem">
-            <div class="itinerary-label">📅 Trip Dates</div>
-            <div class="itinerary-value" id="tripDatesValue">
-                <span class="itinerary-empty">Not set yet</span>
-            </div>
-        </div>
-        
-        <div class="itinerary-item incomplete" id="breakfastItem">
-            <div class="itinerary-label">🍳 Breakfast</div>
-            <div class="itinerary-value" id="breakfastValue">
-                <span class="itinerary-empty">Not selected</span>
-            </div>
-        </div>
-        
-        <div class="itinerary-item incomplete" id="landmarksItem">
-            <div class="itinerary-label">🗽 Landmarks</div>
-            <div class="itinerary-value" id="landmarksValue">
-                <span class="itinerary-empty">Not selected</span>
-            </div>
-        </div>
-        
-        <div class="itinerary-item incomplete" id="shoppingItem">
-            <div class="itinerary-label">🛍️ Shopping</div>
-            <div class="itinerary-value" id="shoppingValue">
-                <span class="itinerary-empty">Not selected</span>
-            </div>
-        </div>
-        
-        <div class="itinerary-item incomplete" id="broadwayItem">
-            <div class="itinerary-label">🎭 Broadway</div>
-            <div class="itinerary-value" id="broadwayValue">
-                <span class="itinerary-empty">Not selected</span>
-            </div>
-        </div>
-        
-        <button class="clear-itinerary-btn" onclick="clearItinerary()">
-            Clear All Selections
-        </button>
-    </div>
-
-    <script type="module">
-        // ============================================
-        // ITINERARY TRACKER JAVASCRIPT (UPDATED FOR BACKEND)
-        // ============================================
-
-        // Import configuration from config.js (MODIFIED)
-        import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
-        
-        console.log('Config loaded - Python URI:', pythonURI);
-
-        // Initialize itinerary when page loads
-        async function initItinerary() {
-            try {
-                const itinerary = await getItinerary();
-                updateItineraryDisplay(itinerary);
-                updateAddToItineraryButtons();
-                updateShoppingContentItineraryButton();
-            } catch (error) {
-                console.error('Failed to initialize itinerary:', error);
-                // Fallback to localStorage during transition
-                const stored = localStorage.getItem('nycItinerary');
-                const itinerary = stored ? JSON.parse(stored) : {
-                    tripInfo: null,
-                    breakfast: null,
-                    landmarks: null,
-                    shopping: null,
-                    broadway: null
-                };
-                updateItineraryDisplay(itinerary);
-            }
-        }
-
-        async function getItinerary() {
-            try {
-                const requestOptions = {
-                    ...fetchOptions,
-                    method: 'GET',
-                    credentials: 'include'
-                };
-                
-                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    const backendData = data.data || {};
-                    return {
-                        tripInfo: backendData.trip_info || null,
-                        breakfast: backendData.breakfast || null,
-                        landmarks: backendData.landmarks || null,
-                        shopping: backendData.shopping || null,
-                        broadway: backendData.broadway || null
-                    };
-                } else {
-                    throw new Error(data.error || 'Failed to get itinerary');
-                }
-            } catch (error) {
-                console.error('Error fetching itinerary from backend:', error);
-                // Fallback to localStorage
-                const stored = localStorage.getItem('nycItinerary');
-                return stored ? JSON.parse(stored) : {
-                    tripInfo: null,
-                    breakfast: null,
-                    landmarks: null,
-                    shopping: null,
-                    broadway: null
-                };
-            }
-        }
-
-        async function saveItinerary(itinerary) {
-            try {
-                const backendItinerary = {
-                    trip_info: itinerary.tripInfo || null,
-                    breakfast: itinerary.breakfast || null,
-                    landmarks: itinerary.landmarks || null,
-                    shopping: itinerary.shopping || null,
-                    broadway: itinerary.broadway || null
-                };
-                
-                const requestOptions = {
-                    ...fetchOptions,
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify(backendItinerary)
-                };
-                
-                const response = await fetch(`${pythonURI}/api/itinerary`, requestOptions);
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    updateItineraryDisplay(itinerary);
-                    updateAddToItineraryButtons();
-                    updateShoppingContentItineraryButton();
-                    return itinerary;
-                } else {
-                    throw new Error(data.error || 'Failed to save itinerary');
-                }
-            } catch (error) {
-                console.error('Error saving itinerary to backend:', error);
-                localStorage.setItem('nycItinerary', JSON.stringify(itinerary));
-                updateItineraryDisplay(itinerary);
-                updateAddToItineraryButtons();
-                updateShoppingContentItineraryButton();
-                return itinerary;
-            }
-        }
-
-        async function updateShoppingInItinerary(shoppingData) {
-            try {
-                const requestOptions = {
-                    ...fetchOptions,
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify(shoppingData)
-                };
-                
-                const response = await fetch(`${pythonURI}/api/itinerary/section/shopping`, requestOptions);
-                
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    const itinerary = await getItinerary();
-                    updateItineraryDisplay(itinerary);
-                    updateAddToItineraryButtons();
-                    updateShoppingContentItineraryButton();
-                    return data.data;
-                } else {
-                    throw new Error(data.error || 'Failed to update shopping');
-                }
-            } catch (error) {
-                console.error('Error updating shopping in backend:', error);
-                const itinerary = await getItinerary();
-                itinerary.shopping = shoppingData;
-                await saveItinerary(itinerary);
-                return itinerary;
-            }
-        }
-
-        async function clearItinerary() {
-            if (confirm('Are you sure you want to clear your entire itinerary?')) {
-                try {
-                    const requestOptions = {
-                        ...fetchOptions,
-                        method: 'DELETE',
-                        credentials: 'include'
-                    };
-                    
-                    const response = await fetch(`${pythonURI}/api/itinerary/clear`, requestOptions);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API error: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        localStorage.removeItem('nycItinerary');
-                        location.reload();
-                    } else {
-                        throw new Error(data.error || 'Failed to clear itinerary');
-                    }
-                } catch (error) {
-                    console.error('Error clearing itinerary in backend:', error);
-                    localStorage.removeItem('nycItinerary');
-                    location.reload();
-                }
-            }
-        }
-
-        function updateItineraryDisplay(itinerary) {
-            // Update trip info
-            if (itinerary.tripInfo) {
-                if (typeof itinerary.tripInfo === 'object') {
-                    document.getElementById('tripDatesValue').innerHTML =
-                        `${itinerary.tripInfo.month || ''} ${itinerary.tripInfo.startDate || ''} - ${itinerary.tripInfo.endDate || ''}`;
-                } else {
-                    document.getElementById('tripDatesValue').innerHTML = itinerary.tripInfo;
-                }
-                document.getElementById('tripInfoItem').classList.remove('incomplete');
-            } else {
-                document.getElementById('tripDatesValue').innerHTML = '<span class="itinerary-empty">Not set yet</span>';
-                document.getElementById('tripInfoItem').classList.add('incomplete');
-            }
-
-            // Update breakfast
-            if (itinerary.breakfast) {
-                if (typeof itinerary.breakfast === 'object') {
-                    document.getElementById('breakfastValue').textContent = itinerary.breakfast.name || 'Breakfast selected';
-                } else {
-                    document.getElementById('breakfastValue').textContent = itinerary.breakfast;
-                }
-                document.getElementById('breakfastItem').classList.remove('incomplete');
-            } else {
-                document.getElementById('breakfastValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
-                document.getElementById('breakfastItem').classList.add('incomplete');
-            }
-
-            // Update landmarks
-            if (itinerary.landmarks) {
-                if (typeof itinerary.landmarks === 'object') {
-                    document.getElementById('landmarksValue').textContent = itinerary.landmarks.name || 'Landmark selected';
-                } else {
-                    document.getElementById('landmarksValue').textContent = itinerary.landmarks;
-                }
-                document.getElementById('landmarksItem').classList.remove('incomplete');
-            } else {
-                document.getElementById('landmarksValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
-                document.getElementById('landmarksItem').classList.add('incomplete');
-            }
-
-            // Update shopping
-            if (itinerary.shopping) {
-                if (typeof itinerary.shopping === 'object') {
-                    document.getElementById('shoppingValue').innerHTML =
-                        `${itinerary.shopping.center || 'Shopping'}<br><small>${itinerary.shopping.gender || ''}'s Fashion</small>`;
-                } else {
-                    document.getElementById('shoppingValue').textContent = itinerary.shopping;
-                }
-                document.getElementById('shoppingItem').classList.remove('incomplete');
-            } else {
-                document.getElementById('shoppingValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
-                document.getElementById('shoppingItem').classList.add('incomplete');
-            }
-
-            // Update broadway
-            if (itinerary.broadway) {
-                if (typeof itinerary.broadway === 'object') {
-                    document.getElementById('broadwayValue').innerHTML =
-                        `${itinerary.broadway.theater || 'Broadway'}<br><small>${itinerary.broadway.show || ''}</small>`;
-                } else {
-                    document.getElementById('broadwayValue').textContent = itinerary.broadway;
-                }
-                document.getElementById('broadwayItem').classList.remove('incomplete');
-            } else {
-                document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
-                document.getElementById('broadwayItem').classList.add('incomplete');
-            }
-        }
-
-        function toggleItineraryTracker() {
-            const tracker = document.getElementById('itineraryTracker');
-            tracker.classList.toggle('hidden');
-        }
-
-        // UPDATED: Add shopping center to itinerary (center only, no gender)
-        async function addShoppingCenterToItinerary(centerId, event) {
-            if (event) event.stopPropagation();
-            
-            const center = shoppingCenters[centerId];
-            const shoppingData = {
-                center: center.name,
-                gender: null,
-                selected_at: new Date().toISOString(),
-                center_id: centerId
-            };
-            
-            try {
-                await updateShoppingInItinerary(shoppingData);
-                
-                // Update button state
-                const btn = document.getElementById(`add-${centerId}`);
-                const originalHTML = btn.innerHTML;
-                btn.classList.add('added');
-                btn.innerHTML = '<span>✓</span> Added to Itinerary';
-                btn.disabled = true;
-                
-                // Revert button after 2 seconds
-                setTimeout(() => {
-                    btn.classList.add('added');
-                    btn.innerHTML = '<span>✓</span> Added to Itinerary';
-                    btn.disabled = true;
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Failed to save shopping center to itinerary:', error);
-                alert('Failed to save selection. Please try again.');
-            }
-        }
-
-        // UPDATED: Add full shopping selection to itinerary (with gender)
-        async function addShoppingSelectionToItinerary() {
-            if (!selectedCenter || !selectedGender) {
-                alert('Please select a shopping center and gender first!');
-                return;
-            }
-            
-            const center = shoppingCenters[selectedCenter];
-            const shoppingData = {
-                center: center.name,
-                gender: selectedGender === 'women' ? "Women's" : "Men's",
-                selected_at: new Date().toISOString(),
-                center_id: selectedCenter
-            };
-            
-            // Add outfit items if available
-            if (currentSelection && shoppingCenters[selectedCenter][selectedGender]) {
-                const wardrobe = shoppingCenters[selectedCenter][selectedGender];
-                shoppingData.outfit = {
-                    top: wardrobe.top[currentSelection.top].name,
-                    bottom: wardrobe.bottom[currentSelection.bottom].name,
-                    shoes: wardrobe.shoes[currentSelection.shoes].name
-                };
-            }
-            
-            try {
-                await updateShoppingInItinerary(shoppingData);
-                
-                // Update button state
-                const btn = document.getElementById('addShoppingToItineraryBtn');
-                const originalHTML = btn.innerHTML;
-                btn.classList.add('added');
-                btn.innerHTML = '✅ Added to Itinerary';
-                btn.disabled = true;
-                
-                // Revert button after 2 seconds
-                setTimeout(() => {
-                    btn.classList.add('added');
-                    btn.innerHTML = '✅ Added to Itinerary';
-                    btn.disabled = true;
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Failed to save shopping selection to itinerary:', error);
-                alert('Failed to save selection. Please try again.');
-            }
-        }
-
-        async function updateAddToItineraryButtons() {
-            try {
-                const itinerary = await getItinerary();
-                const currentShopping = itinerary.shopping;
-                
-                // Reset all center buttons first
-                const centerIds = ['east-river', 'macys', 'soho', 'columbus'];
-                centerIds.forEach(centerId => {
-                    const btn = document.getElementById(`add-${centerId}`);
-                    if (btn) {
-                        btn.classList.remove('added');
-                        btn.innerHTML = '<span>✅</span> Add to Itinerary';
-                        btn.disabled = false;
-                    }
-                });
-                
-                // If there's shopping in the itinerary, mark that specific center button
-                if (currentShopping && currentShopping.center) {
-                    let centerId = '';
-                    if (currentShopping.center.includes('East River')) centerId = 'east-river';
-                    else if (currentShopping.center.includes("Macy's")) centerId = 'macys';
-                    else if (currentShopping.center.includes('SoHo')) centerId = 'soho';
-                    else if (currentShopping.center.includes('Columbus')) centerId = 'columbus';
-                    
-                    if (centerId) {
-                        const btn = document.getElementById(`add-${centerId}`);
-                        if (btn) {
-                            btn.classList.add('added');
-                            btn.innerHTML = '<span>✓</span> Added to Itinerary';
-                            btn.disabled = true;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error('Error updating add buttons:', error);
-            }
-        }
-
-        async function updateShoppingContentItineraryButton() {
-            const btn = document.getElementById('addShoppingToItineraryBtn');
-            
-            if (!selectedCenter || !selectedGender) {
-                if (btn) btn.style.display = 'none';
-                return;
-            }
-            
-            try {
-                const itinerary = await getItinerary();
-                const center = shoppingCenters[selectedCenter];
-                const currentGender = selectedGender === 'women' ? "Women's" : "Men's";
-                
-                // Check if this specific shopping selection is already in the itinerary
-                if (itinerary.shopping && 
-                    itinerary.shopping.center === center.name && 
-                    itinerary.shopping.gender === currentGender) {
-                    btn.classList.add('added');
-                    btn.innerHTML = '✅ Added to Itinerary';
-                    btn.disabled = true;
-                } else {
-                    btn.classList.remove('added');
-                    btn.innerHTML = '✅ Add Shopping to My Itinerary';
-                    btn.disabled = false;
-                }
-                
-                btn.style.display = 'block';
-            } catch (error) {
-                console.error('Error updating shopping content button:', error);
-                if (btn) {
-                    btn.style.display = 'block';
-                    btn.classList.remove('added');
-                    btn.innerHTML = '✅ Add Shopping to My Itinerary';
-                    btn.disabled = false;
-                }
-            }
-        }
-
-        // ============================================
-        // SHOPPING JAVASCRIPT (Original code - unchanged)
-        // ============================================
-
+    <script>
         const shoppingCenters = {
             'east-river': {
                 name: 'East River Plaza',
@@ -1431,7 +661,6 @@ footer:
             document.getElementById('section-title').textContent = gender === 'women' ? "Her Look" : "His Look";
             
             updateDisplay();
-            updateShoppingContentItineraryButton();
         }
 
         function backToCenter() {
@@ -1441,7 +670,6 @@ footer:
             document.getElementById('center-selection-screen').classList.remove('hidden');
             document.getElementById('gender-selection-screen').classList.add('hidden');
             document.getElementById('shopping-content').classList.add('hidden');
-            updateShoppingContentItineraryButton();
         }
 
         function backToGender() {
@@ -1449,7 +677,6 @@ footer:
             currentSelection = { top: 0, bottom: 0, shoes: 0 };
             document.getElementById('gender-selection-screen').classList.remove('hidden');
             document.getElementById('shopping-content').classList.add('hidden');
-            updateShoppingContentItineraryButton();
         }
 
         function updateDisplay() {
@@ -1509,6 +736,7 @@ footer:
                 top: wardrobe.top[currentSelection.top].name,
                 bottom: wardrobe.bottom[currentSelection.bottom].name,
                 shoes: wardrobe.shoes[currentSelection.shoes].name,
+                // include image URLs so the post page can render a stacked outfit
                 topImage: wardrobe.top[currentSelection.top].image,
                 bottomImage: wardrobe.bottom[currentSelection.bottom].image,
                 shoesImage: wardrobe.shoes[currentSelection.shoes].image
@@ -1523,25 +751,6 @@ footer:
                 document.getElementById('status').textContent = "❌ Failed to save outfit locally.";
             }
         }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await initItinerary();
-        });
-
-        // Make functions available globally
-        window.toggleItineraryTracker = toggleItineraryTracker;
-        window.clearItinerary = clearItinerary;
-        window.addShoppingCenterToItinerary = addShoppingCenterToItinerary;
-        window.addShoppingSelectionToItinerary = addShoppingSelectionToItinerary;
-        window.selectCenter = selectCenter;
-        window.selectGender = selectGender;
-        window.backToCenter = backToCenter;
-        window.backToGender = backToGender;
-        window.nextItem = nextItem;
-        window.prevItem = prevItem;
-        window.randomOutfit = randomOutfit;
-        window.saveOutfit = saveOutfit;
     </script>
 </body>
 </html>

@@ -378,11 +378,6 @@ footer:
         // Configuration
         const API_URL = 'http://127.0.0.1:8303'; // Change to your backend URL
         const USER_ID = 'user_' + Math.random().toString(36).substr(2, 9); // Replace with actual login
-
-        console.log('Page loaded!');
-        console.log('User ID:', USER_ID);
-        console.log('API URL:', API_URL);
-
         // Switch between tabs
         function switchTab(tab, element) {
             // Update tab buttons
