@@ -6,7 +6,7 @@ permalink: /new-york/broadway/
 parent: "Analytics/Admin"
 team: "Insightful Innovators"
 submodule: 4
-author: "Insightful Innocators"
+author: "Insightful Innovators"
 date: 2025-11-20
 microblog: true
 footer: 
@@ -27,23 +27,121 @@ footer:
     }
 
     body {
-      margin: 0;
-      padding: 20px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
       color: white;
       min-height: 100vh;
     }
-    
+
+    /* Fixed Sidebar - SAME AS LANDMARKS PAGE */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 260px;
+      height: 100vh;
+      background: linear-gradient(180deg, #1a365d 0%, #2d4a7c 50%, #4a6fa5 100%);
+      border-right: 3px solid #FFD700;
+      padding: 25px 20px;
+      z-index: 1000;
+      overflow-y: auto;
+      box-shadow: 4px 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .sidebar-header {
+      margin-bottom: 35px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #FFD700;
+      text-align: center;
+    }
+
+    .sidebar-header h2 {
+      color: #FFD700;
+      font-size: 1.6rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-header p {
+      color: #FFE55C;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-button {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      color: #f0fdfa;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+      border-left: 5px solid transparent;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateX(8px);
+      border-left-color: #FFD700;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    }
+
+    .nav-button.active {
+      background: rgba(255, 215, 0, 0.3);
+      border-left-color: #FFD700;
+      border-color: #FFD700;
+      color: #FFD700;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.5);
+    }
+
+    .nav-button.breakfast {
+      border-left-color: #fbbf24;
+    }
+
+    .nav-button.landmarks {
+      border-left-color: #FFD700;
+    }
+
+    .nav-button.shopping {
+      border-left-color: #c084fc;
+    }
+
+    .nav-button.broadway {
+      border-left-color: #34d399;
+    }
+
+    /* Main Content Area - SHIFTED LEFT */
+    .main-content {
+      margin-left: 280px; /* Slightly more space from sidebar */
+      margin-right: 0; /* Remove right margin */
+      padding: 30px 60px 30px 20px; /* Adjusted padding - more on right, less on left */
+      min-height: 100vh;
+      max-width: 1100px; /* Constrain max width */
+    }
+
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 100%;
+      margin: 0;
+      width: 100%;
     }
     
     .header {
       text-align: center;
       margin-bottom: 40px;
-      padding: 20px;
+      padding: 30px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       border: 2px solid #8b5cf6;
@@ -882,11 +980,111 @@ footer:
       0%, 100% { opacity: 1; }
       50% { opacity: 0.7; }
     }
-    
-    @media (max-width: 768px) {
+
+    /* Responsive Design */
+    @media (max-width: 1400px) {
+      .main-content {
+        margin-right: 0;
+        max-width: 900px;
+      }
+      
+      .itinerary-tracker {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px;
+      }
+      
+      .main-content {
+        margin-left: 220px;
+        margin-right: 0;
+        padding: 20px;
+        max-width: 800px;
+      }
+      
+      .selection-grid,
+      .performance-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      
+      .itinerary-tracker {
+        display: none;
+      }
+      
+      .itinerary-tracker.hidden {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
       .selection-grid,
       .performance-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 60px;
+        padding: 10px;
+      }
+      
+      .sidebar-header h2 {
+        font-size: 0;
+      }
+      
+      .sidebar-header h2::after {
+        content: "🎭";
+        font-size: 1.5rem;
+        color: #FFD700;
+      }
+      
+      .sidebar-header p {
+        display: none;
+      }
+      
+      .nav-button {
+        padding: 10px;
+        font-size: 0;
+        justify-content: center;
+        text-align: center;
+      }
+      
+      .nav-button::before {
+        font-size: 1.2rem;
+      }
+      
+      .nav-button.breakfast::before {
+        content: "🍳";
+      }
+      
+      .nav-button.landmarks::before {
+        content: "🗽";
+      }
+      
+      .nav-button.shopping::before {
+        content: "🛍️";
+      }
+      
+      .nav-button.broadway::before {
+        content: "🎭";
+      }
+      
+      .main-content {
+        margin-left: 70px;
+        margin-right: 10px;
+        padding: 15px;
+        max-width: 100%;
+      }
+      
+      .selection-grid,
+      .performance-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
       }
       
       .header h1 {
@@ -895,16 +1093,6 @@ footer:
       
       .show-card h3 {
         font-size: 24px;
-      }
-      
-      .nav-buttons {
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      .nav-btn {
-        width: 100%;
-        justify-content: center;
       }
 
       .itinerary-tracker {
@@ -921,258 +1109,311 @@ footer:
         display: block;
         overflow-x: auto;
       }
+      
+      .nav-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .nav-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-content {
+        padding: 10px;
+      }
+      
+      .header {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 28px;
+      }
+      
+      .date-selector {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <button class="toggle-tracker-btn" onclick="toggleItineraryTracker()">
-    📋 My Itinerary
-  </button>
-
-  <div class="container">
-    <div class="header">
-      <h1>🎭 Broadway Experience</h1>
-      <p>Choose your Broadway show and vote on famous lyrics from musicals. Experience the magic of theater!</p>
-      <div class="live-data-indicator" id="apiStatus">🔌 Connecting to Broadway API...</div>
+  <!-- Fixed Left Sidebar - SAME AS LANDMARKS PAGE -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>NYC Trip Planner Menu</h2>
+      <p>Click a button to move to the next module</p>
     </div>
-
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-      <button class="tab active" onclick="switchTab('shows')">🎟️ Show Selection</button>
-      <button class="tab" onclick="switchTab('lyrics')">🎵 Lyrics Voting</button>
+    <div class="nav-menu">
+      <button class="nav-button breakfast" onclick="navigateTo('breakfast')">
+        🍳 Breakfast
+      </button>
+      <button class="nav-button landmarks" onclick="navigateTo('landmarks')">
+        🗽 Landmarks
+      </button>
+      <button class="nav-button shopping" onclick="navigateTo('shopping')">
+        🛍️ Shopping
+      </button>
+      <button class="nav-button broadway active" onclick="navigateTo('broadway')">
+        🎭 Broadway
+      </button>
     </div>
+  </div>
 
-    <!-- Shows Tab Content -->
-    <div id="shows-tab" class="tab-content active">
-      <!-- Show Selection Grid -->
-      <div id="step1" class="step active">
-        <h2 style="text-align: center; margin-bottom: 30px; color: #f0abfc;">Choose Your Broadway Show</h2>
-        
-        <div class="date-selector">
-          <div class="date-card selected" onclick="selectDate('2026-06-05')">
-            <div class="day">Friday</div>
-            <div class="date">June 5</div>
-          </div>
-          <div class="date-card" onclick="selectDate('2026-06-06')">
-            <div class="day">Saturday</div>
-            <div class="date">June 6</div>
-          </div>
-          <div class="date-card" onclick="selectDate('2026-06-07')">
-            <div class="day">Sunday</div>
-            <div class="date">June 7</div>
-          </div>
-          <div class="date-card" onclick="selectDate('2026-06-08')">
-            <div class="day">Monday</div>
-            <div class="date">June 8</div>
-          </div>
-          <div class="date-card" onclick="selectDate('2026-06-09')">
-            <div class="day">Tuesday</div>
-            <div class="date">June 9</div>
-          </div>
-        </div>
-        
-        <div class="selection-grid">
-          <div class="selection-card" onclick="selectShow('hamilton')">
-            <h4>🎭 Hamilton</h4>
-            <div class="show-theater">Richard Rodgers Theatre</div>
-            <p>The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.</p>
-            <div class="show-badge">Most Popular</div>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('hamilton', event)" data-show="hamilton">
-              <span>⭐</span> Add to Itinerary
-            </button>
-          </div>
-          
-          <div class="selection-card" onclick="selectShow('lionking')">
-            <h4>🦁 The Lion King</h4>
-            <div class="show-theater">Minskoff Theatre</div>
-            <p>The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.</p>
-            <div class="show-badge">Family Favorite</div>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('lionking', event)" data-show="lionking">
-              <span>⭐</span> Add to Itinerary
-            </button>
-          </div>
-          
-          <div class="selection-card" onclick="selectShow('wicked')">
-            <h4>🧙‍♀️ Wicked</h4>
-            <div class="show-theater">Gershwin Theatre</div>
-            <p>The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.</p>
-            <div class="show-badge">Longest Running</div>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('wicked', event)" data-show="wicked">
-              <span>⭐</span> Add to Itinerary
-            </button>
-          </div>
-          
-          <div class="selection-card" onclick="selectShow('hadestown')">
-            <h4>⚡ Hadestown</h4>
-            <div class="show-theater">Walter Kerr Theatre</div>
-            <p>An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.</p>
-            <div class="show-badge">Tony Winner</div>
-            <button class="quick-add-btn" onclick="quickAddToItinerary('hadestown', event)" data-show="hadestown">
-              <span>⭐</span> Add to Itinerary
-            </button>
-          </div>
-        </div>
-        
-        <button class="btn btn-primary" onclick="goToStep(2)">
-          <span>🎟️</span> Check Live Availability
-          <span>→</span>
-        </button>
+  <!-- Main Content - SHIFTED LEFT -->
+  <div class="main-content">
+    <button class="toggle-tracker-btn" onclick="toggleItineraryTracker()">
+      📋 My Itinerary
+    </button>
+
+    <div class="container">
+      <div class="header">
+        <h1>🎭 Broadway Experience</h1>
+        <p>Choose your Broadway show and vote on famous lyrics from musicals. Experience the magic of theater!</p>
+        <div class="live-data-indicator" id="apiStatus">🔌 Connecting to Broadway API...</div>
       </div>
 
-      <!-- Show Details & Availability -->
-      <div class="step" id="step2">
-        <button class="btn back-btn" onclick="goToStep(1)">
-          <span>←</span> Back to Shows
-        </button>
-        
-        <div class="show-card">
-          <div class="show-info">
-            <h3 id="showName">Loading...</h3>
-            <div class="show-type" id="showType"></div>
-          </div>
-          <div class="show-theater" id="showTheater"></div>
-          <p id="showDescription"></p>
-          
-          <!-- Live Availability Section -->
-          <div id="availabilitySection">
-            <h2 class="availability-header">📅 Live Ticket Availability</h2>
-            <div class="availability-display">
-              <div class="availability-header">
-                <h4>Available Performances</h4>
-                <div class="price-tag" id="priceRange">Loading...</div>
-              </div>
-              <div id="availabilityData">
-                <div class="availability-loading">
-                  <div class="live-loading-spinner"></div>
-                  <div>Checking real-time Broadway.com availability...</div>
-                </div>
-              </div>
-            </div>
-            <button class="btn refresh-btn" onclick="refreshAvailability()">
-              <span>🔄</span> Refresh Live Availability
-            </button>
-          </div>
-        </div>
-        
-        <!-- Ticket Selection -->
-        <div class="selection-section">
-          <h3 style="color: #f0abfc; margin-bottom: 20px;">Select Your Tickets</h3>
-          
-          <div class="ticket-quantity">
-            <div style="flex: 1;">
-              <h4 style="color: #c4b5fd; margin-bottom: 10px;">Number of Tickets</h4>
-              <p style="color: #cbd5e1;">Select how many tickets you need for the selected performance.</p>
-            </div>
-            <div class="quantity-control">
-              <button class="quantity-btn" onclick="adjustQuantity(-1)" id="decreaseBtn">-</button>
-              <div class="quantity-display" id="ticketQuantity">2</div>
-              <button class="quantity-btn" onclick="adjustQuantity(1)" id="increaseBtn">+</button>
-            </div>
-          </div>
-          
-          <div class="total-price" id="estimatedTotal">
-            Estimated Total: $0
-          </div>
-        </div>
-        
-        <button class="btn add-to-itinerary-btn" id="addToItineraryBtn" onclick="addBroadwayToItinerary()">
-          <span>⭐</span> Add to My Itinerary
-        </button>
-
-        <button class="btn btn-primary" onclick="goToStep(3)">
-          <span>✅</span> Confirm Selection
-          <span>→</span>
-        </button>
+      <!-- Tab Navigation -->
+      <div class="tab-container">
+        <button class="tab active" onclick="switchTab('shows')">🎟️ Show Selection</button>
+        <button class="tab" onclick="switchTab('lyrics')">🎵 Lyrics Voting</button>
       </div>
 
-      <!-- Confirmation Section -->
-      <div class="step" id="step3">
-        <button class="btn back-btn" onclick="goToStep(2)">
-          <span>←</span> Back to Tickets
-        </button>
-        
-        <div class="confirmation-section">
-          <div class="confirmation-icon">🎉</div>
-          <h2 class="confirmation-title">Broadway Tickets Reserved!</h2>
+      <!-- Shows Tab Content -->
+      <div id="shows-tab" class="tab-content active">
+        <!-- Show Selection Grid -->
+        <div id="step1" class="step active">
+          <h2 style="text-align: center; margin-bottom: 30px; color: #f0abfc;">Choose Your Broadway Show</h2>
           
-          <div class="confirmation-details">
-            <div class="detail-item">
-              <span class="detail-label">Show:</span>
-              <span class="detail-value" id="confirmShow">Hamilton</span>
+          <div class="date-selector">
+            <div class="date-card selected" onclick="selectDate('2026-06-05')">
+              <div class="day">Friday</div>
+              <div class="date">June 5</div>
             </div>
-            <div class="detail-item">
-              <span class="detail-label">Theater:</span>
-              <span class="detail-value" id="confirmTheater">Richard Rodgers Theatre</span>
+            <div class="date-card" onclick="selectDate('2026-06-06')">
+              <div class="day">Saturday</div>
+              <div class="date">June 6</div>
             </div>
-            <div class="detail-item">
-              <span class="detail-label">Date:</span>
-              <span class="detail-value" id="confirmDate">Friday, June 5, 2026</span>
+            <div class="date-card" onclick="selectDate('2026-06-07')">
+              <div class="day">Sunday</div>
+              <div class="date">June 7</div>
             </div>
-            <div class="detail-item">
-              <span class="detail-label">Tickets:</span>
-              <span class="detail-value" id="confirmTickets">2 tickets</span>
+            <div class="date-card" onclick="selectDate('2026-06-08')">
+              <div class="day">Monday</div>
+              <div class="date">June 8</div>
             </div>
-            <div class="detail-item">
-              <span class="detail-label">Price per Ticket:</span>
-              <span class="detail-value" id="confirmPrice">$250</span>
-            </div>
-            <div class="detail-item" style="border-top: 2px solid #f0abfc; padding-top: 15px; margin-top: 10px;">
-              <span class="detail-label" style="font-size: 1.2rem;">Total Cost:</span>
-              <span class="detail-value" style="font-size: 1.2rem; color: #10b981;" id="confirmTotal">$500</span>
+            <div class="date-card" onclick="selectDate('2026-06-09')">
+              <div class="day">Tuesday</div>
+              <div class="date">June 9</div>
             </div>
           </div>
           
-          <p style="color: #cbd5e1; margin: 20px 0; font-size: 1.1rem;">
-            Your tickets have been added to your itinerary. You'll receive a confirmation email with your e-tickets.
-          </p>
+          <div class="selection-grid">
+            <div class="selection-card" onclick="selectShow('hamilton')">
+              <h4>🎭 Hamilton</h4>
+              <div class="show-theater">Richard Rodgers Theatre</div>
+              <p>The revolutionary musical that tells the story of American Founding Father Alexander Hamilton through a blend of hip-hop, jazz, R&B, and Broadway.</p>
+              <div class="show-badge">Most Popular</div>
+              <button class="quick-add-btn" onclick="quickAddToItinerary('hamilton', event)" data-show="hamilton">
+                <span>⭐</span> Add to Itinerary
+              </button>
+            </div>
+            
+            <div class="selection-card" onclick="selectShow('lionking')">
+              <h4>🦁 The Lion King</h4>
+              <div class="show-theater">Minskoff Theatre</div>
+              <p>The groundbreaking musical based on Disney's classic film, featuring breathtaking visuals, stunning costumes, and unforgettable music by Elton John.</p>
+              <div class="show-badge">Family Favorite</div>
+              <button class="quick-add-btn" onclick="quickAddToItinerary('lionking', event)" data-show="lionking">
+                <span>⭐</span> Add to Itinerary
+              </button>
+            </div>
+            
+            <div class="selection-card" onclick="selectShow('wicked')">
+              <h4>🧙‍♀️ Wicked</h4>
+              <div class="show-theater">Gershwin Theatre</div>
+              <p>The untold story of the witches of Oz, exploring the friendship between Glinda the Good and the Wicked Witch of the West before Dorothy arrived.</p>
+              <div class="show-badge">Longest Running</div>
+              <button class="quick-add-btn" onclick="quickAddToItinerary('wicked', event)" data-show="wicked">
+                <span>⭐</span> Add to Itinerary
+              </button>
+            </div>
+            
+            <div class="selection-card" onclick="selectShow('hadestown')">
+              <h4>⚡ Hadestown</h4>
+              <div class="show-theater">Walter Kerr Theatre</div>
+              <p>An acclaimed musical that intertwines two mythic tales—Orpheus and Eurydice, and King Hades and Persephone—as it journeys to the underworld and back.</p>
+              <div class="show-badge">Tony Winner</div>
+              <button class="quick-add-btn" onclick="quickAddToItinerary('hadestown', event)" data-show="hadestown">
+                <span>⭐</span> Add to Itinerary
+              </button>
+            </div>
+          </div>
           
-          <button class="btn btn-primary" onclick="completeReservation()">
-            <span>📧</span> Send Confirmation Email
+          <button class="btn btn-primary" onclick="goToStep(2)">
+            <span>🎟️</span> Check Live Availability
+            <span>→</span>
           </button>
         </div>
-      </div>
-    </div>
 
-    <!-- Lyrics Voting Tab Content -->
-    <div id="lyrics-tab" class="tab-content">
-      <div class="lyrics-section">
-        <h2>🎵 Broadway Lyrics Voting</h2>
-        <p style="color: #cbd5e1; margin-bottom: 20px; font-size: 1.1rem;">
-          Vote on your favorite lyrics from famous Broadway musicals. Click ❤️ for lyrics you love and 👎 for those you dislike!
-        </p>
-        
-        <table class="lyrics-table">
-          <thead>
-            <tr>
-              <th style="width: 60%">Lyric</th>
-              <th style="width: 20%">❤️ Love</th>
-              <th style="width: 20%">👎 Dislike</th>
-            </tr>
-          </thead>
-          <tbody id="lyricsResult">
-            <!-- JavaScript-generated rows will appear here -->
-          </tbody>
-        </table>
-        
-        <div style="margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 10px;">
-          <h4 style="color: #fbbf24; margin-bottom: 10px;">🎭 Vote for Your Favorites!</h4>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">
-            Lyrics are automatically refreshed every 5 seconds. Your votes are recorded in real-time!
-            Currently showing lyrics from <strong>Hamilton</strong>, <strong>Wicked</strong>, <strong>The Lion King</strong>, and more.
-          </p>
+        <!-- Show Details & Availability -->
+        <div class="step" id="step2">
+          <button class="btn back-btn" onclick="goToStep(1)">
+            <span>←</span> Back to Shows
+          </button>
+          
+          <div class="show-card">
+            <div class="show-info">
+              <h3 id="showName">Loading...</h3>
+              <div class="show-type" id="showType"></div>
+            </div>
+            <div class="show-theater" id="showTheater"></div>
+            <p id="showDescription"></p>
+            
+            <!-- Live Availability Section -->
+            <div id="availabilitySection">
+              <h2 class="availability-header">📅 Live Ticket Availability</h2>
+              <div class="availability-display">
+                <div class="availability-header">
+                  <h4>Available Performances</h4>
+                  <div class="price-tag" id="priceRange">Loading...</div>
+                </div>
+                <div id="availabilityData">
+                  <div class="availability-loading">
+                    <div class="live-loading-spinner"></div>
+                    <div>Checking real-time Broadway.com availability...</div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn refresh-btn" onclick="refreshAvailability()">
+                <span>🔄</span> Refresh Live Availability
+              </button>
+            </div>
+          </div>
+          
+          <!-- Ticket Selection -->
+          <div class="selection-section">
+            <h3 style="color: #f0abfc; margin-bottom: 20px;">Select Your Tickets</h3>
+            
+            <div class="ticket-quantity">
+              <div style="flex: 1;">
+                <h4 style="color: #c4b5fd; margin-bottom: 10px;">Number of Tickets</h4>
+                <p style="color: #cbd5e1;">Select how many tickets you need for the selected performance.</p>
+              </div>
+              <div class="quantity-control">
+                <button class="quantity-btn" onclick="adjustQuantity(-1)" id="decreaseBtn">-</button>
+                <div class="quantity-display" id="ticketQuantity">2</div>
+                <button class="quantity-btn" onclick="adjustQuantity(1)" id="increaseBtn">+</button>
+              </div>
+            </div>
+            
+            <div class="total-price" id="estimatedTotal">
+              Estimated Total: $0
+            </div>
+          </div>
+          
+          <button class="btn add-to-itinerary-btn" id="addToItineraryBtn" onclick="addBroadwayToItinerary()">
+            <span>⭐</span> Add to My Itinerary
+          </button>
+
+          <button class="btn btn-primary" onclick="goToStep(3)">
+            <span>✅</span> Confirm Selection
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- Confirmation Section -->
+        <div class="step" id="step3">
+          <button class="btn back-btn" onclick="goToStep(2)">
+            <span>←</span> Back to Tickets
+          </button>
+          
+          <div class="confirmation-section">
+            <div class="confirmation-icon">🎉</div>
+            <h2 class="confirmation-title">Broadway Tickets Reserved!</h2>
+            
+            <div class="confirmation-details">
+              <div class="detail-item">
+                <span class="detail-label">Show:</span>
+                <span class="detail-value" id="confirmShow">Hamilton</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Theater:</span>
+                <span class="detail-value" id="confirmTheater">Richard Rodgers Theatre</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Date:</span>
+                <span class="detail-value" id="confirmDate">Friday, June 5, 2026</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Tickets:</span>
+                <span class="detail-value" id="confirmTickets">2 tickets</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Price per Ticket:</span>
+                <span class="detail-value" id="confirmPrice">$250</span>
+              </div>
+              <div class="detail-item" style="border-top: 2px solid #f0abfc; padding-top: 15px; margin-top: 10px;">
+                <span class="detail-label" style="font-size: 1.2rem;">Total Cost:</span>
+                <span class="detail-value" style="font-size: 1.2rem; color: #10b981;" id="confirmTotal">$500</span>
+              </div>
+            </div>
+            
+            <p style="color: #cbd5e1; margin: 20px 0; font-size: 1.1rem;">
+              Your tickets have been added to your itinerary. You'll receive a confirmation email with your e-tickets.
+            </p>
+            
+            <button class="btn btn-primary" onclick="completeReservation()">
+              <span>📧</span> Send Confirmation Email
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Navigation Buttons -->
-    <div class="nav-buttons">
-      <a href="/new-york/shopping/" class="nav-btn nav-btn-prev">
-        <span>←</span> Previous: Shopping
-      </a>
-      <a href="/new-york/breakfast/" class="nav-btn nav-btn-next">
-        Next: Breakfast
-        <span>→</span>
-      </a>
+      <!-- Lyrics Voting Tab Content -->
+      <div id="lyrics-tab" class="tab-content">
+        <div class="lyrics-section">
+          <h2>🎵 Broadway Lyrics Voting</h2>
+          <p style="color: #cbd5e1; margin-bottom: 20px; font-size: 1.1rem;">
+            Vote on your favorite lyrics from famous Broadway musicals. Click ❤️ for lyrics you love and 👎 for those you dislike!
+          </p>
+          
+          <table class="lyrics-table">
+            <thead>
+              <tr>
+                <th style="width: 60%">Lyric</th>
+                <th style="width: 20%">❤️ Love</th>
+                <th style="width: 20%">👎 Dislike</th>
+              </tr>
+            </thead>
+            <tbody id="lyricsResult">
+              <!-- JavaScript-generated rows will appear here -->
+            </tbody>
+          </table>
+          
+          <div style="margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 10px;">
+            <h4 style="color: #fbbf24; margin-bottom: 10px;">🎭 Vote for Your Favorites!</h4>
+            <p style="color: #cbd5e1; font-size: 0.95rem;">
+              Lyrics are automatically refreshed every 5 seconds. Your votes are recorded in real-time!
+              Currently showing lyrics from <strong>Hamilton</strong>, <strong>Wicked</strong>, <strong>The Lion King</strong>, and more.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <a href="/new-york/shopping/" class="nav-btn nav-btn-prev">
+          <span>←</span> Previous: Shopping
+        </a>
+        <a href="/new-york/breakfast/" class="nav-btn nav-btn-next">
+          Next: Breakfast
+          <span>→</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -1220,14 +1461,31 @@ footer:
     </button>
   </div>
 
-  <div style="text-align:center; margin:28px 0;">
-    <a href="/Insightful-Innovators-/new-york/events/" style="display:inline-block;padding:12px 20px;border-radius:10px;
-       background:linear-gradient(90deg,#ffd700,#ffed4e);color:#1a1a2e;font-weight:700;text-decoration:none;">
-      Click here to add your own event!
-    </a>
-  </div>
-
   <script type="module">
+    // ============================================
+    // SIDEBAR NAVIGATION
+    // ============================================
+    
+    function navigateTo(section) {
+      // Update active button
+      document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Navigation logic
+      if (section === 'breakfast') {
+        window.location.href = '/Insightful-Innovators-/new-york/breakfast/';
+      } else if (section === 'landmarks') {
+        window.location.href = '/Insightful-Innovators-/new-york/landmarks/';
+      } else if (section === 'shopping') {
+        window.location.href = '/Insightful-Innovators-/new-york/shopping/';
+      } else if (section === 'broadway') {
+        // Already on broadway page
+        console.log('Navigating to broadway section');
+      }
+    }
+
     // ============================================
     // ITINERARY TRACKER JAVASCRIPT (BACKEND-ENABLED)
     // ============================================
@@ -2032,6 +2290,7 @@ footer:
     // ============================================
 
     // Expose all functions to global window scope for inline onclick handlers
+    window.navigateTo = navigateTo;
     window.initItinerary = initItinerary;
     window.getItinerary = getItinerary;
     window.saveItinerary = saveItinerary;
