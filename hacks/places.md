@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Choose Your Own Event"
-description: "Time to add your own event to your itinerary!"
-permalink: /new-york/events/
+title: "Choose Your Own Place"
+description: "Time to add your own place to your itinerary!"
+permalink: /new-york/places/
 parent: "Analytics/Admin"
 team: "Insightful Innovators"
 submodule: 4
@@ -15,12 +15,11 @@ footer:
     next: /new-york/broadway/
 ---
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Events - A Day In New York</title>
+    <title>Custom Places - A Day In New York</title>
     <style>
         * {
             margin: 0;
@@ -154,14 +153,14 @@ footer:
             margin-top: 10px;
         }
 
-        .events-grid {
+        .places-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
 
-        .event-card {
+        .place-card {
             background: #2a2a2a;
             border-radius: 12px;
             padding: 20px;
@@ -169,24 +168,24 @@ footer:
             transition: all 0.3s ease;
         }
 
-        .event-card:hover {
+        .place-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
         }
 
-        .event-card h3 {
+        .place-card h3 {
             color: #ffd700;
             margin-bottom: 10px;
             font-size: 1.3em;
         }
 
-        .event-card p {
+        .place-card p {
             color: #ccc;
             margin: 5px 0;
             line-height: 1.6;
         }
 
-        .event-type {
+        .place-type {
             display: inline-block;
             background: #ffd700;
             color: #1a2332;
@@ -268,7 +267,7 @@ footer:
                 width: 100%;
             }
             
-            .events-grid {
+            .places-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -281,71 +280,21 @@ footer:
 <body>
     <div class="container">
         <header>
-            <h1>🗽 Custom NYC Events</h1>
-            <p style="color: #ccc;">Add your own events or browse what others have shared!</p>
+            <h1>🗽 Custom NYC Places</h1>
+            <p style="color: #ccc;">Add your own places or browse what others have shared!</p>
         </header>
 
         <div class="tabs">
-            <button class="tab" onclick="switchTab('browse', this)">Browse Events</button>
-            <button class="tab active" onclick="switchTab('create', this)">Create Event</button>
-            <button class="tab" onclick="switchTab('myevents', this)">My Itinerary</button>
+            <button class="tab active" onclick="switchTab('browse', this)">Browse Places</button>
         </div>
 
-        <!-- CREATE EVENT SECTION -->
-        <div id="create-section" class="section active">
-            <h2>Create a Custom Event</h2>
-            <div id="create-message"></div>
-            
-            <form id="create-event-form">
-                <div class="form-group">
-                    <label for="event-name">Event Name *</label>
-                    <input type="text" id="event-name" required placeholder="e.g., Central Park Carriage Ride">
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" placeholder="Tell others about this event..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" id="location" placeholder="e.g., Central Park South, Manhattan">
-                </div>
-
-                <!-- Category Preview (auto-suggested) -->
-                <div class="form-group">
-                    <label>Suggested Category</label>
-                    <div id="category-preview">
-                        <p style="color: #ccc;">Start typing to see category suggestion...</p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="time">Time</label>
-                    <input type="text" id="time" placeholder="e.g., 10:00 AM - 12:00 PM">
-                </div>
-
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="text" id="price" placeholder="e.g., Free, $20, $50-100">
-                </div>
-
-                <div class="form-group">
-                    <label for="image-url">Image URL (optional)</label>
-                    <input type="url" id="image-url" placeholder="https://example.com/image.jpg">
-                </div>
-
-                <button type="submit" class="btn">Create Event</button>
-            </form>
-        </div>
-
-        <!-- BROWSE EVENTS SECTION -->
-        <div id="browse-section" class="section">
-            <h2>Browse Custom Events</h2>
+        <!-- BROWSE PLACES SECTION -->
+        <div id="browse-section" class="section active">
+            <h2>Browse Custom Places</h2>
             
             <div class="form-group">
                 <label for="filter-type">Filter by Category</label>
-                <select id="filter-type" onchange="loadEvents()">
+                <select id="filter-type" onchange="loadPlaces()">
                     <option value="">All Categories</option>
                     <option value="Breakfast"> Breakfast</option>
                     <option value="Shopping"> Shopping</option>
@@ -363,21 +312,14 @@ footer:
             </div>
 
             <div id="browse-message"></div>
-            <div id="events-grid" class="events-grid"></div>
+            <div id="places-grid" class="places-grid"></div>
         </div>
-
-        <!-- MY ITINERARY SECTION -->
-        <div id="myevents-section" class="section">
-            <h2>My Custom Events</h2>
-            <div id="myevents-message"></div>
-            <div id="myevents-grid" class="events-grid"></div>
-        </div>
-    </div>
 
     <script>
         // Configuration
         const API_URL = 'http://127.0.0.1:8303'; // Change to your backend URL
         const USER_ID = 'user_' + Math.random().toString(36).substr(2, 9); // Replace with actual login
+
         // Switch between tabs
         function switchTab(tab, element) {
             // Update tab buttons
@@ -390,9 +332,9 @@ footer:
             
             // Load data for the tab
             if (tab === 'browse') {
-                loadEvents();
-            } else if (tab === 'myevents') {
-                loadMyEvents();
+                loadPlaces();
+            } else if (tab === 'myplaces') {
+                loadMyPlaces();
             }
         }
 
@@ -403,13 +345,11 @@ footer:
             clearTimeout(debounceTimer);
             
             debounceTimer = setTimeout(async () => {
-                const eventName = document.getElementById('event-name').value;
-                const description = document.getElementById('description').value;
-                const location = document.getElementById('location').value;
+                const placeName = document.getElementById('place-name')?.value;
+                const description = document.getElementById('place-description')?.value;
+                const location = document.getElementById('place-location')?.value;
                 
-                console.log('Updating category for:', eventName);
-                
-                if (!eventName) {
+                if (!placeName) {
                     document.getElementById('category-preview').innerHTML = 
                         '<p style="color: #ccc;">Start typing to see category suggestion...</p>';
                     return;
@@ -421,20 +361,17 @@ footer:
                 
                 // Call backend to get suggestion
                 try {
-                    console.log('Calling suggest-category API...');
-                    const response = await fetch(`${API_URL}/api/events/suggest-category`, {
+                    const response = await fetch(`${API_URL}/api/places/suggest-category`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            event_name: eventName,
+                            place_name: placeName,
                             description: description,
                             location: location
                         })
                     });
                     
-                    console.log('Response status:', response.status);
                     const data = await response.json();
-                    console.log('Response data:', data);
                     
                     if (data.success) {
                         document.getElementById('category-preview').innerHTML = `
@@ -443,7 +380,7 @@ footer:
                                     ${data.category}
                                 </p>
                                 <p style="color: #aaa; font-size: 0.85em;">
-                                    This event will appear under "${data.category}" on your itinerary
+                                    This place will appear under "${data.category}" on your itinerary
                                 </p>
                             </div>
                         `;
@@ -459,137 +396,124 @@ footer:
             }, 500); // Wait 500ms after user stops typing
         }
 
-        // Add event listeners for live category suggestion
-        document.getElementById('event-name').addEventListener('input', updateCategorySuggestion);
-        document.getElementById('description').addEventListener('input', updateCategorySuggestion);
-        document.getElementById('location').addEventListener('input', updateCategorySuggestion);
+        // Attach debounced suggestion listeners if fields exist
+        document.getElementById('place-name')?.addEventListener('input', updateCategorySuggestion);
+        document.getElementById('place-description')?.addEventListener('input', updateCategorySuggestion);
+        document.getElementById('place-location')?.addEventListener('input', updateCategorySuggestion);
 
-        // Create new event
-        document.getElementById('create-event-form').addEventListener('submit', async (e) => {
+        // Create new place form handler (if form exists)
+        document.getElementById('create-place-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            console.log('Form submitted!');
-            
-            const eventData = {
+            const placeData = {
                 user_id: USER_ID,
-                event_name: document.getElementById('event-name').value,
-                description: document.getElementById('description').value,
-                location: document.getElementById('location').value,
-                time: document.getElementById('time').value,
-                price: document.getElementById('price').value,
-                image_url: document.getElementById('image-url').value
+                place_name: document.getElementById('place-name').value,
+                description: document.getElementById('place-description').value,
+                location: document.getElementById('place-location').value,
+                time: document.getElementById('place-time').value,
+                price: document.getElementById('place-price').value,
+                image_url: document.getElementById('place-image-url').value
             };
             
-            console.log('Event data to submit:', eventData);
-            
             try {
-                console.log('Sending POST request to:', `${API_URL}/api/events/custom`);
-                const response = await fetch(`${API_URL}/api/events/custom`, {
+                const response = await fetch(`${API_URL}/api/places/custom`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(eventData)
+                    body: JSON.stringify(placeData)
                 });
                 
-                console.log('Response status:', response.status);
                 const data = await response.json();
-                console.log('Response data:', data);
                 
                 if (data.success) {
                     showMessage('create-message', 
-                        `✅ Event created successfully under category: ${data.suggested_category}`, 
+                        `✅ Place created successfully under category: ${data.suggested_category}`, 
                         'success');
-                    document.getElementById('create-event-form').reset();
+                    document.getElementById('create-place-form').reset();
                     document.getElementById('category-preview').innerHTML = 
                         '<p style="color: #ccc;">Start typing to see category suggestion...</p>';
                 } else {
                     showMessage('create-message', '❌ Error: ' + data.message, 'error');
                 }
             } catch (error) {
-                console.error('Full error details:', error);
-                showMessage('create-message', '❌ Failed to create event. Check console for details.', 'error');
+                console.error('Error creating place:', error);
+                showMessage('create-message', '❌ Failed to create place. Check console for details.', 'error');
             }
         });
 
-        // Load all events
-        async function loadEvents() {
+        // Load all places
+        async function loadPlaces() {
             const filterType = document.getElementById('filter-type').value;
             const url = filterType 
-                ? `${API_URL}/api/events/custom?type=${encodeURIComponent(filterType)}` 
-                : `${API_URL}/api/events/custom`;
+                ? `${API_URL}/api/places/custom?type=${encodeURIComponent(filterType)}` 
+                : `${API_URL}/api/places/custom`;
             
-            console.log('Loading events from:', url);
-            document.getElementById('events-grid').innerHTML = '<div class="loading">Loading events...</div>';
+            document.getElementById('places-grid').innerHTML = '<div class="loading">Loading places...</div>';
             
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                console.log('Events loaded:', data);
-                
                 if (data.success) {
-                    displayEvents(data.events, 'events-grid');
+                    displayPlaces(data.places, 'places-grid');
                 } else {
-                    showMessage('browse-message', '❌ Error loading events', 'error');
-                    document.getElementById('events-grid').innerHTML = '';
+                    showMessage('browse-message', '❌ Error loading places', 'error');
+                    document.getElementById('places-grid').innerHTML = '';
                 }
             } catch (error) {
-                console.error('Error loading events:', error);
-                showMessage('browse-message', '❌ Failed to load events', 'error');
-                document.getElementById('events-grid').innerHTML = '';
+                console.error('Error loading places:', error);
+                showMessage('browse-message', '❌ Failed to load places', 'error');
+                document.getElementById('places-grid').innerHTML = '';
             }
         }
 
-        // Load user's custom events
-        async function loadMyEvents() {
-            console.log('Loading my events for user:', USER_ID);
-            document.getElementById('myevents-grid').innerHTML = '<div class="loading">Loading your events...</div>';
+        // Load user's custom places
+        async function loadMyPlaces() {
+            document.getElementById('myplaces-grid')?.innerHTML = '<div class="loading">Loading your places...</div>';
             
             try {
-                const response = await fetch(`${API_URL}/api/events/custom/my-itinerary?user_id=${USER_ID}`);
+                const response = await fetch(`${API_URL}/api/places/custom/my-itinerary?user_id=${USER_ID}`);
                 const data = await response.json();
                 
-                console.log('My events loaded:', data);
-                
                 if (data.success) {
-                    displayEvents(data.events, 'myevents-grid', true);
+                    displayPlaces(data.places, 'myplaces-grid', true);
                 } else {
-                    showMessage('myevents-message', '❌ Error loading your events', 'error');
-                    document.getElementById('myevents-grid').innerHTML = '';
+                    showMessage('myplaces-message', '❌ Error loading your places', 'error');
+                    document.getElementById('myplaces-grid').innerHTML = '';
                 }
             } catch (error) {
-                console.error('Error loading my events:', error);
-                showMessage('myevents-message', '❌ Failed to load your events', 'error');
-                document.getElementById('myevents-grid').innerHTML = '';
+                console.error('Error loading my places:', error);
+                showMessage('myplaces-message', '❌ Failed to load your places', 'error');
+                document.getElementById('myplaces-grid').innerHTML = '';
             }
         }
 
-        // Display events
-        function displayEvents(events, gridId, isMyEvents = false) {
+        // Display places
+        function displayPlaces(places, gridId, isMyPlaces = false) {
             const grid = document.getElementById(gridId);
             
-            if (events.length === 0) {
+            if (!places || places.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📭</div>
-                        <p style="font-size: 1.2em; margin-bottom: 10px;">No events found</p>
-                        <p>${isMyEvents ? 'Add some custom events to your itinerary!' : 'Be the first to create an event!'}</p>
+                        <p style="font-size: 1.2em; margin-bottom: 10px;">No places found</p>
+                        <p>${isMyPlaces ? 'Add some custom places to your itinerary!' : 'Be the first to create a place!'}</p>
                     </div>
                 `;
                 return;
             }
             
-            grid.innerHTML = events.map(event => {
+            grid.innerHTML = places.map(place => {
                 return `
-                    <div class="event-card">
-                        <h3>${event.event_name}</h3>
-                        <span class="event-type">${event.event_type}</span>
-                        ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
-                        ${event.location ? `<p><strong>📍 Location:</strong> ${event.location}</p>` : ''}
-                        ${event.time ? `<p><strong>🕐 Time:</strong> ${event.time}</p>` : ''}
-                        ${event.price ? `<p><strong>💵 Price:</strong> ${event.price}</p>` : ''}
-                        ${event.times_added ? `<p class="popularity">⭐ Added ${event.times_added} time${event.times_added > 1 ? 's' : ''}</p>` : ''}
-                        ${!isMyEvents ? `
-                            <button class="btn btn-small" onclick="addToItinerary(${event.id}, '${event.event_name.replace(/'/g, "\\'")}')">
+                    <div class="place-card">
+                        <h3>${place.place_name}</h3>
+                        <span class="place-type">${place.place_type}</span>
+                        ${place.description ? `<p><strong>Description:</strong> ${place.description}</p>` : ''}
+                        ${place.location ? `<p><strong>📍 Location:</strong> ${place.location}</p>` : ''}
+                        ${place.time ? `<p><strong>🕐 Time:</strong> ${place.time}</p>` : ''}
+                        ${place.price ? `<p><strong>💵 Price:</strong> ${place.price}</p>` : ''}
+                        ${place.times_added ? `<p class="popularity">⭐ Added ${place.times_added} time${place.times_added > 1 ? 's' : ''}</p>` : ''}
+                        ${!isMyPlaces ? `
+                            <button class="btn btn-small" onclick="addPlaceToItinerary(${place.id}, '${place.place_name.replace(/'/g, "\\'")}')">
                                 Add to My Itinerary
                             </button>
                         ` : `
@@ -600,43 +524,40 @@ footer:
             }).join('');
         }
 
-        // Add event to itinerary
-        async function addToItinerary(eventId, eventName) {
-            console.log('Adding to itinerary:', eventId, eventName);
+        // Add place to itinerary
+        async function addPlaceToItinerary(placeId, placeName) {
             try {
-                const response = await fetch(`${API_URL}/api/events/custom/add-to-itinerary`, {
+                const response = await fetch(`${API_URL}/api/places/custom/add-to-itinerary`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: USER_ID,
-                        event_id: eventId
+                        place_id: placeId
                     })
                 });
                 
                 const data = await response.json();
-                console.log('Add to itinerary response:', data);
                 
                 if (data.success) {
-                    alert(`✅ "${eventName}" added to your itinerary!`);
-                    loadEvents(); // Refresh to show updated popularity
+                    alert(`✅ "${placeName}" added to your itinerary!`);
+                    loadPlaces(); // Refresh to show updated popularity
                 } else {
                     alert('❌ Error: ' + data.message);
                 }
             } catch (error) {
-                console.error('Error adding to itinerary:', error);
-                alert('❌ Failed to add event to itinerary');
+                console.error('Error adding place to itinerary:', error);
+                alert('❌ Failed to add place to itinerary');
             }
         }
 
         // Show message
         function showMessage(elementId, message, type) {
             const element = document.getElementById(elementId);
+            if (!element) return;
             element.innerHTML = `<div class="message ${type}">${message}</div>`;
             setTimeout(() => element.innerHTML = '', 5000);
         }
 
         // Initialize
-        console.log('Custom Events page initialized!');
+        console.log('Custom Places page initialized!');
     </script>
-</body>
-</html>
