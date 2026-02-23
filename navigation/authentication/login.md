@@ -82,6 +82,9 @@ show_reading_time: false
                 <input type="text" id="name" placeholder="Name" required>
             </div>
             <div class="form-group">
+                <input type="text" id="bio" placeholder="Traveler Bio">
+            </div>
+            <div class="form-group">
                 <input type="text" id="signupUid" placeholder="GitHub ID" required>
             </div>
             <div class="form-group">
@@ -179,6 +182,7 @@ show_reading_time: false
                     email: document.getElementById("uid").value + "@gmail.com",
                     dob: "11-01-2024", // Static date, can be modified
                     name: document.getElementById("uid").value,
+                    bio: document.getElementById("bio")?.value || "", // Add screen_name
                     password: document.getElementById("password").value,
                     kasmServerNeeded: false,
                 });
@@ -253,6 +257,7 @@ show_reading_time: false
             cache: "no-cache",
             body: {
                 name: document.getElementById("name").value,
+                bio: document.getElementById("bio").value, // Add screen_name
                 uid: document.getElementById("signupUid").value,
                 email: document.getElementById("signupEmail").value,
                 password: document.getElementById("signupPassword").value,
@@ -272,6 +277,7 @@ show_reading_time: false
                 email: document.getElementById("signupEmail").value,
                 dob: "11-01-2024",  // Static date for now, you can modify this
                 name: document.getElementById("name").value,
+                bio: document.getElementById("bio").value, // Add screen_name
                 password: document.getElementById("signupPassword").value,
                 kasmServerNeeded: document.getElementById("kasmNeeded").checked,
             })
@@ -280,7 +286,7 @@ show_reading_time: false
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    document.getElementById("signupMessage").innerText = "Sign up successful!";
+                    document.getElementById("signupMessage").innerText = "Java Sign up successful!";
                 } else {
                     document.getElementById("signupMessage").innerText = "Sign up failed: " + data.message;
                 }
@@ -303,7 +309,7 @@ show_reading_time: false
                 return response.json();
             })
             .then(data => {
-                document.getElementById("signupMessage").textContent = "Signup successful!";
+                document.getElementById("signupMessage").textContent = "Python Signup successful!";
                 // Optionally redirect to login page or handle as needed
                 // window.location.href = '{{site.baseurl}}/profile';
             })
