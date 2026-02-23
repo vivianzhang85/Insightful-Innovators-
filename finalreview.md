@@ -4,12 +4,6 @@ title: "AP CSP Review - NYC Itinerary Builder Team Portfolio"
 description: "Individual contributions, code snippets, CollegeBoard results, and GitHub analytics for our NYC trip planner project"
 permalink: /csp/review/nyc-team/
 ---
----
-layout: post
-title: "AP CSP Review - NYC Itinerary Builder Team Portfolio"
-description: "Individual contributions, code snippets, CollegeBoard results, and GitHub analytics for our NYC trip planner project"
-permalink: /csp/review/nyc-team/
----
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -387,6 +381,202 @@ permalink: /csp/review/nyc-team/
             transform: translateY(-2px);
         }
 
+        /* Peer Review Specific Styles */
+        .reviewer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-category {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+            padding: 0.4rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .rating {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 209, 102, 0.1);
+            color: var(--accent-gold);
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+
+        .feedback-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            border-left: 3px solid;
+        }
+
+        .glow {
+            border-left-color: var(--accent-gold);
+        }
+
+        .grow {
+            border-left-color: var(--accent-blue);
+        }
+
+        .presentation {
+            border-left-color: #f59e0b;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .glow .section-label {
+            color: var(--accent-gold);
+        }
+
+        .grow .section-label {
+            color: var(--accent-blue);
+        }
+
+        .presentation .section-label {
+            color: #f59e0b;
+        }
+
+        .theme-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .theme-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .theme-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+        }
+
+        .theme-count {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .theme-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .theme-item:last-child {
+            border-bottom: none;
+        }
+
+        .theme-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .theme-frequency {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        .reviewer-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .reviewer-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.85rem 1.75rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .reviewer-tag:hover {
+            background: rgba(251, 191, 36, 0.15);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+            color: var(--accent-gold);
+        }
+
+        .thank-you {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 padding: 1rem;
@@ -406,6 +596,20 @@ permalink: /csp/review/nyc-team/
             
             .team-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .theme-summary {
+                grid-template-columns: 1fr;
+            }
+            
+            .reviewer-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .reviewer-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -485,7 +689,7 @@ permalink: /csp/review/nyc-team/
             </table>
         </div>
 
-        <!-- Team Work Split Section (REWRITTEN - DETAILED VERSION) -->
+        <!-- Team Work Split Section -->
         <div class="section-card">
             <h2>Team Work Split</h2>
             
@@ -507,7 +711,6 @@ permalink: /csp/review/nyc-team/
                         <li>List usage: museum endpoints list, hours dictionary structure</li>
                         <li>Procedure: <code>scrape_met_museum()</code> with no parameters, returns structured dictionary</li>
                     </ul>
-                    </div>
                 </div>
 
                 <!-- Kailyn -->
@@ -529,8 +732,6 @@ permalink: /csp/review/nyc-team/
                         <li>List: user roles list, session data structure</li>
                         <li>Procedure: <code>login()</code> with form data input, returns redirect or error</li>
                     </ul>
-                    <div class="code-block">
-                    </div>
                 </div>
 
                 <!-- Nitya -->
@@ -550,8 +751,6 @@ permalink: /csp/review/nyc-team/
                         <li>List: user roles list, profile fields (name, bio, avatar)</li>
                         <li>Procedure: <code>get_user_id()</code> with no parameters, returns user JSON</li>
                     </ul>
-                    <div class="code-block">
-                    </div>
                 </div>
 
                 <!-- Ginny -->
@@ -573,9 +772,6 @@ permalink: /csp/review/nyc-team/
                         <li>List: expenses list, category totals dictionary</li>
                         <li>Procedure: <code>add_expense()</code> with category, price, quantity parameters</li>
                     </ul>
-                    <div class="code-block">
-
-                    </div>
                 </div>
 
                 <!-- Laya -->
@@ -596,8 +792,6 @@ permalink: /csp/review/nyc-team/
                         <li>List: places list returned from database, JSON arrays stored in text columns</li>
                         <li>Procedure: <code>get_itinerary()</code> with session_id parameter</li>
                     </ul>
-                    <div class="code-block">
-                    </div>
                 </div>
 
                 <!-- David -->
@@ -618,23 +812,25 @@ permalink: /csp/review/nyc-team/
                         <li>List: feedback items list with status and priority</li>
                         <li>Procedure: <code>process_feedback()</code> with feedback text and category</li>
                     </ul>
-                    <div class="code-block">
+                </div>
             </div>
         </div>
 
-        <!-- Individual AP CSP Requirements Section -->
+        <!-- Individual AP CSP Requirements by Team Member -->
         <div class="section-card">
             <h2>Individual AP CSP Requirements by Team Member</h2>
             
+            <!-- Vivian - Updated with content from her webpage, same format as others -->
             <h3>Vivian — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
-                <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Web scraping pipeline: construct request → fetch HTML → parse with BeautifulSoup → extract hours → return JSON</li>
-                <li style="margin: 0.5rem 0;">• <strong>Selection:</strong> if/else for try/except error handling; if response.ok checks</li>
-                <li style="margin: 0.5rem 0;">• <strong>Iteration:</strong> Looping through HTML elements to find hours text; iterating fallback data</li>
-                <li style="margin: 0.5rem 0;">• <strong>List:</strong> Museum endpoints list, hours data dictionary structure</li>
-                <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> scrape_met_museum() with no parameters, returns dictionary</li>
-            </ul>
+                <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Web scraping pipeline: construct request → fetch HTML → parse with BeautifulSoup → extract hours → return JSON; backend scraping follows request → parse → extract → return pattern</li>
+                <li style="margin: 0.5rem 0;">• <strong>Selection:</strong> if/else for try/except error handling; if response.ok checks; if hours data exists before display; if selected days exist for filtering</li>
+                <li style="margin: 0.5rem 0;">• <strong>Iteration:</strong> Looping through HTML elements to find hours text; iterating through LANDMARK_DATA to generate museum cards; iterating fallback data on failure; searching through hour_elements with find_all()</li>
+                <li style="margin: 0.5rem 0;">• <strong>List:</strong> LANDMARK_DATA list stores museum names, addresses, phone numbers accessed by key; museum endpoints list for API routing; hours dictionary structure</li>
+                <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> fetchMuseumHours(landmarkKey) retrieves live museum hours from backend API, calls getFallbackHours if request fails; scrape_met_museum() with no parameters, returns structured dictionary</li>
+                <li style="margin: 0.5rem 0;">• <strong>Procedure Call:</strong> const hoursData = await fetchMuseumHours('met'); called when user clicks museum card</li>
 
+            <!-- Kailyn -->
             <h3>Kailyn — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
                 <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Login flow: receive form → query user → check password → login_user → redirect</li>
@@ -644,6 +840,7 @@ permalink: /csp/review/nyc-team/
                 <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> login() with form data input, returns redirect or error</li>
             </ul>
 
+            <!-- Nitya -->
             <h3>Nitya — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
                 <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Profile retrieval: check authentication → query user → format data → return JSON</li>
@@ -653,6 +850,7 @@ permalink: /csp/review/nyc-team/
                 <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> get_user_id() with no parameters, returns user JSON</li>
             </ul>
 
+            <!-- Ginny -->
             <h3>Ginny — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
                 <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Budget creation: validate input → insert budget → initialize daily budgets → return</li>
@@ -662,6 +860,7 @@ permalink: /csp/review/nyc-team/
                 <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> add_expense() with category, price, quantity parameters</li>
             </ul>
 
+            <!-- Laya -->
             <h3>Laya — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
                 <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Database queries: connect → execute SELECT → fetch results → close → return</li>
@@ -671,6 +870,7 @@ permalink: /csp/review/nyc-team/
                 <li style="margin: 0.5rem 0;">• <strong>Procedure:</strong> get_itinerary() with session_id parameter</li>
             </ul>
 
+            <!-- David -->
             <h3>David — AP CSP Alignment</h3>
             <ul style="list-style: none; margin: 1rem 0;">
                 <li style="margin: 0.5rem 0;">• <strong>Sequencing:</strong> Feedback collection → prioritization → implementation → review</li>
@@ -777,6 +977,278 @@ permalink: /csp/review/nyc-team/
                 </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+
+        <!-- Peer Review Feedback Section -->
+        <div class="section-card">
+            <h2>Peer Review Feedback</h2>
+            
+            <div class="feedback-grid">
+                <!-- Jaynee -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">J</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Jaynee</div>
+                            <div class="review-category">Web Scraping & UI</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"The web scraping was very impressive, especially in its ability to extract accurate and relevant information directly from live websites. Pulling data straight from the source ensured that the information was current and reliable."</p>
+                        <p style="margin-top: 1rem;">"The accuracy of the scraped data added a strong sense of credibility to the overall output. The process demonstrated a solid understanding of how to efficiently gather and validate information from real-world sources."</p>
+                    </div>
+                </div>
+
+                <!-- Meryl -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">M</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Meryl</div>
+                            <div class="review-category">Itinerary & Usability</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"The itinerary function stood out because it automatically saves user selections, allowing plans to persist across sessions instead of resetting each time. Including real schedules and specific restaurants made the experience feel practical and realistic rather than hypothetical."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"A potential enhancement could be adding hotel or lodging options to create a more complete travel experience, though this may require additional data handling and complexity."</p>
+                    </div>
+                </div>
+
+                <!-- Lilian -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">L</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Lilian</div>
+                            <div class="review-category">UI Consistency</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"The webscraping is very cool!"</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"Have a unified theme for all pages (dates, breakfast). Have the breakfast places be customized to the user instead of a set list. Have more images."</p>
+                    </div>
+                </div>
+
+                <!-- Avantika -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Avantika</div>
+                            <div class="review-category">Clean Design</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"The website has a really clean design that makes it easy to navigate and find what you need. I like how everything is organized in a way that helps users make decisions without getting confused."</p>
+                        <p style="margin-top: 1rem;">"The different pages connect smoothly to each other, which shows the team put a lot of thought into planning how everything works together."</p>
+                    </div>
+                </div>
+
+                <!-- Shay -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">S</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Shay</div>
+                            <div class="review-category">Design Improvements</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"Add more pictures to enhance visual appeal and improve user engagement. Simplify some of the content to make the information easier and quicker to understand."</p>
+                        <p style="margin-top: 1rem;">"Reduce unnecessary text while keeping the key points clear and effective. Use a more simplified color palette to create a cleaner and more consistent look. Streamline the page layout to make navigation more intuitive and less cluttered."</p>
+                    </div>
+                </div>
+
+                <!-- Aneesh -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Aneesh</div>
+                            <div class="review-category">UI Enhancement</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"The website's UI is really clean and also really organized."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"The game is great, I think you guys should add more to the UI to make it look like there's more going on."</p>
+                    </div>
+                </div>
+
+                <!-- Hope -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">H</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Hope</div>
+                            <div class="review-category">Presentation & Flow</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section presentation">
+                        <div class="section-label">
+                            <i class="fas fa-chart-line"></i> Presentation
+                        </div>
+                        <p>"The UI was simple and clean, which made it easy to look at and understand."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"However, the progress from page to page was a little confusing. One improvement could be adding transitions between each page to better show how they connect. This would make the experience feel smoother."</p>
+                    </div>
+                </div>
+
+                <!-- Perry -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">P</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Perry</div>
+                            <div class="review-category">Full Project Review</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section presentation">
+                        <div class="section-label">
+                            <i class="fas fa-chart-line"></i> Presentation
+                        </div>
+                        <p>"Group presented the project clearly and demonstrated knowledge of both frontend and backend. Presentation was organized and decently engaging."</p>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Content
+                        </div>
+                        <p>"Concise and informative, with relevant examples and live demonstrations. Code explanations were clear, and the features shown were directly aligned with the problem being addressed."</p>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-star"></i> Value
+                        </div>
+                        <p>"Integrating real-time data, user interaction, and practical web development skills. Effective for learning purposes and could be used for real-world applications."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Suggestions
+                        </div>
+                        <p>"Add more ways to get user feedback and to get transactional data."</p>
+                    </div>
+                </div>
+
+                <!-- Anika Marathe -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">AM</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Anika Marathe</div>
+                            <div class="review-category">Features & Data</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"I really love the web scraping element that dynamically updates the hours of availability for food stops, etc. That seems like a really cool superpower. I also love that you can see the itinerary on the right side with all of your options saved in local storage."</p>
+                        <p style="margin-top: 1rem;">"For the shopping module, I love how it realistically simulates going to a store, swiping through images, and personalizing your outfit. There are a lot of good elements of transactional data!"</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"One piece of feedback would be to web scrape the reviews as well."</p>
+                    </div>
+                </div>
+
+                <!-- Aditya -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">AD</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Aditya</div>
+                            <div class="review-category">Features & API</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"I like the itinerary on the side where it tracks the dates, and the use of webscrapes were pretty cool. I liked that you could test the api endpoints as well."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Grows
+                        </div>
+                        <p>"I think since you could build orders a cool feature you could add at the end is an expense tracker where you can see how much you spent."</p>
+                    </div>
+                </div>
+
+                <!-- Ethan & Moiz -->
+                <div class="feedback-card">
+                    <div class="reviewer-header">
+                        <div class="reviewer-avatar">E&M</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Ethan & Moiz</div>
+                            <div class="review-category">Realism & Features</div>
+                        </div>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-thumbs-up"></i> Glows
+                        </div>
+                        <p>"We liked how it gives the actual schedule and restaurants, making it more realistic."</p>
+                    </div>
+                    <div class="feedback-section presentation">
+                        <div class="section-label">
+                            <i class="fas fa-chart-line"></i> Presentation
+                        </div>
+                        <p>"The group presented a clear, well-organized walkthrough of the full user flow and demonstrated a strong understanding by live-demoing all the features in the deployed environment."</p>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-star"></i> Content
+                        </div>
+                        <p>"The project is informative and relevant, using real-world examples like restaurants, museums, shopping, and Broadway shows, with visible web-scraped data."</p>
+                    </div>
+                    <div class="feedback-section glow">
+                        <div class="section-label">
+                            <i class="fas fa-check-circle"></i> Value
+                        </div>
+                        <p>"This feature provides strong value for a Create Performance Task by integrating data storage, automation, and user interaction in a realistic travel-planning context."</p>
+                    </div>
+                    <div class="feedback-section grow">
+                        <div class="section-label">
+                            <i class="fas fa-seedling"></i> Improvements
+                        </div>
+                        <p>"You could maybe add hotels to stay at but it might be a lot of work. The presentation could improve by slowing down during transitions. Code explanations were limited. Add personalization logic or analytics."</p>
+                    </div>
+                </div>
+            </div>
