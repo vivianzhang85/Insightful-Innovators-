@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: "Step 1 Breakfast"
 description: "Breakfast time hits, and in NYC that means one thing: pick your spot and dive in."
 permalink: /new-york/breakfast/
@@ -1071,7 +1071,7 @@ footer:
         </div>
 
         <div style="text-align:center; margin:28px 0;">
-          <a href="Insightful-Innovators/new-york/places/" style="display:inline-block;padding:12px 20px;border-radius:10px;
+          <a href="/Insightful-Innovators-/new-york/places/" style="display:inline-block;padding:12px 20px;border-radius:10px;
              background:linear-gradient(90deg,#ffd700,#ffed4e);color:#1a1a2e;font-weight:700;text-decoration:none;">
             Click here to add your own place!
           </a>
@@ -1118,6 +1118,13 @@ footer:
         </div>
     </div>
     
+    <div class="itinerary-item incomplete" id="customPlacesItem">
+        <div class="itinerary-label">📍 Custom Places</div>
+        <div class="itinerary-value" id="customPlacesValue">
+            <span class="itinerary-empty">None added</span>
+        </div>
+    </div>
+
     <button class="clear-itinerary-btn" onclick="clearItinerary()">
         Clear All Selections
     </button>
@@ -1390,6 +1397,44 @@ footer:
         } else {
             document.getElementById('broadwayValue').innerHTML = '<span class="itinerary-empty">Not selected</span>';
             document.getElementById('broadwayItem').classList.add('incomplete');
+        }
+
+        if (itinerary.custom_places && itinerary.custom_places.length > 0) {
+            let customPlacesArray = itinerary.custom_places;
+    
+            if (typeof customPlacesArray === 'string') {
+                try {
+                    customPlacesArray = JSON.parse(customPlacesArray);
+                } catch (e) {
+                    customPlacesArray = [];
+                }
+            }
+            
+            if (customPlacesArray.length > 0) {
+                const grouped = {};
+                customPlacesArray.forEach(place => {
+                    const category = place.place_type || 'Other';
+                    if (!grouped[category]) {
+                        grouped[category] = [];
+                    }
+                    grouped[category].push(place.place_name);
+                });
+                
+                let displayHTML = '';
+                Object.keys(grouped).forEach(category => {
+                    const places = grouped[category];
+                    displayHTML += `<strong>${category}:</strong> ${places.join(', ')}<br>`;
+                });
+                
+                document.getElementById('customPlacesValue').innerHTML = displayHTML;
+                document.getElementById('customPlacesItem').classList.remove('incomplete');
+            } else {
+                document.getElementById('customPlacesValue').innerHTML = '<span class="itinerary-empty">None added</span>';
+                document.getElementById('customPlacesItem').classList.add('incomplete');
+            }
+        } else {
+            document.getElementById('customPlacesValue').innerHTML = '<span class="itinerary-empty">None added</span>';
+            document.getElementById('customPlacesItem').classList.add('incomplete');
         }
     }
 

@@ -168,3 +168,8 @@ layout: opencs
   {%- endif -%}
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
+
+<!-- Include Microblog if enabled -->
+{% if page.microblog %}
+  {% include microblog_foundation.html %}
+{% endif %}
